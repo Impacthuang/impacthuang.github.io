@@ -241,7 +241,7 @@ span{
 }
 .about-img img{
     position:relative;
-    width:650px;
+    width:200px;
     box-shadow: 0 0 25px orangered,
                 0 0 50px orangered;
                 border-radius:50%;
