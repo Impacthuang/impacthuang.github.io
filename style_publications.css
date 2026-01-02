@@ -1,0 +1,204 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+    text-decoration: none;
+    list-style: none;
+    }
+    
+    .navbar{
+        height:80px;
+        width:100%;
+       
+        background:rgb(105, 14, 105);
+        backdrop-filter: blur(10px);
+        display:flex;
+        justify-content: space-around;
+        align-items:center;
+        z-index:100;
+    }
+    
+    
+    .navbar a{
+        font-size: 18px;
+        color:white;
+    
+        font-weight: 500;
+        margin: 0 20px;
+        border-bottom:3px solid transparent;
+        transition:0.3s ease;
+    
+    }
+    .navbar a:hover,
+    .navbar a.active{
+        color:orangered;
+        border-bottom:3px solid orangered
+    }
+    
+    
+    
+    label.logo{
+        color:white;
+        font-size: 35px;
+        line-height: 180px;
+        padding:0 100px;
+        font-weight: bold;
+    }
+    
+    label.logo:hover{
+        color:orangered;
+        text-shadow:0 0 25px orangered,
+                    0 0 50px orangered; 
+                    transform:scale(1.1);
+    }
+    span{
+        color:orangered;
+    }
+    
+    
+    
+    .navbar ul{
+        float:right;
+        margin-right: 20px;
+    }
+    .navbar ul li{
+        display:inline-block;
+        line-height: 80px;
+        margin:0 5px;
+    }
+    .navbar ul li a{
+        color:white;
+        font-size: 17px;
+        padding:7px 13px;
+        border-radius:3px;
+        text-transform:uppercase
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    ::-webkit-scrollbar{
+        width:15px;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: orangered;
+    }
+    ::-webkit-scrollbar-track{
+        background-color:rgba(0,0,0,0.6);
+        width:50px;
+    }
+    
+    .about{
+        display:flex;
+        justify-content: center;
+        align-items:center;
+        padding:12% 8%;
+        gap:10em;
+        background:black;
+    }
+    .about-img img{
+        position:relative;
+        width:650px;
+        box-shadow: 0 0 25px orangered,
+                    0 0 50px orangered;
+                    border-radius:50%;
+    }
+    .about-content h2{
+        text-align:left;
+        color:white;
+        font-size:42px;
+    }
+    .about-content h3{
+        font-size:62px;
+        color:white;
+    }
+    .about-content p{
+        color:white;
+        font-size:20px;
+        margin:2em 0 3em;
+    }
+    
+    .contact-form h2{
+        text-align: center;
+        margin-top: 3em;
+        margin-bottom: 1em;
+    
+    }
+    .contact-form form{
+        max-width: 50em;
+        margin: 1rem auto;
+        text-align: center;
+        margin-bottom: 3em;
+    }
+    .contact-form form .input-box{
+        display: flex;
+        justify-content: cneter;
+        flex-wrap: wrap;
+    }
+    .contact-form form .input-box input,
+    .contact-form form textarea{
+        width:100%;
+        padding: 1.5em;
+        font-size: 18px;
+        color:black;
+        background: rgb(241,241,241);
+        border-radius: .8rem;
+        margin:1rem 0;
+        resize:none;
+    }
+    
+    .footer{
+        position:relative;
+        bottom:0;
+        width:100%;
+        padding:40px 0;
+        background-color: black;
+    }
+    .footer .social{
+        text-align:center;
+        padding-bottom: 25px;
+        color:white;
+    }
+    footer .social a{
+        font-size:24px;
+        color: white;
+        border: 2px solid orangered;
+        width:40px;
+        height:40px;
+        line-height: 38px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 50%;
+        margin: 0 8px;
+        box-shadow: inset 0 0 10px orangered, 0 0 10px orangered;
+        transition: 0.3s ease;
+    }
+    .footer ul{
+        margin-top: 0;
+        padding: 0;
+        font-size: 18;
+        line-height: 1.6;
+        margin-bottom: 0;
+        text-align: center;
+    }
+    .footer ul li a{
+        color:white;
+        border-bottom:3px solid transparent;
+        transition: 0.3s ease;
+    
+    }
+    .footer ul li a:hover{
+        display: inline-block;
+        padding: 0 15px;
+    }
+    .footer .copyright{
+        margin-top: 15px;
+        text-align: center;
+        font-size: 12px;
+        color: white;
+    }
