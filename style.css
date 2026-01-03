@@ -241,10 +241,8 @@
     }
     .about-img img{
         position:relative;
-        width:200px;
-        box-shadow: 0 0 25px orangered,
-                    0 0 50px orangered;
-                    border-radius:50%;
+        width:300px;
+        border-radius:50%;
     }
     .about-content h2{
         text-align:left;
