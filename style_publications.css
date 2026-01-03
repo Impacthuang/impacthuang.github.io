@@ -75,10 +75,209 @@
         text-transform:uppercase
     }
     
+
+/* 关键：让下拉菜单相对于 RESEARCH 定位 */
+.navbar ul li {
+    position: relative;
+}
+
+/* 下拉菜单容器（默认隐藏） */
+.navbar ul li ul {
+    display: none;
+    position: absolute;
+    top: 80px;          /* 与 navbar 高度一致 */
+    left: 0;
+    background: rgb(105, 14, 105);
+    min-width: 140px;
+    padding: 0;
+    margin: 0;
+    float: none;        /* 防止继承 float */
+    z-index: 999;
+}
+
+/* 下拉菜单每一项 */
+.navbar ul li ul li {
+    display: block;
+    line-height: 45px;
+    margin: 0;
+}
+
+
+
+/* 悬停 RESEARCH 显示下拉菜单 */
+.navbar ul li:hover > ul {
+    display: block;
+}
+
+/* 下拉菜单 hover 效果（可选） */
+.navbar ul li ul li a:hover {
+    background: #444;
+}
+
+
+/* 下拉菜单链接：单行 + 省略号 */
+.navbar ul li ul li a {
+    display: block;
+    max-width: 300px;          /* 可按需要调整 */
+    white-space: nowrap;       /* 不换行 */
+    overflow: hidden;          /* 隐藏超出部分 */
+    text-overflow: ellipsis;   /* 显示省略号 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    .checkbtn{
+        font-size: 30px;
+        color:white;
+        float:right;
+        line-height: 80px;
+        margin-right: 40px;
+        cursor:pointer;
+        display:none;
+    }
+    #check{
+        display:none;
+    }
+    @media (max-width: 952px){
+        label.logo{
+            font-size: 20px;
+            padding: left 50px;
+        }
+        .navbar ul li a{
+            font: size 16px;
+        }
+    }
+    @media (max-width:1058px){
+        .checkbtn{
+            display: block;
+        }
+        label.logo{
+            font-size: 22px;
+        }
+        ul{
+            position: fixed;
+            width:100%;
+            height: 100vh;
+            background: rgb(105, 14, 105);
+            top:80px;
+            left:-100%;
+            text-align: center;
+            transition: all .5s;
+    
+        }
+        .navbar ul li{
+            display:block;
+            margin:50px 0;
+            line-height: 30px;;
+        }
+        .navbar ul li a{
+            font-size:20px;
+        }
+        a:hover,a.active{
+            background:none;
+            color:#0082e6;
+        }
+        #check:checked ~ ul{
+            left:0;
+        }
+    
+    }
     
     
     
     
+    
+    
+    .contact{
+        padding: 10px 28px;
+        background-color:white;
+        color:black;
+        border:2px solid transparent;
+        border-radius:8px;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+    .contact:hover{
+        background-color:orangered;
+        box-shadow: 0 0 25px orangered;
+        color:white;
+    }
+    .home{
+        width:100%;
+        min-height:100vh;
+        background:rgb(241,241,241);
+        display: flex;
+        align-items:center;
+        gap:7em;
+        padding:30px 12% 0;
+    }
+    .home-content{
+        max-width: width 800px;
+    }
+    .home-content h3{
+        font-size:42px;
+    }
+    .home-content h1{
+        font-size:62ps;
+        line-height:1.2;
+    }
+    .home-content p{
+        font-size:18px;
+        margin:25px 0 30px;
+    }
+    .btn-box{
+        width:345px;
+        display:flex;
+        gap:2em;
+    }
+    .btn-1{
+        padding: 15px 28px;
+        background-color: black;
+        color: white;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        font-size:18px;
+        letter-spacing: 1px;
+        font-weight: 600;
+        transition: 0.3s ease;
+        cursor:pointer;
+    }
+    .btn-1:hover{
+        background-color: white;
+        color:black;
+        border:2px solid black;
+    }
+    .btn-2{
+        padding:15px 28px;
+        background-color: orangered;
+        color:white;
+        border: 2px solid black;
+        border-radius: 8px;
+        font-size:18px;
+        letter-spacing:1px;
+        font-weight:600;
+        transition:0.3s ease;
+        cursor:pointer;
+    }
+    .btn-2:hover{
+        background-color: white;
+        color:orangered;
+    }
+    .img-box img{
+
+        width:550px;
+    }
     
     
     
@@ -103,10 +302,8 @@
     }
     .about-img img{
         position:relative;
-        width:650px;
-        box-shadow: 0 0 25px orangered,
-                    0 0 50px orangered;
-                    border-radius:50%;
+        width:300px;
+        border-radius:50%;
     }
     .about-content h2{
         text-align:left;
@@ -178,20 +375,33 @@
         box-shadow: inset 0 0 10px orangered, 0 0 10px orangered;
         transition: 0.3s ease;
     }
-    .footer ul{
-        margin-top: 0;
-        padding: 0;
-        font-size: 18;
-        line-height: 1.6;
-        margin-bottom: 0;
-        text-align: center;
-    }
-    .footer ul li a{
-        color:white;
-        border-bottom:3px solid transparent;
-        transition: 0.3s ease;
-    
-    }
+.footer ul{
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1.6;
+
+    display: flex;              /* ⭐关键 */
+    justify-content: center;    /* 水平居中 */
+    flex-wrap: nowrap;          /* 不换行 */
+    list-style: none;           /* 去掉小圆点 */
+}
+.footer ul li{
+    margin: 0 15px;             /* 每个菜单之间的距离 */
+}
+
+
+
+
+.footer ul li a{
+    color: white;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s ease;
+    white-space: nowrap;        /* ⭐防止文字内部换行 */
+}
+
+
+
     .footer ul li a:hover{
         display: inline-block;
         padding: 0 15px;
@@ -202,3 +412,4 @@
         font-size: 12px;
         color: white;
     }
+    

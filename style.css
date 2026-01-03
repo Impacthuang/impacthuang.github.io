@@ -75,6 +75,67 @@
         text-transform:uppercase
     }
     
+
+/* 关键：让下拉菜单相对于 RESEARCH 定位 */
+.navbar ul li {
+    position: relative;
+}
+
+/* 下拉菜单容器（默认隐藏） */
+.navbar ul li ul {
+    display: none;
+    position: absolute;
+    top: 80px;          /* 与 navbar 高度一致 */
+    left: 0;
+    background: rgb(105, 14, 105);
+    min-width: 140px;
+    padding: 0;
+    margin: 0;
+    float: none;        /* 防止继承 float */
+    z-index: 999;
+}
+
+/* 下拉菜单每一项 */
+.navbar ul li ul li {
+    display: block;
+    line-height: 45px;
+    margin: 0;
+}
+
+
+
+/* 悬停 RESEARCH 显示下拉菜单 */
+.navbar ul li:hover > ul {
+    display: block;
+}
+
+/* 下拉菜单 hover 效果（可选） */
+.navbar ul li ul li a:hover {
+    background: #444;
+}
+
+
+/* 下拉菜单链接：单行 + 省略号 */
+.navbar ul li ul li a {
+    display: block;
+    max-width: 300px;          /* 可按需要调整 */
+    white-space: nowrap;       /* 不换行 */
+    overflow: hidden;          /* 隐藏超出部分 */
+    text-overflow: ellipsis;   /* 显示省略号 */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     .checkbtn{
         font-size: 30px;
@@ -213,12 +274,109 @@
         background-color: white;
         color:orangered;
     }
+    /* 【新增】 */
+.img-box{
+    position: relative;
+    width: 550px;
+    height: auto;
+    overflow: hidden;
+
+    position: relative;
+}
+
     .img-box img{
 
-        width:550px;
-    }
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0;
+    object-fit: cover;   /* 关键 */
+}
+
+
     
-    
+
+/* 【新增】 */
+.slider img{
+    width: 550px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+/* 当前显示图片 */
+.slider img.active{
+    opacity: 1;
+    position: relative;
+}
+
+/* 【新增】 */
+.img-box .nav{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 36px;
+    color: white;
+    background: rgba(0,0,0,0.4);
+    padding: 6px 12px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+
+
+/* ===== 新增：左右切换按钮 ===== */
+.img-box .prev{
+    left: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    font-size: 28px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s ease;
+}
+
+
+.img-box .next{
+    right: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    font-size: 28px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s ease;
+}
+.img-box .prev:hover,
+.img-box .next:hover{
+    background: rgba(255,69,0,0.8);
+}
+
+
+.img-box img.active{
+    opacity: 1;
+    position: relative;
+}
+
+
+
+
     
     ::-webkit-scrollbar{
         width:15px;
@@ -314,20 +472,33 @@
         box-shadow: inset 0 0 10px orangered, 0 0 10px orangered;
         transition: 0.3s ease;
     }
-    .footer ul{
-        margin-top: 0;
-        padding: 0;
-        font-size: 18;
-        line-height: 1.6;
-        margin-bottom: 0;
-        text-align: center;
-    }
-    .footer ul li a{
-        color:white;
-        border-bottom:3px solid transparent;
-        transition: 0.3s ease;
-    
-    }
+.footer ul{
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1.6;
+
+    display: flex;              /* ⭐关键 */
+    justify-content: center;    /* 水平居中 */
+    flex-wrap: nowrap;          /* 不换行 */
+    list-style: none;           /* 去掉小圆点 */
+}
+.footer ul li{
+    margin: 0 15px;             /* 每个菜单之间的距离 */
+}
+
+
+
+
+.footer ul li a{
+    color: white;
+    border-bottom: 3px solid transparent;
+    transition: 0.3s ease;
+    white-space: nowrap;        /* ⭐防止文字内部换行 */
+}
+
+
+
     .footer ul li a:hover{
         display: inline-block;
         padding: 0 15px;

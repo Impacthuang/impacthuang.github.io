@@ -12,23 +12,32 @@
 </head>
 <body>
 
-        <nav class="navbar">
-            <header class="header">
-                <a href="index.html" class="logo"><span>Impact</span>Huang</a>
-            </header>
-            <input type="checkbox" id="check">
-            <label for="check" class="checkbtn">
-                <i class="fas fa-bars"></i>
-            </label>
+<nav class="navbar">
+    <header class="header">
+        <a href="index.html" class="logo"><span>Impact</span>Huang</a>
+    </header>
 
-            <ul>
-                <li><a href="#">HOME</a></li>
-                <li><a href="members.html">MEMBERS</a></li>
-                <li><a href="research.html">RESEARCH</a></li>
-                <li><a href="publications.html">PUBLICATIONS</a></li>
-                <li><a href="downloads.html">DOWNLOADS</a></li>
+    <ul>
+        <li><a href="#">HOME</a></li>
+        <li><a href="members.html">MEMBERS</a></li>
+
+        <!-- RESEARCH 下拉菜单 -->
+        <li class="dropdown">
+            <a href="#">RESEARCH</a>
+            <ul class="dropdown-menu">
+                <li><a href="research_Constitutive modelling.html">Constitutive modelling</a></li>
+                <li><a href="research_Impact dynamics.html">Impact dynamics</a></li>
+                <li><a href="research_crystal plasticity mechanics.html">Crystal plasticity</a></li>
+                <li><a href="research_3D printing materials.html">3D printing</a></li>
+                <li><a href="research_Battery PHM.html">Battery PHM</a></li>
             </ul>
-        </nav>
+        </li>
+
+        <li><a href="publications.html">PUBLICATIONS</a></li>
+        <li><a href="downloads.html">DOWNLOADS</a></li>
+    </ul>
+</nav>
+
         <!--<a href="#" class="contact">Contact Me</a>-->
 
     <section class="home">
@@ -47,12 +56,25 @@
         </div>
         <a href="research_Constitutive modelling.html">
 
+<div class="img-box">
+    <a href="research1.html"><img src="Constitutive modelling.jpg" class="active"></a>
+    <a href="research_Impact dynamics.html"><img src="img2.jpg"></a>
+    <a href="research_Battery PHM.html"><img src="img3.jpg"></a>
+    <a href="research_Battery PHM.html"><img src="img4.jpg"></a>
+    <a href="research_crystal plasticity mechanics.html"><img src="img5.jpg"></a>
 
-        <div class="img-box">
-            <img src="Constitutive modelling.jpg" alt="Lab 22 photo">
-        </div>
-                </a>
+    <span class="nav prev">&#10094;</span>
+    <span class="nav next">&#10095;</span>
+</div>
+
+
+
+ 
     </section>
+
+
+
+
 
     <section class="about">
 
@@ -73,12 +95,7 @@
 
 
     <footer class="footer">
-        <div class="social">
-            <a href="#"><i class='bx bxl-facebook'></i></a>
-            <a href="#"><i class='bx bxl-linkedin'></i></a>
-            <a href="#"><i class='bx bxl-twitter'></i></a>
-            <a href="#"><i class='bx bxl-instagram-alt'></i></a>
-        </div>
+
 
         <ul class="list">
             <li>
@@ -99,5 +116,72 @@
         </ul>
         <p class="copyright">© 2024 Impacthuang | All Rights Reserved</p>
     </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const images = document.querySelectorAll('.img-box img');
+    const prev = document.querySelector('.img-box .prev');
+    const next = document.querySelector('.img-box .next');
+
+    let index = 0;
+    let timer = null;
+
+    // 初始化：只显示第一张
+    images.forEach((img, i) => {
+        img.classList.toggle('active', i === 0);
+    });
+
+    function showImage(i) {
+        images.forEach(img => img.classList.remove('active'));
+        images[i].classList.add('active');
+    }
+
+    function nextImage() {
+        index = (index + 1) % images.length;
+        showImage(index);
+    }
+
+    function prevImage() {
+        index = (index - 1 + images.length) % images.length;
+        showImage(index);
+    }
+
+    // 自动轮播（4 秒）
+    function startAuto() {
+        timer = setInterval(nextImage, 4000);
+    }
+
+    function stopAuto() {
+        clearInterval(timer);
+    }
+
+    startAuto();
+
+    // 手动切换
+    if (next && prev) {
+        next.addEventListener('click', function (e) {
+            e.stopPropagation();      // 防止影响图片链接
+            stopAuto();
+            nextImage();
+            startAuto();
+        });
+
+        prev.addEventListener('click', function (e) {
+            e.stopPropagation();
+            stopAuto();
+            prevImage();
+            startAuto();
+        });
+    }
+
+});
+</script>
+
+
+
 </body>
 </html>
+
+
+
