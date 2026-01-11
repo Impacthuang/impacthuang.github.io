@@ -222,9 +222,13 @@
         align-items:center;
         gap:7em;
         padding:30px 12% 0;
+
+
     }
     .home-content{
-        max-width: width 800px;
+  
+            max-width: 800px;   /* ← 修正语法 */
+     /*flex-shrink: 0;     ← 防止被压缩 */
     }
     .home-content h3{
         font-size:42px;
@@ -281,7 +285,7 @@
     width: 550px;
     height: auto;
     overflow: hidden;
-
+  flex-shrink: 0;  /*    ⭐关键：禁止 flex 压缩 */
     position: relative;
 }
 
