@@ -282,7 +282,7 @@
     /* 【新增】 */
 .img-box{
     position: relative;
-    width: 550px;
+    width: 620px;
     height: auto;
     overflow: hidden;
   flex-shrink: 0;  /*    ⭐关键：禁止 flex 压缩 */
