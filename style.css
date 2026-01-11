@@ -16,7 +16,9 @@
         display:flex;
         justify-content: space-around;
         align-items:center;
-        z-index:100;
+
+            position: relative;
+        z-index: 1000;   /* 保证导航和下拉菜单在最顶层 */
     }
     
     
@@ -123,7 +125,6 @@
     overflow: hidden;          /* 隐藏超出部分 */
     text-overflow: ellipsis;   /* 显示省略号 */
 }
-
 
 
 
