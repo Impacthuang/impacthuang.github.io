@@ -1,0 +1,9 @@
+# Local-only files — do NOT upload to GitHub Pages
+_local/
+
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
