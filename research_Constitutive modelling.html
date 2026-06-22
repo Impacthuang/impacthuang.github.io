@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Constitutive Modeling — ImpactHuang</title>
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="conferences.html">Conferences</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Constitutive Modeling</div>
+    <h1>Dynamic Constitutive Modeling</h1>
+    <p>Pioneering data-driven methods for flow stress characterization of metals under high strain-rate loading.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <div class="res-intro">
+      <span class="s-label">Research Overview</span>
+      <p>
+        The mechanical behavior of engineering materials under extreme strain rates — as encountered in impact, crash, and ballistic events — is governed by their dynamic flow stress. For decades, the Johnson-Cook (J-C) equation has been the industry standard for representing this behavior, yet its mathematical foundations have remained unexamined and its calibration from real experimental data has been fraught with ambiguities.
+      </p>
+      <p style="margin-top:14px;">
+        This research establishes a rigorous, data-driven trilogy: first <em>verifying</em> when decoupled constitutive equations are mathematically legitimate, then <em>determining</em> flow stress from varied strain-rate SHPB data, and finally <em>extending</em> the framework to the full three-dimensional (strain, strain-rate, temperature) constitutive surface. The methodology — combining SVD/CP tensor decomposition with artificial neural networks — has broad applicability beyond the J-C equation to any factorized constitutive model.
+      </p>
+    </div>
+
+    <!-- PAPER 1: Legitimacy of J-C -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Paper 1 · 2023</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.ijimpeng.2022.104453" target="_blank" rel="noopener">
+              The Legitimacy of Decoupled Dynamic Flow Stress Equations and Their Representation Based on Discrete Experimental Data
+            </a>
+          </div>
+          <div class="pb-journal"><strong>Xianglin Huang</strong>, Q.M. Li* &nbsp;·&nbsp; <em>International Journal of Impact Engineering</em>, Vol. 173, 104453 (2023)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Background &amp; Motivation</h4>
+          <p class="pb-overview">
+            The Johnson-Cook equation assumes that strain hardening, strain-rate sensitivity, and thermal softening can be separated — i.e., the dynamic flow stress is a product (or sum of products) of independent functions of each variable. While this assumption drives nearly all impact simulations globally, its mathematical validity against actual experimental data had never been systematically tested.
+          </p>
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>First rigorous mathematical framework to verify the legitimacy of decoupled (factorized) flow stress equations using matrix/tensor decomposition</li>
+            <li>SVD applied to 2D flow stress data arrays reveals when a rank-1 approximation is sufficient — the necessary condition for J-C type equations</li>
+            <li>Quantitative criterion established for measuring the validity of decoupled assumptions for any material dataset</li>
+            <li>Discrete flow stress representation method developed — avoids the need to assume a functional form</li>
+            <li>Problems inherent to the conventional J-C parameter-fitting procedure identified and clarified</li>
+            <li>Demonstrated on multiple materials: the legitimacy of decoupling varies by material and must be verified, not assumed</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/jc-legitimacy.png" alt="Legitimacy of J-C equation — SVD analysis">
+          <div class="fig-cap">SVD-based data structure analysis revealing the rank of dynamic flow stress tensors for different materials.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Xianglin Huang, Q.M. Li, "The legitimacy of decoupled dynamic flow stress equations and their representation based on discrete experimental data," <em>International Journal of Impact Engineering</em>, Vol. 173, 104453 (2023).
+        DOI: <a href="https://doi.org/10.1016/j.ijimpeng.2022.104453" target="_blank" rel="noopener">10.1016/j.ijimpeng.2022.104453</a>
+      </div>
+    </div>
+
+    <!-- PAPER 2: Part 1 Varied Strain-Rate -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Paper 2 · 2025</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.ijimpeng.2025.105403" target="_blank" rel="noopener">
+              Determination of Dynamic Flow Stress Equation Based on Discrete Experimental Data: Part 1 — Methodology and the Dependence of Dynamic Flow Stress on Strain-Rate
+            </a>
+          </div>
+          <div class="pb-journal"><strong>Xianglin Huang</strong>, Q.M. Li* &nbsp;·&nbsp; <em>International Journal of Impact Engineering</em>, Vol. 206, 105403 (2025)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Background &amp; Motivation</h4>
+          <p class="pb-overview">
+            Traditional SHPB (Split Hopkinson Pressure Bar) tests require constant strain-rate conditions, which are practically difficult to achieve. Most experimental data contains mixed-strain-rate loading histories. Conventional approaches discard this "impure" data or fit it with simplified models, discarding valuable information and introducing systematic errors.
+          </p>
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>Framework for determining dynamic flow stress directly from <em>varied</em> strain-rate SHPB data — relaxing the conventional constant-strain-rate requirement</li>
+            <li>Data qualification criteria developed to screen and validate raw SHPB experimental datasets</li>
+            <li>ANN combined with SVD to generate a finely-resolved 2D flow stress matrix from sparse experimental points</li>
+            <li>Five inherent uncertainties in conventional flow stress determination methods identified and addressed systematically</li>
+            <li>Method demonstrated to produce superior accuracy compared to conventional J-C fitting procedures</li>
+            <li>Provides both a discrete flow stress table and an equivalent analytical equation for direct use in FEM simulations</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/shpb-varied-strain-rate.png" alt="Varied strain-rate SHPB methodology">
+          <div class="fig-cap">Framework for extracting dynamic flow stress from varied strain-rate SHPB test data using ANN + SVD decomposition.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Xianglin Huang, Q.M. Li, "Determination of dynamic flow stress equation based on discrete experimental data: Part 1 Methodology and the dependence of dynamic flow stress on strain-rate," <em>International Journal of Impact Engineering</em>, Vol. 206, 105403 (2025).
+        DOI: <a href="https://doi.org/10.1016/j.ijimpeng.2025.105403" target="_blank" rel="noopener">10.1016/j.ijimpeng.2025.105403</a>
+      </div>
+    </div>
+
+    <!-- PAPER 3: Part 2 Temperature -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Paper 3 · 2025</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.ijimpeng.2025.105432" target="_blank" rel="noopener">
+              Determination of Dynamic Flow Stress Equation Based on Discrete Experimental Data: Part 2 — Dynamic Flow Stress Depending on Strain, Strain-Rate and Temperature
+            </a>
+          </div>
+          <div class="pb-journal"><strong>Xianglin Huang</strong>, Q.M. Li* &nbsp;·&nbsp; <em>International Journal of Impact Engineering</em>, Vol. 206, 105432 (2025)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Background &amp; Motivation</h4>
+          <p class="pb-overview">
+            Real impact events involve simultaneous evolution of strain, strain-rate, and temperature. Part 2 extends the methodology to the complete three-dimensional constitutive surface — the full dependence of flow stress on all three thermomechanical variables simultaneously. CP (CANDECOMP/PARAFAC) tensor decomposition generalizes the SVD approach to 3D data arrays.
+          </p>
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>Extension of the ANN+decomposition framework from 2D (strain-rate only) to 3D (strain × strain-rate × temperature)</li>
+            <li>CP (CANDECOMP/PARAFAC) decomposition applied to three-dimensional flow stress tensors</li>
+            <li>ANN used to generate a finely-resolved 3D flow stress tensor from sparse multi-temperature SHPB data</li>
+            <li>Thermal softening effect modeled with superior accuracy compared to modified Johnson-Cook approaches</li>
+            <li>Demonstrated on C54400 phosphor copper alloy across wide strain-rate and temperature ranges</li>
+            <li>Both discrete 3D constitutive tables and equivalent analytical equations derived for simulation use</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/cp-decomposition.png" alt="3D flow stress characterization">
+          <div class="fig-cap">3D flow stress surface characterization using CP tensor decomposition over strain, strain-rate, and temperature space.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Xianglin Huang, Q.M. Li, "Determination of dynamic flow stress equation based on discrete experimental data: Part 2 dynamic flow stress depending on strain, strain-rate and temperature," <em>International Journal of Impact Engineering</em>, Vol. 206, 105432 (2025).
+        DOI: <a href="https://doi.org/10.1016/j.ijimpeng.2025.105432" target="_blank" rel="noopener">10.1016/j.ijimpeng.2025.105432</a>
+      </div>
+    </div>
+
+    <!-- SIGNIFICANCE BOX -->
+    <div class="vision-block" style="margin-top:40px;">
+      <blockquote>
+        "This trilogy establishes a complete, mathematically grounded pipeline for dynamic material characterization: from verifying when empirical models are legitimate, to determining constitutive equations from realistic (non-ideal) experimental data, to fully resolving the three-dimensional mechanical response. The same ANN+SVD/CP methodology has since been extended to impact resistance prediction, demonstrating its broad applicability as a data-driven mechanics framework."
+      </blockquote>
+      <cite>— Research significance of the constitutive modeling trilogy</cite>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="#" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Research Areas</h4>
+        <ul>
+          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>

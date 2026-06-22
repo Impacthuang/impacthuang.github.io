@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impact Mechanics — ImpactHuang</title>
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="conferences.html">Conferences</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Impact Mechanics</div>
+    <h1>Surrogate Models for Ballistic Penetration</h1>
+    <p>ANN + SVD/CP data-driven surrogate models for predicting ballistic limit velocity and residual velocity, grounded in systematic experimental characterization.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <div class="res-intro">
+      <span class="s-label">Research Overview</span>
+      <p>
+        Ballistic penetration problems involve complex, multi-parameter interactions between projectile geometry, impact velocity, target thickness, and obliquity. Classical analytical models (e.g., Recht-Ipson) capture single-variable trends but fail to generalise across parameter combinations. This research develops data-driven <em>surrogate models</em> for ballistic penetration — using ANN combined with SVD/CP tensor decomposition (the same methodology established in constitutive modeling) to predict ballistic limit velocity (BLV) and residual velocity across the full multi-parameter impact space. The surrogate models are trained on experimental datasets augmented by validated FEM simulations, enabling accurate, physics-grounded predictions for protective structure design.
+      </p>
+    </div>
+
+    <!-- PAPER 1: ANN Ballistic Resistance -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Surrogate Model · Corresponding Author · 2024</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.tws.2024.112161" target="_blank" rel="noopener">
+              Determination of Ballistic Resistance Model of Finite Thickness Material Based on Artificial Neural Network
+            </a>
+          </div>
+          <div class="pb-journal">Yunfei Deng, Xiaoyue Yang, <strong>Xianglin Huang</strong>* &nbsp;·&nbsp; <em>Thin-Walled Structures</em>, Vol. 203, 112161 (2024)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>General ANN-based ballistic limit velocity (BLV) model accounting simultaneously for target thickness, impact angle, and projectile nose shape</li>
+            <li>Combines experimental data with validated FEM simulations to generate training datasets for sparse ballistic data scenarios</li>
+            <li>k-Fold cross-validation implemented for reliable model assessment with small sample sizes</li>
+            <li>SVD/CP decomposition applied to reveal decoupled relationships between BLV and independent parameters</li>
+            <li>Rank-1 decomposition achieves &lt;6% MAPE while capturing fully decoupled effects of all input variables</li>
+            <li>Equivalent analytical models derived for direct engineering application</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/ballistic-resistance.jpg" alt="ANN ballistic resistance model">
+          <div class="fig-cap">ANN-predicted ballistic limit velocity surface as a function of target thickness and impact angle.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Yunfei Deng, Xiaoyue Yang, Xianglin Huang*, "Determination of ballistic resistance model of finite thickness material based on artificial neural network," <em>Thin-Walled Structures</em>, Vol. 203, 112161 (2024).
+        DOI: <a href="https://doi.org/10.1016/j.tws.2024.112161" target="_blank" rel="noopener">10.1016/j.tws.2024.112161</a>
+      </div>
+    </div>
+
+    <!-- PAPER 2: ANN Residual Velocity -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Corresponding Author · 2025</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.tws.2025.113685" target="_blank" rel="noopener">
+              Determination of Residual Velocity Model of Finite Thickness Material Based on Artificial Neural Network
+            </a>
+          </div>
+          <div class="pb-journal">Yunfei Deng, Yixu Lv, Xiaoyue Yang, Chunzhi Du, <strong>Xianglin Huang</strong>* &nbsp;·&nbsp; <em>Thin-Walled Structures</em>, Vol. 216, 113685 (2025)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>Comprehensive ANN-based residual velocity surrogate model covering multiple impact variables: initial velocity, target thickness, impact angle, projectile nose shape</li>
+            <li>Extended dataset generated by combining experimental results with validated numerical simulations</li>
+            <li>ANN + SVD/CP decomposition framework extended from BLV surrogate to residual velocity prediction</li>
+            <li>"Safe region" and "perforating region" identified and mapped in multi-parameter impact space</li>
+            <li>Decoupled CP components physically correlated with material failure mechanisms</li>
+            <li>Outperforms classical Recht-Ipson model for multi-parameter residual velocity prediction</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/residual-velocity.jpg" alt="ANN residual velocity model">
+          <div class="fig-cap">Residual velocity surrogate model prediction surface, showing the transition from safe to perforating regime.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Yunfei Deng, Yixu Lv, Xiaoyue Yang, Chunzhi Du, Xianglin Huang*, "Determination of residual velocity model of finite thickness material based on Artificial Neural Network," <em>Thin-Walled Structures</em>, Vol. 216, 113685 (2025).
+        DOI: <a href="https://doi.org/10.1016/j.tws.2025.113685" target="_blank" rel="noopener">10.1016/j.tws.2025.113685</a>
+      </div>
+    </div>
+
+    <!-- PAPER 3: Experimental 2018 -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">First Author · 2018</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.ijimpeng.2017.12.002" target="_blank" rel="noopener">
+              Experimental Investigation on the Ballistic Resistance of Polymer-Aluminium Layered Plates
+            </a>
+          </div>
+          <div class="pb-journal"><strong>Xianglin Huang</strong>, Wei Zhang, Yunfei Deng, Xiongwen Jiang &nbsp;·&nbsp; <em>International Journal of Impact Engineering</em>, Vol. 113, pp. 212–221 (2018)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>Systematic experimental study of polymer-aluminium bi-layer protective plates against projectile impact</li>
+            <li>Comparison of polycarbonate (PC) vs. polymethyl methacrylate (PMMA) polymer layers with AA2024-T4 aluminium</li>
+            <li>Effect of projectile nose shape (blunt vs. ogival) on penetration and deformation mechanisms</li>
+            <li>Effect of polymer layer placement (impact side vs. back side) on ballistic performance</li>
+            <li>PC layers provide superior ballistic resistance improvement over PMMA; nose geometry significantly affects failure mode</li>
+            <li>Establishes the experimental dataset and design guidelines that underpin later surrogate model development</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/impact-dynamics.jpg" alt="Ballistic impact research">
+          <div class="fig-cap">Ballistic impact test setup and failure mode characterization of polymer-aluminium layered protective plates.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Xianglin Huang, Wei Zhang, Yunfei Deng, Xiongwen Jiang, "Experimental investigation on the ballistic resistance of polymer-aluminium layered plates," <em>International Journal of Impact Engineering</em>, Vol. 113, pp. 212–221 (2018).
+        DOI: <a href="https://doi.org/10.1016/j.ijimpeng.2017.12.002" target="_blank" rel="noopener">10.1016/j.ijimpeng.2017.12.002</a>
+      </div>
+    </div>
+
+    <!-- CO-AUTHORED WORKS -->
+    <div style="margin-top:48px;">
+      <span class="s-label">Additional Co-Authored Works</span>
+      <h2 class="s-title">Related Impact Mechanics Publications</h2>
+    </div>
+
+    <div class="pub-cards" style="margin-top:24px;">
+      <div class="pub-card">
+        <div class="pc-year">2024</div>
+        <div class="pc-body">
+          <div class="pc-title">
+            <a href="https://doi.org/10.1016/j.ijmecsci.2024.109382" target="_blank" rel="noopener">
+              Multiscale Modeling for the Impact Behavior of 3D Angle-Interlock Woven Composites
+            </a>
+          </div>
+          <div class="pc-authors">Hongjian Wei, <strong>Xianglin Huang</strong>, Wenbo Xie, Xiongwen Jiang, Geng Zhao, Wei Zhang*</div>
+          <div class="pc-journal">International Journal of Mechanical Sciences, Vol. 276, 109382</div>
+          <div class="pc-tags"><span class="badge">IJMS Q1</span></div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pc-year">2022</div>
+        <div class="pc-body">
+          <div class="pc-title">
+            <a href="https://doi.org/10.1016/j.ijimpeng.2021.104083" target="_blank" rel="noopener">
+              Experimental and Numerical Study on the Ballistic Resistance of 6061-T651 Aluminium Alloy Thin Plates Struck by Different Nose Shapes of Projectiles
+            </a>
+          </div>
+          <div class="pc-authors">Yunfei Deng, Huapeng Wu, Yong Zhang*, <strong>Xianglin Huang</strong>, Xinke Xiao, Yuhan Lv</div>
+          <div class="pc-journal">International Journal of Impact Engineering, Vol. 160, 104083</div>
+          <div class="pc-tags"><span class="badge">IJIE Q1</span></div>
+        </div>
+      </div>
+      <div class="pub-card">
+        <div class="pc-year">2016–2017</div>
+        <div class="pc-body">
+          <div class="pc-title">Sandwich structures and underwater impulsive loading (3 papers)</div>
+          <div class="pc-authors">Wei Huang*, Wei Zhang*, Ye Nan, <strong>Xianglin Huang</strong>, et al.</div>
+          <div class="pc-journal">International Journal of Impact Engineering, Vol. 94, 109; AIP Conference Proceedings, 1793</div>
+          <div class="pc-tags"><span class="badge">IJIE Q1</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="#" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Research Areas</h4>
+        <ul>
+          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
