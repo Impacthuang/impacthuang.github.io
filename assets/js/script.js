@@ -29,4 +29,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  /* ── Activity photo lightbox ── */
+  var lb     = document.getElementById('lb');
+  var lbImg  = document.getElementById('lb-img');
+  var lbClose = document.getElementById('lb-close');
+
+  if (lb && lbImg) {
+    document.querySelectorAll('.act-photo img').forEach(function (img) {
+      img.addEventListener('click', function () {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lb.classList.add('open');
+      });
+    });
+
+    function closeLb() { lb.classList.remove('open'); lbImg.src = ''; }
+    if (lbClose) lbClose.addEventListener('click', closeLb);
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
+  }
+
 });
