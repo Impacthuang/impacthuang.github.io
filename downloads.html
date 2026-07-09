@@ -1,71 +1,116 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset = 'UTF-8'>
-        <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-        <title>Impacthuang Lab</title>
-        <link rel="stylesheet" href="assets/css/style-publications.css">
-
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-          <!-- Font Awesome Link for Icons -->
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Downloads — ImpactHuang</title>
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
-
 <nav class="navbar">
-    <header class="header">
-        <a href="index.html" class="logo"><span>Impact</span>Huang</a>
-    </header>
-
-    <ul>
-        <li><a href="index.html">HOME</a></li>
-        <li><a href="members.html">MEMBERS</a></li>
-
-        <!-- RESEARCH ä¸‹æ‹‰èœå• -->
-        <li class="dropdown">
-            <a href="research.html">RESEARCH</a>
-            <ul class="dropdown-menu">
-                 <li><a href="research_Battery PHM.html">Battery PHM</a></li>
-                <li><a href="research_Constitutive modelling.html">Constitutive modelling</a></li>
-                <li><a href="research_Impact dynamics.html">Impact dynamics</a></li>
-                <li><a href="research_crystal plasticity mechanics.html">Crystal plasticity</a></li>
-                <li><a href="research_3D printing materials.html">3D printing</a></li>
-
-            </ul>
-        </li>
-
-        <li><a href="publications.html">PUBLICATIONS</a></li>
-        <li><a href="downloads.html">DOWNLOADS</a></li>
-    </ul>
-</nav>
-        <!--<a href="#" class="contact">Contact Me</a>-->
-
-    <section class="members">
-
-        <div class="title"> Members</div>
-
-        <div class="member"><a href="members_Huang.html">To be continued</a></div>
-
-
-    </section>
-    
-
-
-
-
-        <footer class="footer">
-        <ul class="list">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="members.html">Members</a></li>
-            <li><a href="research.html">Research</a></li>
-            <li><a href="publications.html">Publications</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="mailto:xianglin.huang@kaist.ac.kr">Contact</a></li>
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
         </ul>
-        <p class="copyright">&copy; 2024 Impacthuang | All Rights Reserved</p>
-    </footer>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="conferences.html">Conferences</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span>Downloads</div>
+    <h1>Downloads</h1>
+    <p>Technical notes, worked examples, and supplementary materials from our research on data-driven constitutive modeling — released progressively alongside ongoing work and publications.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <div class="dl-list">
+
+      <div class="dl-item">
+        <div class="dl-icon"><i class="fas fa-file-alt"></i></div>
+        <div class="dl-body">
+          <div class="dl-tags">
+            <span class="tag tag-accent">Tensor Decomposition</span>
+            <span class="badge">Technical Note</span>
+          </div>
+          <div class="dl-title">Mathematical Principles of Non-negative CP Decomposition</div>
+          <div class="dl-desc">A self-contained technical note deriving the mathematical principles of non-negative CP (CANDECOMP/PARAFAC) tensor decomposition, including the underlying optimization formulation and worked numerical examples — the methodological foundation behind our tensor-based dynamic flow stress modeling framework.</div>
+          <div class="dl-meta">Jul 2026 &nbsp;·&nbsp; PDF</div>
+        </div>
+        <div class="dl-actions">
+          <a href="docs/EN_Mathematical%20Principles_Non-negative%20CP%20Decomposition.pdf" class="btn btn-primary" download><i class="fas fa-file-pdf"></i> PDF</a>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="dl-note">More technical notes, datasets, and supplementary materials accompanying our journal publications will be added here over time.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="#" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
 </body>
 </html>
-
