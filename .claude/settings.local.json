@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls _pages)",
+      "Bash(ls _data)",
+      "Bash(timeout 180 tail -f \"C:\\\\Users\\\\shori\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Github-Impacthuang-web-impacthuang-github-io\\\\e0dfb922-a592-4a6a-979a-141bbdb30093\\\\tasks\\\\ac6a423074bca3ab3.output\")"
+    ]
+  }
+}
