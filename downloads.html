@@ -27,11 +27,16 @@
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
-      <li><a href="notes.html">Notes</a></li>
-      <li><a href="members.html">Members</a></li>
-      <li><a href="conferences.html">Conferences</a></li>
-      <li><a href="activities.html">Activities</a></li>
-      <li><a href="downloads.html">Downloads</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
@@ -41,34 +46,20 @@
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span>Downloads</div>
     <h1>Downloads</h1>
-    <p>Technical notes, worked examples, and supplementary materials from our research on data-driven constitutive modeling — released progressively alongside ongoing work and publications.</p>
+    <p>Datasets and supplementary materials accompanying our publications, released progressively as the underlying work is completed. Explanatory material is published as web pages under <a href="notes.html">Technical Notes &amp; Glossary</a>.</p>
   </div>
 </div>
 
-<section class="section">
+<section class="section alt">
   <div class="container">
 
-    <div class="dl-list">
-
-      <div class="dl-item">
-        <div class="dl-icon"><i class="fas fa-book-open"></i></div>
-        <div class="dl-body">
-          <div class="dl-tags">
-            <span class="tag tag-accent">Tensor Decomposition</span>
-            <span class="badge">Technical Note</span>
-          </div>
-          <div class="dl-title">Mathematical Principles of Non-negative CP Decomposition</div>
-          <div class="dl-desc">A self-contained technical note deriving the mathematical principles of non-negative CP (CANDECOMP/PARAFAC) tensor decomposition, including the underlying optimization formulation and worked numerical examples. This is the methodological foundation of the TEDI-FS framework (<a href="research_Constitutive modelling.html#tedi-fs">IJIE, accepted 2026</a>). It is now published as a web page rather than a download, so the equations render directly in the browser.</div>
-          <div class="dl-meta">Jul 2026 &nbsp;·&nbsp; Web page</div>
-        </div>
-        <div class="dl-actions">
-          <a href="note_nncp.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Read</a>
-        </div>
-      </div>
-
+    <div class="dl-empty">
+      <div class="dl-empty-icon"><i class="fas fa-folder-open"></i></div>
+      <div class="dl-empty-title">No files are available for download yet</div>
+      <p class="dl-empty-text">Datasets and supplementary materials accompanying our journal publications will be added here as the underlying work is completed. Until then, requests for data supporting a published paper are welcome by <a href="contact.html">email</a>.</p>
+      <p class="dl-empty-text">Explanatory and tutorial material is not distributed as files. It is published directly on the web under <a href="notes.html">Technical Notes &amp; Glossary</a>, where the equations render in the browser.</p>
+      <a href="notes.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Technical Notes &amp; Glossary</a>
     </div>
-
-    <p class="dl-note">Explanatory material of this kind now lives under <a href="notes.html">Technical Notes &amp; Glossary</a>. Datasets and supplementary materials accompanying our journal publications will be added to this page over time.</p>
   </div>
 </section>
 
@@ -114,5 +105,6 @@
 </footer>
 
 <script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
 </body>
 </html>

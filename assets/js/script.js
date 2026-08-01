@@ -21,11 +21,40 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  /* ── Highlight active nav link based on current page ── */
-  var current = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links > li > a').forEach(function (a) {
-    if (a.getAttribute('href') === current) {
-      a.classList.add('active');
+  /* ── "More" dropdown: click and keyboard toggle (hover covers the pointer case) ── */
+  document.querySelectorAll('.nav-more').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var li = btn.parentElement;
+      var open = li.classList.toggle('dd-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  function closeDropdowns() {
+    document.querySelectorAll('.nav-links > li.dd-open').forEach(function (li) {
+      li.classList.remove('dd-open');
+      var b = li.querySelector('.nav-more');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  }
+  document.addEventListener('click', closeDropdowns);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeDropdowns();
+  });
+
+  /* ── Highlight active nav link based on current page ──
+     Filenames with a space arrive percent-encoded in the path, so decode
+     before comparing against the raw href. A match inside a dropdown also
+     lights up its parent. */
+  var current = decodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+  document.querySelectorAll('.nav-links > li').forEach(function (li) {
+    var hit = false;
+    li.querySelectorAll('a').forEach(function (a) {
+      if (a.getAttribute('href') === current) { a.classList.add('active'); hit = true; }
+    });
+    if (hit) {
+      var top = li.querySelector(':scope > a, :scope > .nav-more');
+      if (top) top.classList.add('active');
     }
   });
 

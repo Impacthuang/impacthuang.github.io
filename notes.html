@@ -28,11 +28,16 @@
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
-      <li><a href="notes.html">Notes</a></li>
-      <li><a href="members.html">Members</a></li>
-      <li><a href="conferences.html">Conferences</a></li>
-      <li><a href="activities.html">Activities</a></li>
-      <li><a href="downloads.html">Downloads</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
@@ -42,12 +47,49 @@
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span>Notes</div>
     <h1>Technical Notes &amp; Glossary</h1>
-    <p>Longer explanations of the methods behind the research, and short definitions of the terminology used across this site.</p>
+    <p>A short primer on what the field is about, longer explanations of the methods behind the research, and definitions of the terminology used across this site.</p>
   </div>
 </div>
 
-<!-- TECHNICAL NOTES -->
+<!-- FIELD PRIMER -->
 <section class="section">
+  <div class="container">
+    <span class="s-label">Start here</span>
+    <h2 class="s-title">What This Field Is About</h2>
+    <div class="s-bar"></div>
+    <p class="s-sub" style="margin-bottom:34px;">Two diagrams that place the work in context, for readers coming from outside impact mechanics. Both are taken from the PhD thesis behind the constitutive modeling stream.</p>
+
+    <div class="fp-block">
+      <figure class="fp-fig">
+        <img src="assets/img/scicomm/simulation-anatomy.png" alt="Diagram showing the three parts of a numerical simulation: geometric representation, constitutive equation, and physical principles, with the flow stress equation highlighted inside the constitutive branch.">
+        <figcaption><strong>Figure 1.</strong> The three parts of a numerical simulation of a metal structure under impact, with the flow stress equation highlighted. Reproduced from the author's PhD thesis, Fig. 1-1.</figcaption>
+      </figure>
+      <div class="fp-text">
+        <h3>Where the uncertainty actually sits</h3>
+        <p>Any simulation of a metal structure under impact rests on three things: a geometric representation of the part, the physical conservation laws, and a constitutive equation describing how the material itself responds. The first two are mature and largely settled. The third is not.</p>
+        <p>Inside the constitutive branch, the shaded box is the <a href="#flow-stress" class="term">flow stress</a> equation, which sets the stress at which the metal yields and keeps deforming as a function of strain, <a href="#strain-rate" class="term">strain rate</a>, and temperature. In practice it is the largest single error source in an otherwise well-posed impact simulation. That is the reason this equation, rather than the solver or the mesh, is the subject of the constitutive modeling work on this site.</p>
+      </div>
+    </div>
+
+    <div class="fp-block fp-rev">
+      <figure class="fp-fig">
+        <img src="assets/img/scicomm/flow-stress-methods.png" alt="Diagram comparing three routes from characterized material data to a flow stress equation: the conventional fitted-equation route, the machine learning route, and the discrete-data route with data screening and SVD/CP decomposition.">
+        <figcaption><strong>Figure 2.</strong> Three routes from measured material data to a usable flow stress equation. The shaded branch on the right is the route developed in the thesis. Reproduced from the author's PhD thesis, Fig. 1-3.</figcaption>
+      </figure>
+      <div class="fp-text">
+        <h3>Three ways to get from data to an equation</h3>
+        <p>The conventional route on the left picks a fixed formula in advance, the <a href="#johnson-cook" class="term">Johnson-Cook model</a> being the usual choice, and fits its constants to the measurements. It is fast and every solver accepts it, but the form of the equation is decided before the data is looked at, so whatever the material does that the formula cannot express is lost.</p>
+        <p>The machine learning route in the middle drops the fixed form and trains a network directly on the data. It fits well inside the tested range and gives little confidence outside it, which is exactly where impact problems live.</p>
+        <p>The third route keeps the discrete data as the primary object. Measurements are first screened for validity, then <a href="#svd" class="term">SVD</a> or <a href="#cp-decomposition" class="term">CP decomposition</a> is used to separate the underlying structure from the noise, and an <a href="#ann" class="term">artificial neural network</a> handles the non-ideal data whose strain rate was never really constant. This is the line of work that became <a href="#tedi-fs" class="term">TEDI-FS</a>, described on the <a href="research_Constitutive modelling.html">constitutive modeling</a> page.</p>
+      </div>
+    </div>
+
+    <p class="fp-src">Source: Xianglin Huang, <em>Determination of dynamic flow stress equation based on discrete material data</em>, PhD thesis, Department of Mechanical and Aerospace Engineering, The University of Manchester, 2024. Supervisor: Prof. Q.M. Li.</p>
+  </div>
+</section>
+
+<!-- TECHNICAL NOTES -->
+<section class="section alt">
   <div class="container">
     <span class="s-label">Long-form</span>
     <h2 class="s-title">Technical Notes</h2>
@@ -81,7 +123,7 @@
 </section>
 
 <!-- GLOSSARY -->
-<section class="section alt">
+<section class="section">
   <div class="container">
     <span class="s-label">Terminology</span>
     <h2 class="s-title">Glossary</h2>
@@ -289,5 +331,6 @@
 </footer>
 
 <script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
 </body>
 </html>

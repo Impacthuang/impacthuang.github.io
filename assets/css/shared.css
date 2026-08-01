@@ -107,6 +107,21 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .nav-links > li > a:hover,
 .nav-links > li > a.active { color: #fff; background: rgba(255,255,255,.10); }
 
+/* "More" opens a dropdown but has no page of its own, so it is a button
+   dressed to match the top-level links. */
+.nav-more {
+  display: flex; align-items: center; gap: 6px;
+  font-family: inherit; font-size: 13.5px; font-weight: 600; letter-spacing: .4px;
+  line-height: 1.65; color: rgba(255,255,255,.80);
+  padding: 8px 13px; border-radius: 5px;
+  background: none; border: none; cursor: pointer; transition: var(--t);
+}
+.nav-more i { font-size: 9px; opacity: .65; transition: var(--t); }
+.nav-more:hover,
+.nav-more.active { color: #fff; background: rgba(255,255,255,.10); }
+.nav-links > li:hover > .nav-more i,
+.nav-links > li.dd-open > .nav-more i { transform: rotate(180deg); }
+
 /* Dropdown */
 .dd-menu {
   position: absolute; top: calc(100% + 4px); left: 0;
@@ -122,8 +137,11 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .dd-menu::before {
   content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px;
 }
+/* the last item would otherwise run off the right edge */
+.dd-menu.dd-right { left: auto; right: 0; }
 .nav-links > li:hover > .dd-menu,
-.nav-links > li:focus-within > .dd-menu {
+.nav-links > li:focus-within > .dd-menu,
+.nav-links > li.dd-open > .dd-menu {
   opacity: 1; visibility: visible; transform: translateY(0);
   transition: opacity .16s ease, transform .16s ease, visibility 0s;
 }
@@ -151,6 +169,8 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .page-header .bc span { margin: 0 6px; }
 .page-header h1 { font-size: 38px; font-weight: 800; color: #fff; line-height: 1.15; }
 .page-header p  { font-size: 16px; color: rgba(255,255,255,.58); margin-top: 10px; max-width: 560px; line-height: 1.6; }
+.page-header p a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); transition: var(--t); }
+.page-header p a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ======================================================
    HOME — HERO
@@ -259,6 +279,21 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .dl-meta { font-size: 12.5px; color: var(--muted); }
 .dl-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; min-width: 108px; }
 .dl-note { margin-top: 20px; font-size: 13.5px; color: var(--muted); font-style: italic; }
+
+.dl-empty {
+  margin-top: 32px; text-align: center;
+  background: #fff; border: 1px dashed var(--border); border-radius: var(--r-lg);
+  padding: 54px 32px 46px;
+}
+.dl-empty-icon { font-size: 30px; color: var(--accent); opacity: .55; margin-bottom: 16px; }
+.dl-empty-title { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+.dl-empty-text {
+  font-size: 14.5px; color: var(--muted); line-height: 1.72;
+  max-width: 620px; margin: 0 auto 12px;
+}
+.dl-empty-text a { color: var(--link); font-weight: 600; border-bottom: 1px solid rgba(37,99,235,.35); transition: var(--t); }
+.dl-empty-text a:hover { color: var(--link-h); border-bottom-color: var(--link-h); }
+.dl-empty .btn { margin-top: 14px; }
 
 /* ─── HOME — TEACHING ─── */
 .course-list { display: flex; flex-direction: column; gap: 24px; margin-top: 32px; }
@@ -700,6 +735,67 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 }
 .term:hover { color: var(--link-h); background: rgba(37,99,235,.08); border-bottom-style: solid; }
 
+/* ─── Hover preview card, built by assets/js/glossary.js ─── */
+.tt {
+  position: absolute; z-index: 950; width: 330px; max-width: calc(100vw - 24px);
+  background: #fff; border: 1px solid var(--border); border-radius: var(--r);
+  border-top: 3px solid var(--accent);
+  box-shadow: 0 12px 34px rgba(11,28,52,.16);
+  padding: 16px 18px 14px;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity .16s ease, transform .16s ease;
+  pointer-events: none;
+}
+.tt.on { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+.tt::before {
+  content: ''; position: absolute; left: var(--arrow, 50%); margin-left: -7px; top: -7px;
+  width: 12px; height: 12px; background: #fff;
+  border-left: 1px solid var(--border); border-top: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+.tt.tt-above::before { top: auto; bottom: -7px; transform: rotate(225deg); }
+.tt-term { font-size: 15px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+.tt-full { font-size: 12.5px; font-style: italic; color: var(--muted); margin-top: 3px; line-height: 1.45; }
+.tt-tip { font-size: 13.5px; color: var(--text); line-height: 1.62; margin-top: 10px; }
+.tt-tip sup { font-size: .72em; }
+.tt-more {
+  display: inline-block; margin-top: 12px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .3px;
+  color: var(--accent); transition: var(--t);
+}
+.tt-more i { font-size: 10px; margin-left: 4px; transition: var(--t); }
+.tt-more:hover { color: var(--accent-h); }
+.tt-more:hover i { transform: translateX(3px); }
+
+/* ─── Hub: field primer (thesis figures + plain-language text) ─── */
+.fp-block {
+  display: grid; grid-template-columns: 1.15fr 1fr; gap: 34px; align-items: center;
+  padding: 30px 0; border-top: 1px solid var(--border);
+}
+.fp-block:first-of-type { border-top: none; padding-top: 0; }
+.fp-rev .fp-fig  { order: 2; }
+.fp-rev .fp-text { order: 1; }
+.fp-fig { margin: 0; }
+.fp-fig img {
+  display: block; width: 100%; height: auto;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--r);
+  padding: 12px;
+}
+.fp-fig figcaption { font-size: 12.5px; color: var(--muted); line-height: 1.6; margin-top: 12px; }
+.fp-fig figcaption strong { color: var(--navy); font-weight: 700; }
+.fp-text h3 {
+  font-size: 18px; font-weight: 700; color: var(--navy);
+  line-height: 1.3; margin-bottom: 12px;
+}
+.fp-text p { font-size: 14.5px; color: var(--muted); line-height: 1.78; margin-bottom: 12px; }
+.fp-text p:last-child { margin-bottom: 0; }
+.fp-text p a:not(.term) { color: var(--link); font-weight: 600; transition: var(--t); }
+.fp-text p a:not(.term):hover { color: var(--link-h); }
+.fp-src {
+  margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--border);
+  font-size: 12.5px; color: var(--muted); line-height: 1.65;
+}
+
 /* ─── Hub: long-form note cards ─── */
 .note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 .note-card {
@@ -759,7 +855,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .na-body h2:first-child { margin-top: 0; }
 .na-body h3 { font-size: 16.5px; font-weight: 700; color: var(--navy); margin: 26px 0 10px; }
 .na-body p  { font-size: 15.5px; line-height: 1.78; margin-bottom: 14px; }
-.na-body ul, .na-body ol { margin: 0 0 16px 0; padding-left: 0; }
+.na-body ul, .na-body ol { margin: 0 0 16px 0; padding-left: 0; list-style: none; }
 .na-body li { font-size: 15px; line-height: 1.72; padding: 4px 0 4px 22px; position: relative; }
 .na-body ul > li::before { content: '·'; position: absolute; left: 6px; color: var(--accent); font-weight: 800; }
 .na-body ol { counter-reset: na-ol; }
@@ -800,7 +896,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .na-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
 .na-table caption { caption-side: bottom; font-size: 13px; color: var(--muted); padding-top: 10px; text-align: left; }
 
-.na-refs { margin: 0; padding-left: 0; counter-reset: na-ref; }
+.na-refs { margin: 0; padding-left: 0; list-style: none; counter-reset: na-ref; }
 .na-refs li {
   counter-increment: na-ref; font-size: 14px; line-height: 1.66;
   padding: 7px 0 7px 30px; position: relative; color: var(--text);
@@ -820,8 +916,28 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
     border-top: 1px solid rgba(255,255,255,.08);
     max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
   }
+  .nav-links.open > li { width: 100%; }
   .nav-links.open > li > a { font-size: 15px; padding: 11px 13px; }
-  .dd-menu { display: none !important; }
+
+  /* No hover on a phone, so dropdown children flatten into an indented
+     sublist instead of staying behind a hover that never happens. */
+  .nav-links.open .dd-menu {
+    position: static; opacity: 1; visibility: visible; transform: none; transition: none;
+    background: none; border: none; box-shadow: none;
+    min-width: 0; margin: 2px 0 6px 14px; padding: 0 0 0 12px;
+    border-left: 2px solid rgba(255,255,255,.14);
+  }
+  .nav-links.open .dd-menu::before { display: none; }
+  .nav-links.open .dd-menu a { font-size: 14px; padding: 9px 12px; }
+  /* "More" is only a grouping label once the menu is already flattened */
+  .nav-links.open .nav-more {
+    width: 100%; cursor: default;
+    font-size: 11.5px; letter-spacing: 1.2px; text-transform: uppercase;
+    color: rgba(255,255,255,.42); padding: 14px 13px 4px;
+  }
+  .nav-links.open .nav-more:hover,
+  .nav-links.open .nav-more.active { background: none; color: rgba(255,255,255,.42); }
+  .nav-links.open .nav-more i { display: none; }
 
   .hero .hi      { flex-direction: column-reverse; gap: 32px; text-align: center; }
   .hero-content h1 { font-size: 40px; }
@@ -847,6 +963,9 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   .collab-grid        { grid-template-columns: 1fr 1fr; }
   .dl-item            { flex-direction: column; }
   .dl-actions         { flex-direction: row; min-width: 0; }
+  .fp-block           { grid-template-columns: 1fr; gap: 22px; }
+  .fp-rev .fp-fig     { order: 1; }
+  .fp-rev .fp-text    { order: 2; }
   .na-wrap            { grid-template-columns: 1fr; gap: 28px; }
   .na-toc             { position: static; }
 }
