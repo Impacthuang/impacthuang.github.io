@@ -22,8 +22,8 @@
         <a href="research.html">Research</a>
         <ul class="dd-menu">
           <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
-          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
           <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
@@ -39,8 +39,8 @@
 <div class="page-header">
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Impact Mechanics</div>
-    <h1>Impact Mechanics &amp; Ballistic Performance</h1>
-    <p>From ballistic penetration of metals and composites to energy-absorbing sandwich structures: experimental characterization, damage modeling, and ANN + SVD/CP surrogate models for predicting ballistic limit and residual velocity.</p>
+    <h1>Impact Mechanics &amp; Structural Response</h1>
+    <p>The experimental foundation of the research programme: high-velocity impact of metals and composites, energy-absorbing sandwich structures, damage modeling, and ANN + SVD/CP surrogate models for critical perforation velocity and residual velocity. This is also where new directions are opened.</p>
   </div>
 </div>
 
@@ -50,14 +50,14 @@
     <div class="res-intro">
       <span class="s-label">Research Overview</span>
       <p>
-        Ballistic penetration problems involve complex, multi-parameter interactions between projectile geometry, impact velocity, target thickness, and obliquity. Classical analytical models (e.g., Recht-Ipson) capture single-variable trends but fail to generalise across parameter combinations. This research develops data-driven <em>surrogate models</em> for ballistic penetration — using ANN combined with SVD/CP tensor decomposition (the same methodology established in constitutive modeling) to predict ballistic limit velocity (BLV) and residual velocity across the full multi-parameter impact space. The surrogate models are trained on experimental datasets augmented by validated FEM simulations, enabling accurate, physics-grounded predictions for protective structure design.
+        High-velocity impact problems involve complex, multi-parameter interactions between impactor geometry, impact velocity, plate thickness, and obliquity. Classical analytical models (e.g., Recht-Ipson) capture single-variable trends but fail to generalise across parameter combinations. This research develops data-driven <em>surrogate models</em> for high-velocity impact — using ANN combined with SVD/CP tensor decomposition (the same methodology established in constitutive modeling) to predict critical perforation velocity and residual velocity across the full multi-parameter impact space. The surrogate models are trained on experimental datasets augmented by validated FEM simulations, enabling accurate, physics-grounded predictions for impact-resistant structure design.
       </p>
       <p>
-        The surrogate modeling work rests on a decade of hands-on impact mechanics research spanning three material systems. First, ballistic penetration of metallic and layered targets: perforation of 6061-T651 aluminium plates by projectiles of different nose shapes, and polymer-aluminium layered plates under high-velocity impact (first-authored in IJIE, 2018). Second, impact behavior of textile composites: multiscale modeling of 3D angle-interlock woven composites under impact and mesoscale damage modeling of 3D woven composites incorporating plasticity and fiber misalignment. Third, structural crashworthiness and energy absorption: the dynamic response of clamped plates and corrugated-core and PVC-foam-core sandwich structures under underwater impulsive loading, work that began during the master's period at Harbin Institute of Technology and produced three IJIE papers (2016–2017). Together these threads cover the target side, the material side, and the structure side of impact protection.
+        The surrogate modeling work rests on a decade of hands-on impact mechanics research spanning three material systems. First, high-velocity impact of metallic and layered plates: perforation of 6061-T651 aluminium plates by impactors of different nose shapes, and polymer-aluminium layered plates under high-velocity impact (first-authored in IJIE, 2018). Second, impact behavior of textile composites: multiscale modeling of 3D angle-interlock woven composites under impact and mesoscale damage modeling of 3D woven composites incorporating plasticity and fiber misalignment. Third, structural crashworthiness and energy absorption: the dynamic response of clamped plates and corrugated-core and PVC-foam-core sandwich structures under underwater impulsive loading, work that began during the master's period at Harbin Institute of Technology and produced three IJIE papers (2016–2017). Together these threads cover the plate side, the material side, and the structure side of impact resistance.
       </p>
     </div>
 
-    <!-- PAPER 1: ANN Ballistic Resistance -->
+    <!-- PAPER 1: ANN Impact Resistance -->
     <div class="paper-block">
       <div class="pb-header">
         <div class="pb-num">Surrogate Model · Corresponding Author · 2024</div>
@@ -74,17 +74,17 @@
         <div class="pb-content">
           <h4>Key Contributions</h4>
           <ul class="pb-highlights">
-            <li>General ANN-based ballistic limit velocity (BLV) model accounting simultaneously for target thickness, impact angle, and projectile nose shape</li>
-            <li>Combines experimental data with validated FEM simulations to generate training datasets for sparse ballistic data scenarios</li>
+            <li>General ANN-based critical perforation velocity model accounting simultaneously for plate thickness, impact angle, and impactor nose shape</li>
+            <li>Combines experimental data with validated FEM simulations to generate training datasets for sparse high-velocity impact data scenarios</li>
             <li>k-Fold cross-validation implemented for reliable model assessment with small sample sizes</li>
-            <li>SVD/CP decomposition applied to reveal decoupled relationships between BLV and independent parameters</li>
+            <li>SVD/CP decomposition applied to reveal decoupled relationships between the critical perforation velocity and independent parameters</li>
             <li>Rank-1 decomposition achieves &lt;6% MAPE while capturing fully decoupled effects of all input variables</li>
             <li>Equivalent analytical models derived for direct engineering application</li>
           </ul>
         </div>
         <div class="pb-figure">
-          <img src="assets/img/research/ballistic-resistance.jpg" alt="ANN ballistic resistance model">
-          <div class="fig-cap">ANN-predicted ballistic limit velocity surface as a function of target thickness and impact angle.</div>
+          <img src="assets/img/research/impact-resistance.jpg" alt="ANN impact resistance model">
+          <div class="fig-cap">ANN-predicted critical perforation velocity surface as a function of plate thickness and impact angle.</div>
         </div>
       </div>
       <div class="pb-cite">
@@ -110,9 +110,9 @@
         <div class="pb-content">
           <h4>Key Contributions</h4>
           <ul class="pb-highlights">
-            <li>Comprehensive ANN-based residual velocity surrogate model covering multiple impact variables: initial velocity, target thickness, impact angle, projectile nose shape</li>
+            <li>Comprehensive ANN-based residual velocity surrogate model covering multiple impact variables: initial velocity, plate thickness, impact angle, impactor nose shape</li>
             <li>Extended dataset generated by combining experimental results with validated numerical simulations</li>
-            <li>ANN + SVD/CP decomposition framework extended from BLV surrogate to residual velocity prediction</li>
+            <li>ANN + SVD/CP decomposition framework extended from the critical perforation velocity surrogate to residual velocity prediction</li>
             <li>"Safe region" and "perforating region" identified and mapped in multi-parameter impact space</li>
             <li>Decoupled CP components physically correlated with material failure mechanisms</li>
             <li>Outperforms classical Recht-Ipson model for multi-parameter residual velocity prediction</li>
@@ -146,17 +146,17 @@
         <div class="pb-content">
           <h4>Key Contributions</h4>
           <ul class="pb-highlights">
-            <li>Systematic experimental study of polymer-aluminium bi-layer protective plates against projectile impact</li>
+            <li>Systematic experimental study of polymer-aluminium bi-layer plates under high-velocity impact</li>
             <li>Comparison of polycarbonate (PC) vs. polymethyl methacrylate (PMMA) polymer layers with AA2024-T4 aluminium</li>
-            <li>Effect of projectile nose shape (blunt vs. ogival) on penetration and deformation mechanisms</li>
-            <li>Effect of polymer layer placement (impact side vs. back side) on ballistic performance</li>
-            <li>PC layers provide superior ballistic resistance improvement over PMMA; nose geometry significantly affects failure mode</li>
+            <li>Effect of impactor nose shape (blunt vs. ogival) on perforation and deformation mechanisms</li>
+            <li>Effect of polymer layer placement (impact side vs. back side) on impact resistance</li>
+            <li>PC layers provide superior impact resistance improvement over PMMA; nose geometry significantly affects failure mode</li>
             <li>Establishes the experimental dataset and design guidelines that underpin later surrogate model development</li>
           </ul>
         </div>
         <div class="pb-figure">
-          <img src="assets/img/research/impact-dynamics.jpg" alt="Ballistic impact research">
-          <div class="fig-cap">Ballistic impact test setup and failure mode characterization of polymer-aluminium layered protective plates.</div>
+          <img src="assets/img/research/impact-dynamics.jpg" alt="High-velocity impact research">
+          <div class="fig-cap">High-velocity impact test setup and failure mode characterization of polymer-aluminium layered plates.</div>
         </div>
       </div>
       <div class="pb-cite">
@@ -222,6 +222,43 @@
       </div>
     </div>
 
+    <!-- ONGOING DIRECTIONS -->
+    <div style="margin-top:48px;">
+      <span class="s-label">In Progress</span>
+      <h2 class="s-title">Ongoing Directions</h2>
+      <p style="color:var(--muted); line-height:1.75; max-width:820px; margin-top:10px;">
+        Alongside the published work, several directions are currently being explored with collaborators and their graduate students. None of them has been published yet, and they are listed here as an honest picture of where the experimental work is heading rather than as results. Each one builds experience and data that can be taken further by a future research group.
+      </p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:24px;">
+
+      <div style="background:#fff; border:1px solid var(--border); border-left:4px solid var(--navy); border-radius:10px; padding:20px 22px;">
+        <div style="font-size:11.5px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">In progress</div>
+        <div style="font-weight:700; color:var(--navy); margin-bottom:8px;">Impact Response of 3D-Printed Materials</div>
+        <div style="font-size:14.5px; color:var(--muted); line-height:1.7;">How print parameters and build orientation govern the dynamic response of additively manufactured specimens under impact loading.</div>
+      </div>
+
+      <div style="background:#fff; border:1px solid var(--border); border-left:4px solid var(--navy); border-radius:10px; padding:20px 22px;">
+        <div style="font-size:11.5px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">In progress</div>
+        <div style="font-weight:700; color:var(--navy); margin-bottom:8px;">Energy Absorption of Lattice Materials</div>
+        <div style="font-size:14.5px; color:var(--muted); line-height:1.7;">Crushing behavior and energy absorption efficiency of architected lattice structures under dynamic compression.</div>
+      </div>
+
+      <div style="background:#fff; border:1px solid var(--border); border-left:4px solid var(--navy); border-radius:10px; padding:20px 22px;">
+        <div style="font-size:11.5px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">In progress</div>
+        <div style="font-weight:700; color:var(--navy); margin-bottom:8px;">Anisotropy of Metals</div>
+        <div style="font-size:14.5px; color:var(--muted); line-height:1.7;">Direction-dependent plastic response of rolled metals and what it implies for constitutive models that assume isotropy.</div>
+      </div>
+
+      <div style="background:#fff; border:1px solid var(--border); border-left:4px solid var(--navy); border-radius:10px; padding:20px 22px;">
+        <div style="font-size:11.5px; font-weight:700; letter-spacing:1.1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px;">In progress</div>
+        <div style="font-weight:700; color:var(--navy); margin-bottom:8px;">Prestress Effects on Impact Damage of Ceramics</div>
+        <div style="font-size:14.5px; color:var(--muted); line-height:1.7;">How an applied prestress state changes crack initiation and damage evolution in brittle ceramic materials under impact.</div>
+      </div>
+
+    </div>
+
   </div>
 </section>
 
@@ -242,8 +279,8 @@
         <h4>Research Areas</h4>
         <ul>
           <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
-          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
           <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
         </ul>
       </div>
       <div class="footer-col">

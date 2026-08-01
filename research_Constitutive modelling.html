@@ -22,8 +22,8 @@
         <a href="research.html">Research</a>
         <ul class="dd-menu">
           <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
-          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
           <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
@@ -40,7 +40,7 @@
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Constitutive Modeling</div>
     <h1>Dynamic Constitutive Modeling</h1>
-    <p>Data-driven determination and extrapolation of metal flow stress, from quasi-static loading to very-high strain-rate impact.</p>
+    <p>Data-driven determination and extrapolation of dynamic flow stress, from quasi-static loading to very-high strain-rate impact. Established on metals, designed to generalize.</p>
   </div>
 </div>
 
@@ -50,10 +50,13 @@
     <div class="res-intro">
       <span class="s-label">Research Overview</span>
       <p>
-        The mechanical behavior of engineering materials under extreme strain rates — as encountered in impact, crash, and ballistic events — is governed by their dynamic flow stress. For decades, the Johnson-Cook (J-C) equation has been the industry standard for representing this behavior, yet its mathematical foundations have remained unexamined and its calibration from real experimental data has been fraught with ambiguities.
+        The mechanical behavior of engineering materials under extreme strain rates — as encountered in impact, crash, and high-velocity loading events — is governed by their dynamic flow stress. For decades, the Johnson-Cook (J-C) equation has been the industry standard for representing this behavior, yet its mathematical foundations have remained unexamined and its calibration from real experimental data has been fraught with ambiguities.
       </p>
       <p style="margin-top:14px;">
         This research builds a rigorous, data-driven programme of four first-authored papers in the <em>International Journal of Impact Engineering</em> (2023–2026): first <em>verifying</em> when decoupled constitutive equations are mathematically legitimate, then <em>determining</em> flow stress from varied strain-rate SHPB data, next <em>extending</em> the framework to the full three-dimensional (strain, strain-rate, temperature) constitutive surface, and now <em>extrapolating</em> the identified model beyond the experimentally calibrated domain to very-high strain rates, with direct validation against Taylor-Hopkinson impact tests. The methodology, combining SVD/CP tensor decomposition with artificial neural networks, applies beyond the J-C equation to any factorized constitutive model.
+      </p>
+      <p style="margin-top:14px;">
+        Metals were the natural starting point because their dynamic test data are abundant and their model forms are well established, which makes them the right setting for proving a method. The method itself makes no assumption that the material is a metal. The direction of the work from here is to carry it into material classes where the standard constitutive models are considerably weaker and the data are harder to interpret, in particular cellular materials such as foams and rate-sensitive polymers.
       </p>
     </div>
 
@@ -62,7 +65,7 @@
       <div style="font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">Why It Matters</div>
       <h3 style="font-size:19px; font-weight:800; color:var(--navy); margin-bottom:12px;">What is dynamic constitutive modeling, and why does every impact simulation depend on it?</h3>
       <p style="color:var(--muted); line-height:1.75; font-size:15px;">
-        When engineers simulate a car crash, a bird strike on a jet engine, a dropped phone, or a projectile hitting armor, they use explicit finite element software such as ABAQUS or LS-DYNA. The solver divides the structure into millions of small elements and computes, step by step, how each one deforms. At every time step, for every element, it must ask the material a question: at this strain, this strain rate, and this temperature, how much stress do you carry? The answer comes from the flow stress model (the dynamic constitutive model), and no simulation can be more accurate than the model it is fed.
+        When engineers simulate a car crash, a bird strike on a jet engine, a dropped phone, or a hailstone striking a wind turbine blade, they use explicit finite element software such as ABAQUS or LS-DYNA. The solver divides the structure into millions of small elements and computes, step by step, how each one deforms. At every time step, for every element, it must ask the material a question: at this strain, this strain rate, and this temperature, how much stress do you carry? The answer comes from the flow stress model (the dynamic constitutive model), and no simulation can be more accurate than the model it is fed.
       </p>
       <p style="color:var(--muted); line-height:1.75; font-size:15px; margin-top:12px;">
         Metals behave very differently under impact than in slow laboratory tests: at strain rates of 10<sup>3</sup> s<sup>-1</sup> and beyond, their strength can rise well above the quasi-static value. Yet the models used in practice, most famously the Johnson-Cook equation, rest on assumptions that were rarely verified, are calibrated from limited Hopkinson-bar data, and are routinely extrapolated far outside the tested range. This research replaces each of those leaps of faith with a data-driven, mathematically grounded procedure: testing when the model form is legitimate, determining it directly from experimental data, and extrapolating it with validation against real impact experiments.
@@ -220,7 +223,7 @@
         <div class="pb-content">
           <h4>Background &amp; Motivation</h4>
           <p class="pb-overview">
-            Every flow stress model is calibrated within an experimentally accessible domain, in practice bounded by SHPB strain rates of about 10<sup>3</sup>–10<sup>4</sup> s<sup>-1</sup>. Yet simulations of ballistic impact, crash, and penetration routinely evaluate these models at strain rates far beyond calibration, where their validity is unknown. This paper confronts that question directly: how can a flow stress model be validly extrapolated beyond its calibrated strain-rate domain, and how can the extrapolation be verified by experiment?
+            Every flow stress model is calibrated within an experimentally accessible domain, in practice bounded by SHPB strain rates of about 10<sup>3</sup>–10<sup>4</sup> s<sup>-1</sup>. Yet simulations of high-velocity impact, crash, and perforation routinely evaluate these models at strain rates far beyond calibration, where their validity is unknown. This paper confronts that question directly: how can a flow stress model be validly extrapolated beyond its calibrated strain-rate domain, and how can the extrapolation be verified by experiment?
           </p>
           <h4>Key Contributions</h4>
           <ul class="pb-highlights">
@@ -270,8 +273,8 @@
         <h4>Research Areas</h4>
         <ul>
           <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
-          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
           <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
         </ul>
       </div>
       <div class="footer-col">

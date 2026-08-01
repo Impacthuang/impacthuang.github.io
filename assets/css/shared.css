@@ -109,12 +109,24 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 
 /* Dropdown */
 .dd-menu {
-  display: none; position: absolute; top: calc(100% + 4px); left: 0;
+  position: absolute; top: calc(100% + 4px); left: 0;
   background: var(--navy-d); border: 1px solid rgba(255,255,255,.09);
   border-radius: var(--r); min-width: 234px;
   box-shadow: 0 12px 32px rgba(0,0,0,.30); padding: 6px; z-index: 100;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  /* stays visible (and hoverable) for a moment after the pointer leaves,
+     so a slow move from the parent link into the menu does not dismiss it */
+  transition: opacity .18s ease .25s, transform .18s ease .25s, visibility 0s linear .43s;
 }
-.nav-links > li:hover > .dd-menu { display: block; }
+/* invisible bridge across the 4px gap under the parent link */
+.dd-menu::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -10px; height: 10px;
+}
+.nav-links > li:hover > .dd-menu,
+.nav-links > li:focus-within > .dd-menu {
+  opacity: 1; visibility: visible; transform: translateY(0);
+  transition: opacity .16s ease, transform .16s ease, visibility 0s;
+}
 .dd-menu a {
   display: block; font-size: 13px; font-weight: 500;
   color: rgba(255,255,255,.72); padding: 9px 14px; border-radius: 4px; transition: var(--t);
