@@ -27,6 +27,7 @@
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
+      <li><a href="notes.html">Notes</a></li>
       <li><a href="members.html">Members</a></li>
       <li><a href="conferences.html">Conferences</a></li>
       <li><a href="activities.html">Activities</a></li>
@@ -50,7 +51,7 @@
     <div class="res-intro">
       <span class="s-label">Research Overview</span>
       <p>
-        High-velocity impact problems involve complex, multi-parameter interactions between impactor geometry, impact velocity, plate thickness, and obliquity. Classical analytical models (e.g., Recht-Ipson) capture single-variable trends but fail to generalise across parameter combinations. This research develops data-driven <em>surrogate models</em> for high-velocity impact — using ANN combined with SVD/CP tensor decomposition (the same methodology established in constitutive modeling) to predict critical perforation velocity and residual velocity across the full multi-parameter impact space. The surrogate models are trained on experimental datasets augmented by validated FEM simulations, enabling accurate, physics-grounded predictions for impact-resistant structure design.
+        High-velocity impact problems involve complex, multi-parameter interactions between impactor geometry, impact velocity, plate thickness, and obliquity. Classical analytical models (e.g., Recht-Ipson) capture single-variable trends but fail to generalise across parameter combinations. This research develops data-driven <em>surrogate models</em> for high-velocity impact — using <a class="term" href="notes.html#ann">ANN</a> combined with <a class="term" href="notes.html#svd">SVD</a>/<a class="term" href="notes.html#cp-decomposition">CP tensor decomposition</a> (the same methodology established in constitutive modeling) to predict critical perforation velocity and residual velocity across the full multi-parameter impact space. The surrogate models are trained on experimental datasets augmented by validated FEM simulations, enabling accurate, physics-grounded predictions for impact-resistant structure design.
       </p>
       <p>
         The surrogate modeling work rests on a decade of hands-on impact mechanics research spanning three material systems. First, high-velocity impact of metallic and layered plates: perforation of 6061-T651 aluminium plates by impactors of different nose shapes, and polymer-aluminium layered plates under high-velocity impact (first-authored in IJIE, 2018). Second, impact behavior of textile composites: multiscale modeling of 3D angle-interlock woven composites under impact and mesoscale damage modeling of 3D woven composites incorporating plasticity and fiber misalignment. Third, structural crashworthiness and energy absorption: the dynamic response of clamped plates and corrugated-core and PVC-foam-core sandwich structures under underwater impulsive loading, work that began during the master's period at Harbin Institute of Technology and produced three IJIE papers (2016–2017). Together these threads cover the plate side, the material side, and the structure side of impact resistance.
@@ -78,7 +79,7 @@
             <li>Combines experimental data with validated FEM simulations to generate training datasets for sparse high-velocity impact data scenarios</li>
             <li>k-Fold cross-validation implemented for reliable model assessment with small sample sizes</li>
             <li>SVD/CP decomposition applied to reveal decoupled relationships between the critical perforation velocity and independent parameters</li>
-            <li>Rank-1 decomposition achieves &lt;6% MAPE while capturing fully decoupled effects of all input variables</li>
+            <li>Rank-1 decomposition achieves &lt;6% <a class="term" href="notes.html#mape">MAPE</a> while capturing fully decoupled effects of all input variables</li>
             <li>Equivalent analytical models derived for direct engineering application</li>
           </ul>
         </div>

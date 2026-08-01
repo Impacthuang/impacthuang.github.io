@@ -687,6 +687,127 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .social-row a:hover { background: var(--accent); color: #fff; }
 
 /* ======================================================
+   TECHNICAL NOTES & GLOSSARY
+   ====================================================== */
+
+/* Inline term link: any jargon in body prose that has a glossary entry.
+   Deliberately styled differently from an ordinary link (dashed underline)
+   so a reader can tell an explanation from an external reference. */
+.term {
+  color: var(--link); font-weight: 600;
+  border-bottom: 1px dashed rgba(37,99,235,.55);
+  cursor: help; transition: var(--t);
+}
+.term:hover { color: var(--link-h); background: rgba(37,99,235,.08); border-bottom-style: solid; }
+
+/* ─── Hub: long-form note cards ─── */
+.note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.note-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--r-lg);
+  border-top: 3px solid var(--accent); padding: 26px; transition: var(--t);
+  display: flex; flex-direction: column;
+}
+.note-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-2px); }
+.note-card .nc-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+.note-card .nc-title { font-size: 18px; font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 10px; }
+.note-card .nc-desc  { font-size: 14px; color: var(--muted); line-height: 1.68; flex-grow: 1; }
+.note-card .nc-meta  { font-size: 12.5px; color: var(--muted); margin-top: 14px; }
+.note-card .nc-link  { margin-top: 16px; font-size: 13.5px; font-weight: 700; color: var(--accent); }
+.note-card .nc-link:hover { text-decoration: underline; }
+
+.note-card.nc-planned { border-top-color: var(--border); background: var(--bg-alt); }
+.note-card.nc-planned:hover { transform: none; box-shadow: none; }
+
+/* ─── Hub: glossary ─── */
+.gl-group { margin-top: 40px; }
+.gl-group > h3 {
+  font-size: 15px; font-weight: 800; color: var(--navy);
+  letter-spacing: .3px; padding-bottom: 10px; margin-bottom: 4px;
+  border-bottom: 2px solid var(--accent); display: inline-block;
+}
+.gl-entry {
+  padding: 20px 0; border-bottom: 1px solid var(--border);
+  scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+.gl-entry:target { background: rgba(200,67,15,.05); box-shadow: -14px 0 0 rgba(200,67,15,.05), 14px 0 0 rgba(200,67,15,.05); }
+.gl-term { font-size: 16.5px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.gl-term .gl-abbr { color: var(--accent); }
+.gl-full { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 8px; }
+.gl-body { font-size: 14.5px; color: var(--text); line-height: 1.72; }
+.gl-body + .gl-body { margin-top: 8px; }
+.gl-where { font-size: 13px; color: var(--muted); margin-top: 9px; }
+.gl-where a { color: var(--link); font-weight: 600; }
+.gl-where a:hover { text-decoration: underline; }
+
+/* ─── Long-form note article ─── */
+.na-wrap { display: grid; grid-template-columns: 220px 1fr; gap: 44px; align-items: start; }
+.na-toc {
+  position: sticky; top: calc(var(--nav-h) + 20px);
+  background: var(--bg-alt); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 18px 20px;
+}
+.na-toc h4 { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.na-toc li { margin-bottom: 7px; }
+.na-toc a { font-size: 13px; color: var(--text); line-height: 1.45; transition: var(--t); }
+.na-toc a:hover { color: var(--accent); }
+
+.na-body { max-width: 760px; min-width: 0; }
+.na-body h2 {
+  font-size: 22px; font-weight: 800; color: var(--navy);
+  margin: 40px 0 14px; scroll-margin-top: calc(var(--nav-h) + 20px);
+}
+.na-body h2:first-child { margin-top: 0; }
+.na-body h3 { font-size: 16.5px; font-weight: 700; color: var(--navy); margin: 26px 0 10px; }
+.na-body p  { font-size: 15.5px; line-height: 1.78; margin-bottom: 14px; }
+.na-body ul, .na-body ol { margin: 0 0 16px 0; padding-left: 0; }
+.na-body li { font-size: 15px; line-height: 1.72; padding: 4px 0 4px 22px; position: relative; }
+.na-body ul > li::before { content: '·'; position: absolute; left: 6px; color: var(--accent); font-weight: 800; }
+.na-body ol { counter-reset: na-ol; }
+.na-body ol > li { counter-increment: na-ol; }
+.na-body ol > li::before { content: counter(na-ol) '.'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-size: 13.5px; }
+
+.na-abstract {
+  background: var(--bg-alt); border-left: 4px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0; padding: 22px 24px; margin-bottom: 12px;
+}
+.na-abstract .na-ab-label { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.na-abstract p { font-size: 14.5px; line-height: 1.75; margin-bottom: 0; color: var(--text); }
+.na-keywords { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+
+/* display equation block; scrolls on its own when the formula is wide */
+.na-eq { overflow-x: auto; margin: 18px 0; padding: 4px 0; }
+.na-note {
+  background: rgba(37,99,235,.05); border: 1px solid rgba(37,99,235,.16);
+  border-radius: var(--r); padding: 16px 20px; margin: 18px 0;
+}
+.na-note p { font-size: 14px; margin-bottom: 0; color: var(--text); }
+
+.na-pseudo {
+  background: var(--navy-d); color: rgba(255,255,255,.88);
+  border-radius: var(--r); padding: 20px 22px; margin: 18px 0;
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 12.8px; line-height: 1.75; overflow-x: auto; white-space: pre;
+}
+.na-pseudo .pk { color: #F9A825; }
+.na-pseudo .pc { color: rgba(255,255,255,.42); }
+
+.na-table-wrap { overflow-x: auto; margin: 18px 0; }
+.na-table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.na-table th {
+  background: var(--bg-alt); color: var(--navy); font-weight: 700;
+  text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--border); white-space: nowrap;
+}
+.na-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.na-table caption { caption-side: bottom; font-size: 13px; color: var(--muted); padding-top: 10px; text-align: left; }
+
+.na-refs { margin: 0; padding-left: 0; counter-reset: na-ref; }
+.na-refs li {
+  counter-increment: na-ref; font-size: 14px; line-height: 1.66;
+  padding: 7px 0 7px 30px; position: relative; color: var(--text);
+}
+.na-refs li::before { content: '[' counter(na-ref) ']'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-size: 13px; }
+
+/* ======================================================
    RESPONSIVE
    ====================================================== */
 @media (max-width: 900px) {
@@ -726,6 +847,8 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   .collab-grid        { grid-template-columns: 1fr 1fr; }
   .dl-item            { flex-direction: column; }
   .dl-actions         { flex-direction: row; min-width: 0; }
+  .na-wrap            { grid-template-columns: 1fr; gap: 28px; }
+  .na-toc             { position: static; }
 }
 
 @media (max-width: 700px) {

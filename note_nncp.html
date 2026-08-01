@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Non-negative CP Decomposition (NN-CP) — Technical Note — ImpactHuang</title>
+  <meta name="description" content="Mathematical principles of non-negative CP (CANDECOMP/PARAFAC) tensor decomposition for order-3 tensors: the outer-product model, matricization and the Khatri-Rao product, the NNLS optimization problem, multiplicative alternating least squares, Kruskal uniqueness, and worked Rank-1 to Rank-3 numerical examples.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
+          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="notes.html">Notes</a></li>
+      <li><a href="members.html">Members</a></li>
+      <li><a href="conferences.html">Conferences</a></li>
+      <li><a href="activities.html">Activities</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="notes.html">Notes</a><span>/</span>NN-CP Decomposition</div>
+    <h1>Non-negative CP Decomposition of Order-3 Tensors</h1>
+    <p>Mathematical principles, numerical examples, and a general rank-R algorithm.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. Introduction</a></li>
+          <li><a href="#s2">2. Basic definitions</a></li>
+          <li><a href="#s3">3. Optimization problem</a></li>
+          <li><a href="#s4">4. The NN-ALS algorithm</a></li>
+          <li><a href="#s5">5. Uniqueness</a></li>
+          <li><a href="#s6">6. Numerical examples</a></li>
+          <li><a href="#s7">7. Implementation</a></li>
+          <li><a href="#s8">8. Conclusions</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Abstract</div>
+          <p>
+            CANDECOMP/PARAFAC (CP) decomposition is a classical multilinear model that represents a higher-order tensor as a sum of rank-1 tensors (outer products of three vectors). When every factor matrix is additionally required to be non-negative, the model is called non-negative CP decomposition (NN-CP), a natural three-way generalization of non-negative matrix factorization (NMF). It is widely used for additive, interpretable modeling of chemometric data, signal processing data, and multi-factor coupled material data, for example temperature-strain-strain rate flow stress data. This note derives the mathematical principles of NN-CP decomposition for order-3 tensors: the outer-product tensor model, matricization (unfolding) and the Khatri-Rao product, the KKT conditions of the non-negative least squares (NNLS) problem, and the alternating non-negative least squares (NN-ALS) algorithm based on multiplicative updates. Explicit matrix-form derivations and hand-verifiable numerical examples are given separately for Rank-1, Rank-2, and Rank-3, followed by a general algorithm applicable to an arbitrary rank <em>R</em>.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> tensor decomposition; CP/PARAFAC; non-negativity constraint; alternating least squares; Khatri-Rao product</p>
+
+        <h2 id="s1">1. Introduction</h2>
+        <p>
+          Many experimental or simulated datasets naturally have a three-way (or higher) multi-factor structure. A flow stress tensor measured over temperature &times; strain &times; strain rate is one example; fluorescence spectroscopy data over wavelength &times; time &times; space is another [1]. Simply flattening such data into a matrix and applying principal component analysis (PCA) or non-negative matrix factorization (NMF) discards the coupling structure among the factors, and matrix-factorization factors are generally non-unique: extra constraints such as orthogonality are needed to fix them.
+        </p>
+        <p>
+          CP decomposition, proposed independently by Harshman [2] and by Carroll and Chang [3], performs low-rank additive modeling directly on the tensor's original three-way structure. Under mild conditions its decomposition is inherently unique, with no orthogonality assumption required [4], which makes it better suited to explaining the data-generating mechanism through physically meaningful components. When the data itself is non-negative, as concentration, intensity, and stress all are, further imposing a non-negativity constraint (NN-CP) yields additive, interpretable factors free of cancelling negative components. This is the same advantage NMF has over PCA [5], and this three-way generalization of the non-negativity constraint is the direct motivation behind early work such as Welling and Weber [6].
+        </p>
+        <p>
+          The remainder of this note is organized as follows. Section 2 gives the general mathematical definition of the CP model, outer-product notation, matricization, and the Khatri-Rao product. Section 3 formulates NN-CP decomposition as a non-negativity-constrained least squares problem and states its KKT optimality conditions. Section 4 derives the alternating non-negative least squares algorithm based on multiplicative updates, writes out explicit matrix forms for Rank-1, Rank-2, and Rank-3, and gives the general algorithm for arbitrary Rank-R. Section 5 reviews Kruskal's uniqueness condition. Section 6 gives hand-verifiable numerical examples. Section 7 describes the reference implementation and discusses convergence and complexity. Section 8 concludes.
+        </p>
+
+        <h2 id="s2">2. Basic Definitions of CP Decomposition</h2>
+
+        <h3>2.1 Order-3 tensors and the outer product</h3>
+        <p>
+          Let \( \mathcal{X} \in \mathbb{R}_{\ge 0}^{I \times J \times K} \) be an order-3 (three-way) non-negative tensor with entries \( x_{ijk} \), where \( i = 1,\dots,I \), \( j = 1,\dots,J \), \( k = 1,\dots,K \) correspond respectively to the tensor's 1st, 2nd, and 3rd modes. Given three vectors \( a \in \mathbb{R}^{I} \), \( b \in \mathbb{R}^{J} \), \( c \in \mathbb{R}^{K} \), their outer product is defined as an \( I \times J \times K \) rank-1 tensor:
+        </p>
+        <div class="na-eq">\[ (a \circ b \circ c)_{ijk} = a_i\, b_j\, c_k \tag{1} \]</div>
+
+        <h3>2.2 The general form of the CP model (Rank-R)</h3>
+        <p>
+          CP decomposition approximates \( \mathcal{X} \) as a weighted sum of \( R \) rank-1 tensors:
+        </p>
+        <div class="na-eq">\[ \mathcal{X} \;\approx\; [\![\lambda; A, B, C]\!] \;=\; \sum_{r=1}^{R} \lambda_r\, a_r \circ b_r \circ c_r, \qquad x_{ijk} \approx \sum_{r=1}^{R} \lambda_r\, a_{ir}\, b_{jr}\, c_{kr} \tag{2} \]</div>
+        <p>
+          where \( A = [a_1,\dots,a_R] \in \mathbb{R}^{I \times R} \), \( B = [b_1,\dots,b_R] \in \mathbb{R}^{J \times R} \), and \( C = [c_1,\dots,c_R] \in \mathbb{R}^{K \times R} \) are the mode-1, mode-2, and mode-3 factor matrices, and \( \lambda = (\lambda_1,\dots,\lambda_R) \) is the weight vector. When \( R \) is the smallest value for which \( \mathcal{X} \) can be represented exactly, \( R \) is the (non-negative) rank of the tensor. Non-negative CP decomposition requires
+        </p>
+        <div class="na-eq">\[ A \ge 0, \quad B \ge 0, \quad C \ge 0, \quad \lambda \ge 0. \]</div>
+        <p>
+          Without loss of generality, an implementation may absorb \( \lambda_r \) directly into the columns of one factor matrix, and separate \( \lambda \) out again after decomposition by column normalization.
+        </p>
+
+        <h3>2.3 Matricization (unfolding) and the Khatri-Rao product</h3>
+        <p>
+          To turn the trilinear model of Eq. (2) into a least squares problem that matrix algebra can handle, we introduce the tensor's matricization. Unfolding \( \mathcal{X} \) along mode-1, mode-2, and mode-3 gives matrices \( X_{(1)} \in \mathbb{R}^{I \times JK} \), \( X_{(2)} \in \mathbb{R}^{J \times IK} \), and \( X_{(3)} \in \mathbb{R}^{K \times IJ} \) respectively.
+        </p>
+        <p>
+          Next, define the Khatri-Rao product (column-wise Kronecker product) of two matrices \( U \in \mathbb{R}^{I \times R} \) and \( V \in \mathbb{R}^{J \times R} \) as \( U \odot V \in \mathbb{R}^{IJ \times R} \), whose \( r \)-th column is \( u_r \otimes v_r \). Using it, the three matricized forms of the CP model can be written, following the convention of Kolda and Bader [4], as:
+        </p>
+        <div class="na-eq">\[ X_{(1)} = A\,(C \odot B)^{\mathsf{T}}, \qquad X_{(2)} = B\,(C \odot A)^{\mathsf{T}}, \qquad X_{(3)} = C\,(B \odot A)^{\mathsf{T}} \tag{3} \]</div>
+        <p>
+          The Khatri-Rao product satisfies a key identity that makes the algorithm efficient. For any \( U, V \) with the same number of columns,
+        </p>
+        <div class="na-eq">\[ (U \odot V)^{\mathsf{T}} (U \odot V) = (U^{\mathsf{T}}U) * (V^{\mathsf{T}}V) \tag{4} \]</div>
+        <p>
+          where \( * \) denotes the elementwise (Hadamard) product. This holds because \( \langle u_r \otimes v_r,\, u_s \otimes v_s \rangle = \langle u_r, u_s \rangle \langle v_r, v_s \rangle \). Equation (4) reduces an inner-product computation of size \( IJ \times IJ \) to the Hadamard product of two small \( R \times R \) matrices, which is the core reason the alternating least squares algorithm below can be implemented efficiently.
+        </p>
+
+        <h2 id="s3">3. The Optimization Problem Under Non-negativity Constraints</h2>
+        <p>
+          Expressing Eq. (2) as a least squares objective under the Frobenius norm, with non-negativity constraints imposed:
+        </p>
+        <div class="na-eq">\[ \min_{A,B,C \,\ge\, 0} f(A,B,C) = \tfrac{1}{2} \left\| \mathcal{X} - [\![A,B,C]\!] \right\|_F^2 \tag{5} \]</div>
+        <p>
+          Equation (5) is non-convex jointly in the three factor matrices, but fixing any two of them and solving only for the third is a convex non-negative least squares (NNLS) problem. This is exactly the origin of the alternating least squares (ALS) idea. Taking the case of fixing \( B, C \) and solving for \( A \), Eq. (5) is rewritten in matrix form using Eq. (3):
+        </p>
+        <div class="na-eq">\[ f(A) = \tfrac{1}{2} \left\| X_{(1)} - A\,(C \odot B)^{\mathsf{T}} \right\|_F^2, \qquad A \ge 0 \tag{6} \]</div>
+        <p>
+          This is a standard matrix NNLS problem. Its KKT optimality conditions are that the gradient satisfies \( \nabla_A f \ge 0 \) elementwise, and that the complementary slackness condition \( A_{ir}\,[\nabla_A f]_{ir} = 0 \) holds for all \( (i,r) \). The gradient of Eq. (6) with respect to \( A \) is:
+        </p>
+        <div class="na-eq">\[ \nabla_A f = A \left[ (C^{\mathsf{T}}C) * (B^{\mathsf{T}}B) \right] - X_{(1)}(C \odot B) \tag{7} \]</div>
+        <p>
+          where the identity of Eq. (4) has been used to reduce \( (C \odot B)^{\mathsf{T}} (C \odot B) \) to an \( R \times R \) Hadamard product, avoiding explicit construction of a matrix product of size \( JK \times R \).
+        </p>
+
+        <h2 id="s4">4. The Alternating Non-negative Least Squares (NN-ALS) Algorithm</h2>
+
+        <h3>4.1 Derivation of the multiplicative update rule</h3>
+        <p>
+          The multiplicative update technique proposed by Lee and Seung [5,7] for non-negative matrix factorization generalizes directly to Eq. (7). Split the gradient into two non-negative parts:
+        </p>
+        <div class="na-eq">\[ \nabla_A f = \nabla_A^{+} - \nabla_A^{-}, \qquad \nabla_A^{+} = A\left[(C^{\mathsf{T}}C) * (B^{\mathsf{T}}B)\right] \ge 0, \qquad \nabla_A^{-} = X_{(1)}(C \odot B) \ge 0 \tag{8} \]</div>
+        <p>
+          Both terms are elementwise non-negative whenever \( A, B, C, \mathcal{X} \ge 0 \). Define the multiplicative update:
+        </p>
+        <div class="na-eq">\[ A \;\leftarrow\; A \circledast \frac{\nabla_A^{-}}{\nabla_A^{+}} \;=\; A \circledast \frac{X_{(1)}(C \odot B)}{A\left[(C^{\mathsf{T}}C) * (B^{\mathsf{T}}B)\right]} \tag{9} \]</div>
+        <p>
+          where \( \circledast \) and the division are both elementwise operations, and a small positive \( \varepsilon \) is added to the denominator to avoid division by zero. Equation (9) has two important properties:
+        </p>
+        <ol>
+          <li><strong>Non-negativity is preserved automatically.</strong> As long as the initial \( A^{(0)} \ge 0 \), the ratio \( \nabla_A^{-} / \nabla_A^{+} \ge 0 \), so the product remains non-negative. No extra projection or clipping step is needed.</li>
+          <li><strong>Fixed points satisfy the KKT conditions.</strong> If the update converges to a fixed point \( A = A \circledast (\nabla_A^{-}/\nabla_A^{+}) \), then for every \( (i,r) \) we have \( A_{ir}\nabla^{+}_{A,ir} = A_{ir}\nabla^{-}_{A,ir} \), that is, \( A_{ir}[\nabla_A f]_{ir} = 0 \), which is exactly the complementary slackness condition of the NNLS problem. It can also be shown, via an auxiliary-function argument, that this update monotonically decreases the objective in Eq. (5); the proof follows the same reasoning as Lee and Seung's original NMF multiplicative update and is omitted here.</li>
+        </ol>
+        <p>
+          The updates for \( B \) and \( C \) follow by symmetry, based on the matricizations \( X_{(2)} \) and \( X_{(3)} \) respectively:
+        </p>
+        <div class="na-eq">\[ B \;\leftarrow\; B \circledast \frac{X_{(2)}(C \odot A)}{B\left[(C^{\mathsf{T}}C) * (A^{\mathsf{T}}A)\right]}, \qquad C \;\leftarrow\; C \circledast \frac{X_{(3)}(B \odot A)}{C\left[(B^{\mathsf{T}}B) * (A^{\mathsf{T}}A)\right]} \tag{10} \]</div>
+        <p>
+          In each outer sweep, the algorithm performs the three updates of Eqs. (9) and (10) in turn, then recomputes the reconstructed tensor \( \hat{\mathcal{X}} = [\![A,B,C]\!] \) and the relative error \( \|\mathcal{X} - \hat{\mathcal{X}}\|_F / \|\mathcal{X}\|_F \), until the change in this error falls below a threshold or the maximum number of iterations is reached.
+        </p>
+        <p>
+          Below, the \( R \times R \) Gram-matrix portion of Eqs. (9) and (10) is expanded explicitly for \( R = 1, 2, 3 \), to show what the abstract rank-R formula looks like concretely at small ranks.
+        </p>
+
+        <h3>4.2 Explicit derivation for Rank-1</h3>
+        <p>
+          When \( R = 1 \), the factor matrices \( A = a \), \( B = b \), \( C = c \) degenerate to column vectors, \( C^{\mathsf{T}}C = \|c\|^2 \) and \( B^{\mathsf{T}}B = \|b\|^2 \) are both scalars, and the Khatri-Rao product \( C \odot B \) degenerates to the ordinary Kronecker product of vectors \( c \otimes b \). Equation (9) simplifies to an elementwise scalar update:
+        </p>
+        <div class="na-eq">\[ a \;\leftarrow\; a \circledast \frac{X_{(1)}(c \otimes b)}{\|b\|^2\,\|c\|^2\,a} \tag{11} \]</div>
+        <p>
+          That is,
+        </p>
+        <div class="na-eq">\[ a_i \;\leftarrow\; \frac{\sum_{j,k} x_{ijk}\, b_j\, c_k}{\|b\|^2 \|c\|^2} \]</div>
+        <p>
+          where the numerator is the bilinear contraction of \( \mathcal{X} \) with \( b \) and \( c \) over modes 2 and 3, and the denominator is the product of the two squared norms. This is exactly the form of tensor power iteration for updating \( a \). For an exactly rank-1 non-negative \( \mathcal{X} \), Perron-Frobenius theory guarantees the existence of non-negative \( a, b, c \) such that the iteration converges to the exact solution, and in principle a single alternating update together with normalization suffices, with no crosstalk between components to handle as in the \( R \gt 1 \) case.
+        </p>
+
+        <h3>4.3 Explicit derivation for Rank-2</h3>
+        <p>
+          When \( R = 2 \), \( C^{\mathsf{T}}C \) and \( B^{\mathsf{T}}B \) are \( 2 \times 2 \) symmetric matrices:
+        </p>
+        <div class="na-eq">\[ C^{\mathsf{T}}C = \begin{bmatrix} c_1 \cdot c_1 & c_1 \cdot c_2 \\ c_2 \cdot c_1 & c_2 \cdot c_2 \end{bmatrix}, \qquad B^{\mathsf{T}}B = \begin{bmatrix} b_1 \cdot b_1 & b_1 \cdot b_2 \\ b_2 \cdot b_1 & b_2 \cdot b_2 \end{bmatrix} \tag{12} \]</div>
+        <p>
+          The \( 2 \times 2 \) Hadamard product inside the denominator matrix \( A[(C^{\mathsf{T}}C) * (B^{\mathsf{T}}B)] \) is
+        </p>
+        <div class="na-eq">\[ (C^{\mathsf{T}}C) * (B^{\mathsf{T}}B) = \begin{bmatrix} (c_1 \cdot c_1)(b_1 \cdot b_1) & (c_1 \cdot c_2)(b_1 \cdot b_2) \\ (c_2 \cdot c_1)(b_2 \cdot b_1) & (c_2 \cdot c_2)(b_2 \cdot b_2) \end{bmatrix} \tag{13} \]</div>
+        <p>
+          Its off-diagonal entry \( (c_1 \cdot c_2)(b_1 \cdot b_2) \) is precisely the source of crosstalk between the two rank-1 components. When the \( b \) and \( c \) factors of the two components are mutually orthogonal, this matrix degenerates to a diagonal matrix and Eq. (9) reduces to two independent Rank-1 updates as in Eq. (11). In general the off-diagonal entry is non-zero, the two components are coupled during the iteration, and many alternations are required to converge, which is the slower convergence observed in the numerical example of Section 6.2.
+        </p>
+
+        <h3>4.4 Explicit derivation for Rank-3</h3>
+        <p>
+          For \( R = 3 \), the Gram matrices above extend to \( 3 \times 3 \):
+        </p>
+        <div class="na-eq">\[ C^{\mathsf{T}}C = \begin{bmatrix} c_1 \cdot c_1 & c_1 \cdot c_2 & c_1 \cdot c_3 \\ c_2 \cdot c_1 & c_2 \cdot c_2 & c_2 \cdot c_3 \\ c_3 \cdot c_1 & c_3 \cdot c_2 & c_3 \cdot c_3 \end{bmatrix}, \qquad B^{\mathsf{T}}B = \begin{bmatrix} b_1 \cdot b_1 & b_1 \cdot b_2 & b_1 \cdot b_3 \\ b_2 \cdot b_1 & b_2 \cdot b_2 & b_2 \cdot b_3 \\ b_3 \cdot b_1 & b_3 \cdot b_2 & b_3 \cdot b_3 \end{bmatrix} \tag{14} \]</div>
+        <p>
+          The \( 3 \times 3 \) Hadamard product \( (C^{\mathsf{T}}C) * (B^{\mathsf{T}}B) \) in the denominator of Eq. (9) now has six independent off-diagonal entries, since the matrix is symmetric, each corresponding to the coupling strength between one pair of components. Computationally, relative to Rank-2 and Rank-1, only the Gram-matrix size grows from \( 1 \times 1 \) to \( 2 \times 2 \) to \( 3 \times 3 \). The cost of the MTTKRP (matricized tensor times Khatri-Rao product, the term \( X_{(1)}(C \odot B) \)) grows linearly with \( R \), so the good scalability of the ALS algorithm with rank is preserved overall.
+        </p>
+
+        <h3>4.5 The general Rank-R algorithm</h3>
+        <p>
+          Combining Eqs. (9) and (10), the NN-CP alternating non-negative least squares algorithm for an arbitrary rank \( R \) can be summarized as follows.
+        </p>
+        <div class="na-pseudo"><span class="pk">Input:</span>   non-negative tensor X in R_{&gt;=0}^{I x J x K}, target rank R, max iterations N, tolerance tol
+<span class="pk">Init:</span>    A in R_{&gt;=0}^{I x R}, B in R_{&gt;=0}^{J x R}, C in R_{&gt;=0}^{K x R}   <span class="pc">(random non-negative)</span>
+<span class="pk">Precompute:</span> X_(1), X_(2), X_(3)   <span class="pc">(matricizations along the three modes)</span>
+
+<span class="pk">for</span> it = 1 ... N:
+    A &lt;- A (*) [ X_(1)(C(.)B) ] / [ A((C^T C)*(B^T B)) + eps ]
+    B &lt;- B (*) [ X_(2)(C(.)A) ] / [ B((C^T C)*(A^T A)) + eps ]
+    C &lt;- C (*) [ X_(3)(B(.)A) ] / [ C((B^T B)*(A^T A)) + eps ]
+    err = ||X - [[A,B,C]]||_F / ||X||_F
+    <span class="pk">if</span> |err_{it-1} - err_it| &lt; tol: <span class="pk">break</span>
+
+<span class="pk">Output:</span>  A, B, C, and the weight vector lambda separated out by column normalization</div>
+        <p>
+          Here <code>(*)</code> denotes the elementwise product and <code>(.)</code> denotes the Khatri-Rao product. The rank parameter is exactly \( R \), and the same code applies to \( R = 1, 2, 3 \) or any larger \( R \) without a separate implementation for each rank.
+        </p>
+
+        <h2 id="s5">5. Uniqueness: Kruskal's Condition</h2>
+        <p>
+          Unlike matrix decompositions such as SVD or NMF, CP decomposition is essentially unique under mild conditions, up to permutation and per-component rescaling, without requiring extra constraints such as orthogonality. The classical sufficient condition of Kruskal [8] is:
+        </p>
+        <div class="na-eq">\[ k_A + k_B + k_C \;\ge\; 2R + 2 \tag{15} \]</div>
+        <p>
+          where \( k_M \) denotes the Kruskal rank (k-rank) of matrix \( M \): the largest integer \( k \) such that every \( k \) columns of \( M \) are linearly independent. When Eq. (15) is satisfied, if \( [\![A,B,C]\!] = [\![A',B',C']\!] \), then there must exist a permutation matrix \( \Pi \) and diagonal scaling matrices \( D_1, D_2, D_3 \) satisfying \( D_1 D_2 D_3 = I \) such that \( A' = A \Pi D_1 \), \( B' = B \Pi D_2 \), \( C' = C \Pi D_3 \).
+        </p>
+        <p>
+          This property is the most important theoretical advantage of CP decomposition over matrix decomposition: when Eq. (15) holds, the decomposed components are determined by the data-generating mechanism itself, rather than by an algorithmic or artificially chosen constraint. The component-order permutation observed in the Rank-3 numerical example of Section 6.3 is a direct manifestation of this permutation indeterminacy.
+        </p>
+
+        <h2 id="s6">6. Numerical Examples</h2>
+        <p>
+          The three examples below are all generated and verified by first constructing an exact rank-R tensor from given non-negative vectors, then decomposing it with the NN-ALS algorithm of Section 4.5. All tensors are constructed synthetically and rely on no external database or dataset.
+        </p>
+
+        <h3>6.1 Rank-1 example</h3>
+        <p>
+          Take \( I = J = K = 2 \) and construct the vectors
+        </p>
+        <div class="na-eq">\[ a = (1,2), \qquad b = (2,1), \qquad c = (1,3) \]</div>
+        <p>
+          Using Eq. (1) to construct the exact rank-1 tensor \( \mathcal{X} = a \circ b \circ c \), its two slices, fixing \( k \) along mode-3, are:
+        </p>
+        <div class="na-eq">\[ \mathcal{X}_{:,:,1} = \begin{bmatrix} 2 & 1 \\ 4 & 2 \end{bmatrix}, \qquad \mathcal{X}_{:,:,2} = \begin{bmatrix} 6 & 3 \\ 12 & 6 \end{bmatrix} \]</div>
+        <p>
+          Iterating Eq. (11) from a random non-negative initialization of \( a, b, c \) at rank 1, after convergence and column normalization with weight \( \hat{\lambda} \), we obtain:
+        </p>
+        <div class="na-table-wrap">
+          <table class="na-table">
+            <thead>
+              <tr><th>Quantity</th><th>True value (normalized)</th><th>Recovered value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>\( \hat{a} \)</td><td>(0.4472, 0.8944)</td><td>(0.4472, 0.8944)</td></tr>
+              <tr><td>\( \hat{b} \)</td><td>(0.8944, 0.4472)</td><td>(0.8944, 0.4472)</td></tr>
+              <tr><td>\( \hat{c} \)</td><td>(0.3162, 0.9487)</td><td>(0.3162, 0.9487)</td></tr>
+              <tr><td>\( \hat{\lambda} \)</td><td>\( \|a\|\|b\|\|c\| = 15.8114 \)</td><td>15.8114</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The final relative reconstruction error is \( \|\mathcal{X} - \hat{\mathcal{X}}\|_F / \|\mathcal{X}\|_F \approx 2.4 \times 10^{-14} \), that is, exact recovery to floating-point precision. This is consistent with the theoretical analysis of Section 4.2: decomposing an exactly rank-1 non-negative tensor is essentially a power-iteration problem, which converges quickly and uniquely, with no permutation ambiguity between components since there is only one component.
+        </p>
+
+        <h3>6.2 Rank-2 example</h3>
+        <p>
+          Take \( I = 3 \), \( J = 2 \), \( K = 2 \), with the vectors of the two rank-1 components given by
+        </p>
+        <div class="na-eq">\[ a_1 = (1,0,2),\; b_1 = (1,1),\; c_1 = (2,0); \qquad a_2 = (0,1,1),\; b_2 = (2,0),\; c_2 = (1,1) \]</div>
+        <p>
+          with both component weights taken as 1. Constructing \( \mathcal{X} = a_1 \circ b_1 \circ c_1 + a_2 \circ b_2 \circ c_2 \), its two mode-3 slices are:
+        </p>
+        <div class="na-eq">\[ \mathcal{X}_{:,:,1} = \begin{bmatrix} 2 & 2 \\ 2 & 0 \\ 6 & 4 \end{bmatrix}, \qquad \mathcal{X}_{:,:,2} = \begin{bmatrix} 0 & 0 \\ 2 & 0 \\ 2 & 0 \end{bmatrix} \]</div>
+        <p>
+          After 8000 iterations at rank 2, the recovered results, component-aligned and column-normalized, are:
+        </p>
+        <div class="na-table-wrap">
+          <table class="na-table">
+            <thead>
+              <tr><th>Component \( r \)</th><th>\( \hat{\lambda}_r \)</th><th>True \( \lambda_r = \|a_r\|\|b_r\|\|c_r\| \)</th><th>\( \hat{a}_r \)</th><th>\( \hat{b}_r \)</th><th>\( \hat{c}_r \)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>6.3244</td><td>\( \sqrt{5}\cdot\sqrt{2}\cdot 2 = 6.3246 \)</td><td>(0.4472, 0, 0.8944)</td><td>(0.7071, 0.7071)</td><td>(1, 0)</td></tr>
+              <tr><td>2</td><td>4.0000</td><td>\( \sqrt{2}\cdot 2 \cdot \sqrt{2} = 4.0000 \)</td><td>(0, 0.7071, 0.7071)</td><td>(1, 0)</td><td>(0.7071, 0.7071)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The recovered values agree fully with the true normalized values, with numerical noise below \( 10^{-4} \) and a final relative reconstruction error of about \( 4.1 \times 10^{-5} \). Compared with the Rank-1 example, the number of iterations required for convergence is markedly larger, consistent with the crosstalk between components discussed via Eq. (13) in Section 4.3.
+        </p>
+
+        <h3>6.3 Rank-3 example</h3>
+        <p>
+          Take \( I = 4 \), \( J = 3 \), \( K = 3 \), with three mutually non-orthogonal rank-1 components carrying different weights 2.0, 1.5, and 1.0:
+        </p>
+        <div class="na-eq">\[ \begin{aligned} a_1 &amp;= (1,0,0,1), \quad b_1 = (1,1,0), \quad c_1 = (1,0,1) \\ a_2 &amp;= (0,1,0,1), \quad b_2 = (0,1,1), \quad c_2 = (1,1,0) \\ a_3 &amp;= (0,0,1,1), \quad b_3 = (1,0,1), \quad c_3 = (0,1,1) \end{aligned} \]</div>
+        <p>
+          After 15000 iterations, the rank-3 decomposition converges with a relative reconstruction error of about \( 2.7 \times 10^{-5} \). The recovered weights are \( \hat{\lambda} = (2.8284,\, 5.6568,\, 4.2426) \), and the internal component ordering produced by the algorithm differs from the construction order. As discussed under permutation indeterminacy in Section 5, the actual correspondence is:
+        </p>
+        <div class="na-table-wrap">
+          <table class="na-table">
+            <thead>
+              <tr><th>Algorithm output</th><th>Corresponding true component</th><th>\( \hat{\lambda} \)</th><th>True \( \lambda = w \cdot \|a\|\|b\|\|c\| \)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Output #1</td><td>True component 3 (weight 1.0)</td><td>2.8284</td><td>\( 1.0 \times (\sqrt{2})^3 = 2.8284 \)</td></tr>
+              <tr><td>Output #2</td><td>True component 1 (weight 2.0)</td><td>5.6568</td><td>\( 2.0 \times (\sqrt{2})^3 = 5.6569 \)</td></tr>
+              <tr><td>Output #3</td><td>True component 2 (weight 1.5)</td><td>4.2426</td><td>\( 1.5 \times (\sqrt{2})^3 = 4.2426 \)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Checking the three sets of normalized factor vectors one by one confirms numerical agreement with the corresponding true components, with differences below \( 10^{-4} \). This behaviour, components reordered but numerically exactly recovered, is a direct manifestation in a numerical experiment of the theoretical property that CP decomposition is unique only up to permutation and scaling. It also shows that comparing two decomposition results requires component alignment first, for example sorting by \( \hat{\lambda} \) or matching by inter-factor correlation, rather than comparing directly by component index.
+        </p>
+
+        <h2 id="s7">7. Implementation and Convergence</h2>
+        <p>
+          The reference implementation is a pure-NumPy routine that relies on no dedicated tensor-decomposition library and loads no ready-made dataset. It consists of the following parts:
+        </p>
+        <ul>
+          <li><strong>Khatri-Rao product</strong> of an arbitrary number of matrices.</li>
+          <li><strong>Unfolding</strong>: matricization of an order-3 tensor along mode-1, mode-2, or mode-3.</li>
+          <li><strong>Reconstruction</strong>: rebuilding the full tensor \( [\![A,B,C]\!] \) from the factor matrices.</li>
+          <li><strong>Normalization</strong>: absorbing column norms into the weight \( \lambda \), leaving the factor matrices with unit column norm.</li>
+          <li><strong>NN-ALS solver</strong>: a direct implementation of the pseudocode in Section 4.5, with the rank parameter supporting any \( R \ge 1 \).</li>
+          <li><strong>Synthetic tensor generator</strong>: builds an exact rank-R tensor from given vectors and calls the solver to verify the decomposition result. The three examples in Section 6 and one additional \( R = 6 \) example are all generated this way.</li>
+        </ul>
+        <p>
+          <strong>Convergence and complexity.</strong> The multiplicative updates of Eqs. (9) and (10) can be shown to monotonically decrease the objective in Eq. (5), via a Lee-Seung-type auxiliary-function argument, but the convergence rate is first-order (linear), generally slower than implementations based on exact non-negative least squares such as the Lawson-Hanson active-set method [10], or on hierarchical alternating least squares [9]. This is consistent with the Rank-2 and Rank-3 examples of Section 6, where thousands of sweeps are needed to reach a relative error of \( 10^{-4} \) to \( 10^{-5} \), whereas Rank-1 converges to machine precision in effectively one sweep.
+        </p>
+        <p>
+          The dominant computational cost of each sweep is the product of a matricized tensor with a Khatri-Rao product (MTTKRP), with complexity about \( O(IJK \cdot R) \), growing linearly with the total number of tensor elements and with the rank \( R \). The cost of the \( R \times R \) Gram-matrix products is negligible by comparison. For faster convergence, the multiplicative updates in this note can be replaced with HALS or a projected-gradient or active-set NNLS subproblem solver, while the overall algorithmic framework of matricization plus alternating sweeps remains unchanged.
+        </p>
+
+        <h2 id="s8">8. Conclusions</h2>
+        <ol>
+          <li>CP decomposition of an order-3 tensor represents the data as a sum of rank-1 tensors. Its matricized forms such as \( X_{(1)} = A(C \odot B)^{\mathsf{T}} \), together with the Khatri-Rao Gram identity \( (U \odot V)^{\mathsf{T}}(U \odot V) = (U^{\mathsf{T}}U)*(V^{\mathsf{T}}V) \), turn the trilinear optimization problem into a sequence of efficiently solvable non-negative least squares subproblems.</li>
+          <li>Under the non-negativity constraint, Lee-Seung-type multiplicative updates monotonically decrease the reconstruction error while guaranteeing non-negativity of the factor matrices, and their fixed points satisfy exactly the KKT complementary slackness conditions of the NNLS problem. This update rule has a unified form for any rank \( R \), with Rank-1, Rank-2, and Rank-3 being special cases that differ only in the size of the \( R \times R \) Gram matrix.</li>
+          <li>The numerical examples show that an exact rank-1 tensor is recovered in effectively one convergence step to floating-point precision. As the rank increases, off-diagonal Gram terms couple the components and the number of iterations needed for convergence grows significantly. The recovered component order may differ from the construction order, a direct manifestation of the theoretical property that CP decomposition is unique only up to permutation and scaling.</li>
+          <li>A minimal, dependency-free NN-CP implementation covers decomposition needs from Rank-1 to any Rank-R through a single rank parameter, with no separate code path per rank.</li>
+        </ol>
+
+        <div class="na-note">
+          <p>
+            <strong>Where this is used.</strong> Non-negative CP decomposition is the mathematical foundation of the tensor-decomposition step in the data-driven <a href="notes.html#flow-stress" class="term">flow stress</a> work, in which a discrete stress tensor over strain, strain rate, and temperature is decomposed into non-negative one-dimensional factors before being reconstructed by a neural network. See <a href="research_Constitutive modelling.html">Constitutive Modeling</a> for the research context.
+          </p>
+        </div>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Bro, R. (1997). PARAFAC. Tutorial and applications. <em>Chemometrics and Intelligent Laboratory Systems</em>, 38(2), 149-171.</li>
+          <li>Harshman, R. A. (1970). Foundations of the PARAFAC procedure: Models and conditions for an explanatory multi-modal factor analysis. <em>UCLA Working Papers in Phonetics</em>, 16, 1-84.</li>
+          <li>Carroll, J. D., &amp; Chang, J. J. (1970). Analysis of individual differences in multidimensional scaling via an N-way generalization of the Eckart-Young decomposition. <em>Psychometrika</em>, 35(3), 283-319.</li>
+          <li>Kolda, T. G., &amp; Bader, B. W. (2009). Tensor decompositions and applications. <em>SIAM Review</em>, 51(3), 455-500.</li>
+          <li>Lee, D. D., &amp; Seung, H. S. (1999). Learning the parts of objects by non-negative matrix factorization. <em>Nature</em>, 401(6755), 788-791.</li>
+          <li>Welling, M., &amp; Weber, M. (2001). Positive tensor factorization. <em>Pattern Recognition Letters</em>, 22(12), 1255-1261.</li>
+          <li>Lee, D. D., &amp; Seung, H. S. (2001). Algorithms for non-negative matrix factorization. <em>Advances in Neural Information Processing Systems</em>, 13, 556-562.</li>
+          <li>Kruskal, J. B. (1977). Three-way arrays: rank and uniqueness of trilinear decompositions, with application to arithmetic complexity and statistics. <em>Linear Algebra and Its Applications</em>, 18(2), 95-138.</li>
+          <li>Cichocki, A., &amp; Phan, A. H. (2009). Fast local algorithms for large scale nonnegative matrix and tensor factorizations. <em>IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences</em>, E92-A(3), 708-721.</li>
+          <li>Lawson, C. L., &amp; Hanson, R. J. (1974). <em>Solving Least Squares Problems</em>. Prentice-Hall.</li>
+        </ol>
+
+        <p style="margin-top:36px;">
+          <a href="notes.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Technical Notes</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+</body>
+</html>
