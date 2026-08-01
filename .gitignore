@@ -1,5 +1,7 @@
 # Local-only files — do NOT upload to GitHub Pages
 _local/
+_archive/
+.claude/settings.local-*.json
 
 # OS and editor artifacts
 .DS_Store

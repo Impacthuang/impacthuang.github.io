@@ -40,7 +40,7 @@
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Battery Impact &amp; PHM</div>
     <h1>Battery Impact Safety &amp; Health Management</h1>
-    <p>Bridging impact mechanics expertise with electrochemical safety for next-generation lithium-ion battery systems.</p>
+    <p>Experimental characterization, real-time monitoring, and multiphysics modeling of lithium-ion battery safety under impact loading.</p>
   </div>
 </div>
 
@@ -50,11 +50,25 @@
     <div class="res-intro">
       <span class="s-label">Research Overview</span>
       <p>
-        Lithium-ion batteries (LIBs) are increasingly deployed in safety-critical applications — electric vehicles, aerospace, and portable electronics — where they may be subjected to mechanical abuse including impact, crush, and penetration. Understanding how LIBs fail under dynamic loading, and developing systems to detect damage in real time, is essential for safe deployment.
+        Lithium-ion batteries (LIBs) power electric vehicles, electric aircraft, and grid-scale storage, all of which can experience crash, drop, or penetration events in service. Mechanical abuse is one of the least understood triggers of thermal runaway: a cell can suffer internal damage in an impact, show no external sign, and fail catastrophically later. Understanding how LIBs fail under dynamic loading, and detecting that damage the moment it occurs, is therefore a prerequisite for the safe deployment of electrified transport and storage.
       </p>
       <p style="margin-top:14px;">
-        This research program leverages Dr. Huang's background in impact mechanics and constitutive modeling to address battery safety from a fundamentally mechanical perspective. The work spans experimental characterization of failure modes, acoustic emission-based real-time monitoring with deep learning, multiphysics finite element modeling, and systematic review of the broader PHM field. The long-term vision is to apply constitutive modeling methods directly to battery electrode and separator materials — building a rigorous mechanical-electrochemical framework for safety under dynamic loading.
+        This research program addresses battery impact safety as an independent stream with its own experimental and computational methodology, organized around three questions. <strong>How do cells fail under impact?</strong> Systematic drop-weight and ballistic campaigns characterize failure modes and identify the impact-energy thresholds that separate safe deformation from internal short circuit. <strong>Can damage be detected in real time, without opening the cell?</strong> Deep learning models on acoustic emission signals classify damage states as they happen, reaching 98.3% accuracy with a CNN-BiLSTM architecture. <strong>How does cell-level damage propagate to system level?</strong> Multiphysics finite element models couple mechanical deformation with electrochemical response, linking local damage to pack-level instability across states of charge.
       </p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:20px;">
+        <div style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:6px;">Failure Physics</div>
+          <div style="font-size:14px; color:var(--muted); line-height:1.6;">Failure modes and impact-energy thresholds of cells under quasi-static, drop-weight, and ballistic loading.</div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:6px;">Real-Time Monitoring</div>
+          <div style="font-size:14px; color:var(--muted); line-height:1.6;">Acoustic emission sensing plus deep learning for non-invasive, in-situ damage classification during impact.</div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:6px;">Cell-to-Pack Simulation</div>
+          <div style="font-size:14px; color:var(--muted); line-height:1.6;">Multiphysics FE models coupling structural damage with electrochemical degradation, from single cell to pack.</div>
+        </div>
+      </div>
     </div>
 
     <!-- PAPER 1: Failure Modes -->
@@ -201,12 +215,12 @@
       </div>
     </div>
 
-    <!-- FUTURE VISION -->
+    <!-- RESEARCH SIGNIFICANCE -->
     <div class="vision-block" style="margin-top:40px;">
       <blockquote>
-        "The long-term academic vision is to establish impact dynamics — particularly constitutive modeling under high strain-rate loading — as the primary research identity. Battery impact safety serves as an important and strategically chosen application domain, where the physics of dynamic loading and structural failure are directly relevant. Future directions in this battery research thread will focus on deepening the mechanical-electrochemical coupling and developing more rigorous predictive frameworks for battery safety under dynamic abuse."
+        "Current battery safety standards are built around quasi-static tests, yet real accidents are dynamic. The significance of this stream lies in closing that gap: quantified impact-energy thresholds that can inform test standards, a monitoring approach that detects internal damage without disassembling the cell, and simulation tools that trace how an impact on one cell destabilizes a pack. Future work will deepen the mechanical-electrochemical coupling and extend the experiments toward module- and pack-level dynamic abuse."
       </blockquote>
-      <cite>— Long-term research vision: impact dynamics as core identity, battery safety as application domain</cite>
+      <cite>— Research significance and outlook: from cell-level failure physics toward impact safety standards for energy storage</cite>
     </div>
 
   </div>
@@ -221,7 +235,7 @@
         <div class="social-row">
           <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
           <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-          <a href="#" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
           <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
         </div>
       </div>

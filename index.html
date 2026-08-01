@@ -49,7 +49,7 @@
         Postdoctoral Researcher, InnoCORE PRISM-AI Center, KAIST
       </p>
       <p class="hero-vision">
-        Pioneering data-driven methods for dynamic material constitutive characterization — from rigorous flow stress modeling of metals under extreme strain rates to AI-driven safety assessment of lithium-ion batteries under impact loading.
+        Every crash, impact, and penetration simulation stands on one question: how does the material behave at extreme strain rates? My research answers it with data-driven rigor, from flow stress models of metals validated up to 10<sup>5</sup> s<sup>-1</sup>, to AI-based real-time impact safety assessment of lithium-ion batteries.
       </p>
       <div class="hero-actions">
         <a href="research.html" class="btn btn-primary"><i class="fas fa-flask"></i> Explore Research</a>
@@ -68,8 +68,8 @@
 <section class="section alt">
   <div class="container">
     <span class="s-label">Research Areas</span>
-    <h2 class="s-title">Three Interconnected Research Pillars</h2>
-    <p class="s-sub">Unified by a shared methodology — combining experimental mechanics with data-driven computational approaches across different material and structural systems.</p>
+    <h2 class="s-title">Three Research Pillars</h2>
+    <p class="s-sub">Two independent research streams, metal mechanics and battery safety, each combining rigorous impact experiments with data-driven modeling suited to its own physics.</p>
 
     <div class="res-grid">
 
@@ -78,8 +78,8 @@
         <div class="rc-body">
           <div class="rc-tag"><span class="tag tag-accent">Core Research</span></div>
           <div class="rc-title">Dynamic Constitutive Modeling</div>
-          <div class="rc-desc">Pioneering SVD/CP tensor decomposition and neural network frameworks to determine the dynamic flow stress of metals directly from discrete SHPB experimental data — rigorously examining the mathematical foundations of the Johnson-Cook paradigm.</div>
-          <div class="rc-meta"><strong>3 first-authored papers in IJIE</strong> &nbsp;·&nbsp; 2023–2025</div>
+          <div class="rc-desc">SVD/CP tensor decomposition and neural network frameworks that determine metal flow stress directly from discrete SHPB data, and now extrapolate it beyond the calibrated domain to very-high strain rates with Taylor-Hopkinson validation (TEDI-FS, accepted 2026).</div>
+          <div class="rc-meta"><strong>4 first-authored papers in IJIE</strong> &nbsp;·&nbsp; 2023–2026</div>
           <a href="research_Constitutive modelling.html" class="btn btn-outline">Learn More →</a>
         </div>
       </div>
@@ -89,8 +89,8 @@
         <div class="rc-body">
           <div class="rc-tag"><span class="tag tag-navy">Impact Dynamics</span></div>
           <div class="rc-title">Impact Mechanics &amp; Ballistic Performance</div>
-          <div class="rc-desc">Experimental and computational study of ballistic impact phenomena — from polymer-aluminium layered plates to ANN-based predictive models for ballistic limit velocity and residual velocity across multi-parameter impact scenarios.</div>
-          <div class="rc-meta"><strong>6 papers</strong> in IJIE, TWS, IJMS &nbsp;·&nbsp; 2018–2025</div>
+          <div class="rc-desc">Experimental and computational study of impact across material systems: ballistic resistance of metallic and polymer-aluminium layered plates, impact behavior of 3D woven composites, and energy absorption of sandwich structures under impulsive loading, with ANN-based surrogate models predicting ballistic limit and residual velocity.</div>
+          <div class="rc-meta"><strong>10 publications</strong> in IJIE, TWS, IJMS, Composite Structures &nbsp;·&nbsp; 2016–2026</div>
           <a href="research_Impact dynamics.html" class="btn btn-outline">Learn More →</a>
         </div>
       </div>
@@ -100,12 +100,26 @@
         <div class="rc-body">
           <div class="rc-tag"><span class="tag tag-blue">Current Focus</span></div>
           <div class="rc-title">Battery Impact Safety &amp; Health Management</div>
-          <div class="rc-desc">Bridging impact mechanics expertise with electrochemical safety — investigating failure modes of batteries under extreme loading, and developing deep learning frameworks for real-time damage monitoring via acoustic emission signals.</div>
+          <div class="rc-desc">An independent research stream on lithium-ion battery safety: failure modes and energy thresholds of cells under extreme loading, deep learning frameworks that detect internal damage in real time from acoustic emission, and multiphysics models linking mechanical damage to electrochemical degradation at pack level.</div>
           <div class="rc-meta"><strong>5 papers</strong> in JPS, JES, EFA, JMST &nbsp;·&nbsp; 2026</div>
           <a href="research_Battery PHM.html" class="btn btn-outline">Learn More →</a>
         </div>
       </div>
 
+    </div>
+
+    <div style="margin-top:32px; background:#fff; border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; padding:20px 26px; display:flex; flex-wrap:wrap; gap:20px; align-items:center;">
+      <div style="flex:1 1 340px; font-size:14.5px; color:var(--muted); line-height:1.72;">
+        <strong style="color:var(--navy);">Why constitutive modeling?</strong>
+        Every explicit finite element simulation of a crash, impact, or penetration event, whether in ABAQUS, LS-DYNA, or any other solver, needs a material model that tells the software how stress evolves with strain, strain rate, and temperature. The fidelity of the entire simulation is capped by the fidelity of that model. Making these models rigorous, data-driven, and validly extrapolable is the core of this research.
+        <a href="research_Constitutive modelling.html" style="font-weight:600;">Learn more →</a>
+      </div>
+      <figure style="margin:0; flex:0 1 220px;">
+        <img src="assets/img/scicomm/fem-crash-simulation.jpg" alt="Finite element simulation of a three-car collision" style="width:100%; border-radius:8px; border:1px solid var(--border);">
+        <figcaption style="font-size:11.5px; color:var(--muted); line-height:1.5; margin-top:6px;">
+          FE model of a three-car collision. Image: Matt Howard, Argonne National Laboratory, via <a href="https://commons.wikimedia.org/wiki/File:Crash-test_simulation_(3467719123).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener">CC BY-SA 2.0</a>.
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -118,6 +132,24 @@
     <p class="s-sub">Highlights spanning constitutive modeling theory, impact mechanics prediction, and battery safety — all published in JCR Q1 journals.</p>
 
     <div class="pub-cards">
+
+      <div class="pub-card">
+        <div class="pc-year">2026</div>
+        <div class="pc-body">
+          <div class="pc-title">
+            <a href="research_Constitutive modelling.html#tedi-fs">
+              Tensor-decomposition-based inverse characterization of flow stress for very-high strain-rate impact
+            </a>
+          </div>
+          <div class="pc-authors"><strong>Xianglin Huang</strong>, Q.M. Li*</div>
+          <div class="pc-journal">International Journal of Impact Engineering, Accepted</div>
+          <div class="pc-tags">
+            <span class="tag tag-accent">First Author</span>
+            <span class="tag tag-green">Just Accepted</span>
+            <span class="badge">IJIE Q1</span>
+          </div>
+        </div>
+      </div>
 
       <div class="pub-card">
         <div class="pc-year">2026</div>
@@ -188,8 +220,8 @@
         <span class="s-label">About</span>
         <h2 class="s-title">Dr. Xianglin Huang</h2>
         <div class="s-bar"></div>
-        <p>Dr. Huang received his Ph.D. from the University of Manchester (2024) under Prof. Q.M. Li, where he developed foundational data-driven methods for dynamic material characterization. His trilogy of papers in the <em>International Journal of Impact Engineering</em> — rigorously verifying the Johnson-Cook equation and establishing ANN+SVD/CP frameworks for flow stress determination — forms the core of his academic identity in impact dynamics.</p>
-        <p>Currently at KAIST and Dongguk University, he applies this expertise to lithium-ion battery impact safety — characterizing failure modes, developing deep learning frameworks for real-time damage detection, and investigating multiphysics pack stability. Impact dynamics and constitutive modeling remain the core research identity; battery safety is the current application domain where mechanical expertise drives new contributions.</p>
+        <p>Dr. Huang received his Ph.D. from the University of Manchester (2024) under Prof. Q.M. Li, where he developed foundational data-driven methods for dynamic material characterization. His four first-authored papers in the <em>International Journal of Impact Engineering</em> (2023–2026) form a complete arc: verifying when decoupled flow stress equations are legitimate, determining them from realistic SHPB data in 2D and 3D, and now validly extrapolating them to very-high strain rates with Taylor-Hopkinson validation (TEDI-FS, accepted 2026).</p>
+        <p>Currently at KAIST and Dongguk University, he also leads an independent research stream on lithium-ion battery impact safety: characterizing failure modes, developing deep learning frameworks for real-time damage detection, and investigating multiphysics pack stability. The two streams share an experimental impact-mechanics foundation, while each develops its own methodology.</p>
         <div class="about-snap-actions">
           <a href="about.html" class="btn btn-primary">Full Academic Profile</a>
           <a href="contact.html" class="btn btn-outline"><i class="fas fa-envelope"></i> Get in Touch</a>
@@ -209,6 +241,15 @@
     <h2 class="s-title">News &amp; Highlights</h2>
 
     <div class="news-list">
+
+      <div class="news-item">
+        <div class="news-date">Aug 2026</div>
+        <div>
+          <div class="news-title">🎉 Paper Accepted in <em>International Journal of Impact Engineering</em></div>
+          <div class="news-desc">"Tensor-decomposition-based inverse characterization of flow stress for very-high strain-rate impact" (First Author, with Q.M. Li). The TEDI-FS framework extrapolates flow stress models beyond the SHPB-calibrated domain and validates them against Taylor-Hopkinson impact tests up to ~10<sup>5</sup> s<sup>-1</sup>, completing a four-paper IJIE series (2023–2026).</div>
+          <a href="research_Constitutive modelling.html#tedi-fs" class="ne-link">View Research →</a>
+        </div>
+      </div>
 
       <div class="news-item">
         <div class="news-date">Jun 2026</div>
@@ -237,15 +278,6 @@
         </div>
       </div>
 
-      <div class="news-item">
-        <div class="news-date">Jan 2026</div>
-        <div>
-          <div class="news-title">Paper Published in <em>Journal of Energy Storage</em></div>
-          <div class="news-desc">"Failure Modes and Failure Energy Threshold of Lithium-ion Batteries under Extreme Impact" (Corresponding Author). Systematic characterization of LIB failure mechanisms across quasi-static, drop-weight, and ballistic loading regimes — establishing critical energy thresholds and loading-rate effects on internal damage.</div>
-          <a href="https://doi.org/10.1016/j.est.2025.120037" target="_blank" rel="noopener" class="ne-link">Read Paper →</a>
-        </div>
-      </div>
-
     </div>
 
     <div style="margin-top:24px;">
@@ -264,7 +296,7 @@
         <div class="social-row">
           <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
           <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-          <a href="#" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
           <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
         </div>
       </div>

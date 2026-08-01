@@ -40,7 +40,7 @@
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Constitutive Modeling</div>
     <h1>Dynamic Constitutive Modeling</h1>
-    <p>Pioneering data-driven methods for flow stress characterization of metals under high strain-rate loading.</p>
+    <p>Data-driven determination and extrapolation of metal flow stress, from quasi-static loading to very-high strain-rate impact.</p>
   </div>
 </div>
 
@@ -53,8 +53,36 @@
         The mechanical behavior of engineering materials under extreme strain rates — as encountered in impact, crash, and ballistic events — is governed by their dynamic flow stress. For decades, the Johnson-Cook (J-C) equation has been the industry standard for representing this behavior, yet its mathematical foundations have remained unexamined and its calibration from real experimental data has been fraught with ambiguities.
       </p>
       <p style="margin-top:14px;">
-        This research establishes a rigorous, data-driven trilogy: first <em>verifying</em> when decoupled constitutive equations are mathematically legitimate, then <em>determining</em> flow stress from varied strain-rate SHPB data, and finally <em>extending</em> the framework to the full three-dimensional (strain, strain-rate, temperature) constitutive surface. The methodology — combining SVD/CP tensor decomposition with artificial neural networks — has broad applicability beyond the J-C equation to any factorized constitutive model.
+        This research builds a rigorous, data-driven programme of four first-authored papers in the <em>International Journal of Impact Engineering</em> (2023–2026): first <em>verifying</em> when decoupled constitutive equations are mathematically legitimate, then <em>determining</em> flow stress from varied strain-rate SHPB data, next <em>extending</em> the framework to the full three-dimensional (strain, strain-rate, temperature) constitutive surface, and now <em>extrapolating</em> the identified model beyond the experimentally calibrated domain to very-high strain rates, with direct validation against Taylor-Hopkinson impact tests. The methodology, combining SVD/CP tensor decomposition with artificial neural networks, applies beyond the J-C equation to any factorized constitutive model.
       </p>
+    </div>
+
+    <!-- WHY IT MATTERS: explainer for the non-specialist -->
+    <div style="background:var(--bg-alt); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; padding:26px 30px; margin-bottom:44px;">
+      <div style="font-size:12px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--accent); margin-bottom:10px;">Why It Matters</div>
+      <h3 style="font-size:19px; font-weight:800; color:var(--navy); margin-bottom:12px;">What is dynamic constitutive modeling, and why does every impact simulation depend on it?</h3>
+      <p style="color:var(--muted); line-height:1.75; font-size:15px;">
+        When engineers simulate a car crash, a bird strike on a jet engine, a dropped phone, or a projectile hitting armor, they use explicit finite element software such as ABAQUS or LS-DYNA. The solver divides the structure into millions of small elements and computes, step by step, how each one deforms. At every time step, for every element, it must ask the material a question: at this strain, this strain rate, and this temperature, how much stress do you carry? The answer comes from the flow stress model (the dynamic constitutive model), and no simulation can be more accurate than the model it is fed.
+      </p>
+      <p style="color:var(--muted); line-height:1.75; font-size:15px; margin-top:12px;">
+        Metals behave very differently under impact than in slow laboratory tests: at strain rates of 10<sup>3</sup> s<sup>-1</sup> and beyond, their strength can rise well above the quasi-static value. Yet the models used in practice, most famously the Johnson-Cook equation, rest on assumptions that were rarely verified, are calibrated from limited Hopkinson-bar data, and are routinely extrapolated far outside the tested range. This research replaces each of those leaps of faith with a data-driven, mathematically grounded procedure: testing when the model form is legitimate, determining it directly from experimental data, and extrapolating it with validation against real impact experiments.
+      </p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:20px;">
+        <figure style="margin:0;">
+          <img src="assets/img/scicomm/fem-crash-simulation.jpg" alt="Finite element simulation of a three-car collision" style="width:100%; height:240px; object-fit:cover; border-radius:8px; border:1px solid var(--border);">
+          <figcaption style="font-size:12.5px; color:var(--muted); line-height:1.55; margin-top:8px;">
+            A finite element model of a three-car collision. During the simulation, every element queries the material's flow stress model at every time step.
+            Image: Matt Howard, Argonne National Laboratory, via <a href="https://commons.wikimedia.org/wiki/File:Crash-test_simulation_(3467719123).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener">CC BY-SA 2.0</a>.
+          </figcaption>
+        </figure>
+        <figure style="margin:0;">
+          <img src="assets/img/scicomm/hopkinson-bar-lab.jpg" alt="Split-Hopkinson pressure bar apparatus in a testing laboratory" style="width:100%; height:240px; object-fit:cover; object-position:center 65%; border-radius:8px; border:1px solid var(--border);">
+          <figcaption style="font-size:12.5px; color:var(--muted); line-height:1.55; margin-top:8px;">
+            A Hopkinson pressure bar system, the standard apparatus for measuring how strong metals are at high strain rates. Data from such tests calibrate the flow stress models used in simulation.
+            Image: MET-4719, via <a href="https://commons.wikimedia.org/wiki/File:Barres_d%27Hopkinson.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
+          </figcaption>
+        </figure>
+      </div>
     </div>
 
     <!-- PAPER 1: Legitimacy of J-C -->
@@ -177,12 +205,49 @@
       </div>
     </div>
 
+    <!-- PAPER 4: TEDI-FS -->
+    <div class="paper-block" id="tedi-fs">
+      <div class="pb-header">
+        <div class="pb-num">Paper 4 · 2026 <span class="badge" style="background:var(--accent);color:#fff;margin-left:8px;">Just Accepted</span></div>
+        <div>
+          <div class="pb-title">
+            Tensor-Decomposition-Based Inverse Characterization of Flow Stress for Very-high Strain-rate Impact
+          </div>
+          <div class="pb-journal"><strong>Xianglin Huang</strong>, Q.M. Li* &nbsp;·&nbsp; <em>International Journal of Impact Engineering</em>, Accepted (2026)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Background &amp; Motivation</h4>
+          <p class="pb-overview">
+            Every flow stress model is calibrated within an experimentally accessible domain, in practice bounded by SHPB strain rates of about 10<sup>3</sup>–10<sup>4</sup> s<sup>-1</sup>. Yet simulations of ballistic impact, crash, and penetration routinely evaluate these models at strain rates far beyond calibration, where their validity is unknown. This paper confronts that question directly: how can a flow stress model be validly extrapolated beyond its calibrated strain-rate domain, and how can the extrapolation be verified by experiment?
+          </p>
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>TEDI-FS framework: Tensor-Decomposition-based Extrapolation and Dynamic Identification of Flow Stress, integrating tensor decomposition, latent mode extrapolation, and Taylor-Hopkinson validation in one methodology</li>
+            <li>Rank-2 non-negative CP decomposition separates strain, strain-rate, and temperature dependencies while preserving non-negativity and physical interpretability of the latent modes</li>
+            <li>Model parameters identified within the quasi-static-to-SHPB domain without predefined coupling assumptions between thermomechanical variables</li>
+            <li>Strain-rate latent modes extrapolated under consistency constraints, with the two branches analytically joined at the calibration boundary by construction</li>
+            <li>Extrapolated model identified and validated through coupled Taylor-Hopkinson impact experiments and explicit finite element simulation, a two-stage inverse procedure</li>
+            <li>Good agreement with measured impact responses at strain rates up to ~10<sup>5</sup> s<sup>-1</sup>, outperforming conventional and rank-1 extrapolation models</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/tedi-fs-framework.png" alt="TEDI-FS framework flowchart">
+          <div class="fig-cap">The TEDI-FS framework: from SHPB-calibrated latent modes, through consistency-constrained extrapolation, to inverse identification against Taylor-Hopkinson impact tests.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Xianglin Huang, Q.M. Li, "Tensor-decomposition-based inverse characterization of flow stress for very-high strain-rate impact," <em>International Journal of Impact Engineering</em>, Accepted (2026). DOI: to be assigned.
+      </div>
+    </div>
+
     <!-- SIGNIFICANCE BOX -->
     <div class="vision-block" style="margin-top:40px;">
       <blockquote>
-        "This trilogy establishes a complete, mathematically grounded pipeline for dynamic material characterization: from verifying when empirical models are legitimate, to determining constitutive equations from realistic (non-ideal) experimental data, to fully resolving the three-dimensional mechanical response. The same ANN+SVD/CP methodology has since been extended to impact resistance prediction, demonstrating its broad applicability as a data-driven mechanics framework."
+        "These four papers form a complete, mathematically grounded pipeline for dynamic material characterization: verifying when empirical models are legitimate, determining constitutive equations from realistic (non-ideal) experimental data, resolving the full three-dimensional mechanical response, and finally extrapolating beyond the calibrated domain with direct experimental validation at very-high strain rates. Together they move flow stress modeling from assumed functional forms toward evidence-based representation across the entire strain-rate spectrum."
       </blockquote>
-      <cite>— Research significance of the constitutive modeling trilogy</cite>
+      <cite>— Research significance of the four-paper flow stress programme</cite>
     </div>
 
   </div>
@@ -197,7 +262,7 @@
         <div class="social-row">
           <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
           <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-          <a href="#" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
           <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
         </div>
       </div>
