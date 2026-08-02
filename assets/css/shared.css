@@ -109,8 +109,16 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   max-width: var(--max); margin: 0 auto; padding: 0 24px;
   height: 100%; display: flex; align-items: center; justify-content: space-between;
 }
-.nav-logo { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
+.nav-logo {
+  display: inline-flex; align-items: center;
+  font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -.3px;
+}
 .nav-logo span { color: var(--accent-d); }
+/* The mark carries a navy tile that matches the bar it sits on, so what reads
+   here is just the letter. Sized against the cap height of the wordmark.
+   The spacing sits on the mark rather than on a flex gap, because "Huang" is
+   an anonymous flex item of its own and a gap would split the wordmark too. */
+.nav-mark { display: block; width: 30px; height: 30px; flex-shrink: 0; margin-right: 10px; }
 
 .nav-links { display: flex; align-items: center; gap: 2px; }
 .nav-links > li { position: relative; }
