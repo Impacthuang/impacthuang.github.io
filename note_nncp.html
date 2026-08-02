@@ -4,6 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Non-negative CP Decomposition (NN-CP) — Technical Note — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_nncp.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Non-negative CP Decomposition (NN-CP) — Technical Note">
+  <meta property="og:description" content="Mathematical principles of non-negative CP (CANDECOMP/PARAFAC) tensor decomposition for order-3 tensors: the outer-product model, matricization and the Khatri-Rao product, the NNLS optimization problem, multiplicative alternating least squares, Kruskal uniqueness, and worked Rank-1 to Rank-3 numerical examples.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_nncp.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Non-negative CP Decomposition (NN-CP) — Technical Note">
+  <meta name="twitter:description" content="Mathematical principles of non-negative CP (CANDECOMP/PARAFAC) tensor decomposition for order-3 tensors: the outer-product model, matricization and the Khatri-Rao product, the NNLS optimization problem, multiplicative alternating least squares, Kruskal uniqueness, and worked Rank-1 to Rank-3 numerical examples.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <meta name="description" content="Mathematical principles of non-negative CP (CANDECOMP/PARAFAC) tensor decomposition for order-3 tensors: the outer-product model, matricization and the Khatri-Rao product, the NNLS optimization problem, multiplicative alternating least squares, Kruskal uniqueness, and worked Rank-1 to Rank-3 numerical examples.">
   <link rel="stylesheet" href="assets/css/shared.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -29,15 +49,17 @@
       <li>
         <a href="research.html">Research</a>
         <ul class="dd-menu">
-          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
-          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
-          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
       <li>
         <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
         <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
           <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
           <li><a href="members.html">Members</a></li>
           <li><a href="conferences.html">Conferences</a></li>
@@ -45,7 +67,6 @@
           <li><a href="downloads.html">Downloads</a></li>
         </ul>
       </li>
-      <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -365,7 +386,7 @@
 
         <div class="na-note">
           <p>
-            <strong>Where this is used.</strong> Non-negative CP decomposition is the mathematical foundation of the tensor-decomposition step in the data-driven <a href="notes.html#flow-stress" class="term">flow stress</a> work, in which a discrete stress tensor over strain, strain rate, and temperature is decomposed into non-negative one-dimensional factors before being reconstructed by a neural network. See <a href="research_Constitutive modelling.html">Constitutive Modeling</a> for the research context.
+            <strong>Where this is used.</strong> Non-negative CP decomposition is the mathematical foundation of the tensor-decomposition step in the data-driven <a href="notes.html#flow-stress" class="term">flow stress</a> work, in which a discrete stress tensor over strain, strain rate, and temperature is decomposed into non-negative one-dimensional factors before being reconstructed by a neural network. See <a href="research-constitutive-modeling.html">Constitutive Modeling</a> for the research context.
           </p>
         </div>
 
@@ -412,6 +433,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="research.html">Research</a></li>
           <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
           <li><a href="notes.html">Technical Notes</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>

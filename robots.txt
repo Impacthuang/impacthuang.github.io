@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /_archive/
+Disallow: /_local/
+
+Sitemap: https://impacthuang.github.io/sitemap.xml

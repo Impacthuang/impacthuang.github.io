@@ -3,7 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Research streams of Dr. Xianglin Huang: data-driven dynamic constitutive modeling, lithium-ion battery impact safety and prognostics, and impact mechanics.">
   <title>Research — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/research.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Research">
+  <meta property="og:description" content="Research streams of Dr. Xianglin Huang: data-driven dynamic constitutive modeling, lithium-ion battery impact safety and prognostics, and impact mechanics.">
+  <meta property="og:url" content="https://impacthuang.github.io/research.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Research">
+  <meta name="twitter:description" content="Research streams of Dr. Xianglin Huang: data-driven dynamic constitutive modeling, lithium-ion battery impact safety and prognostics, and impact mechanics.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <link rel="stylesheet" href="assets/css/shared.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -21,15 +42,17 @@
       <li>
         <a href="research.html">Research</a>
         <ul class="dd-menu">
-          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
-          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
-          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
       <li>
         <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
         <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
           <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
           <li><a href="members.html">Members</a></li>
           <li><a href="conferences.html">Conferences</a></li>
@@ -37,7 +60,6 @@
           <li><a href="downloads.html">Downloads</a></li>
         </ul>
       </li>
-      <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -65,7 +87,7 @@
       <!-- Card 1: Constitutive Modeling (CORE) -->
       <div class="res-ov-card">
         <div class="roc-img">
-          <img src="assets/img/research/constitutive-modelling.jpg" alt="Dynamic Constitutive Modeling">
+          <img src="assets/img/research/constitutive-modelling.jpg" alt="Dynamic Constitutive Modeling" loading="lazy" decoding="async">
           <div class="roc-overlay"></div>
           <div class="roc-label">Dynamic<br>Constitutive<br>Modeling</div>
         </div>
@@ -73,14 +95,14 @@
           <div style="margin-bottom:10px;"><span class="tag tag-accent">Core Research</span></div>
           <p>Every explicit FE simulation of a crash, impact, or perforation event in solvers such as ABAQUS or LS-DYNA depends on a <a class="term" href="notes.html#flow-stress">flow stress</a> model, and its fidelity caps the fidelity of the whole simulation. This research makes those models rigorous: <a class="term" href="notes.html#svd">SVD</a>/<a class="term" href="notes.html#cp-decomposition">CP tensor decomposition</a> and <a class="term" href="notes.html#ann">ANN</a> frameworks that determine dynamic flow stress directly from discrete experimental data, verifying and extending the <a class="term" href="notes.html#johnson-cook">Johnson-Cook</a> equation paradigm. Four consecutive first-authored papers in IJIE build a complete methodology on metals: from mathematical foundations, through full three-dimensional (strain × strain-rate × temperature) characterization, to validated extrapolation at very-high <a class="term" href="notes.html#strain-rate">strain rates</a> (<a class="term" href="notes.html#tedi-fs">TEDI-FS</a>, accepted 2026). The framework is not specific to metals, and the next step is to apply it to materials whose standard models are weakest, such as foams and polymers.</p>
           <div class="roc-papers"><strong>4 first-authored papers</strong> · International Journal of Impact Engineering (Q1) · 2023–2026</div>
-          <a href="research_Constitutive modelling.html" class="btn btn-primary">Explore →</a>
+          <a href="research-constitutive-modeling.html" class="btn btn-primary">Explore →</a>
         </div>
       </div>
 
       <!-- Card 2: Battery PHM -->
       <div class="res-ov-card">
         <div class="roc-img">
-          <img src="assets/img/research/battery-phm-dl.jpg" alt="Battery Impact &amp; PHM">
+          <img src="assets/img/research/battery-phm-dl.jpg" alt="Battery Impact &amp; PHM" loading="lazy" decoding="async">
           <div class="roc-overlay"></div>
           <div class="roc-label">Battery Impact<br>Safety &amp; Health<br>Management</div>
         </div>
@@ -88,14 +110,14 @@
           <div style="margin-bottom:10px;"><span class="tag tag-blue">Current Focus</span></div>
           <p>An independent research stream on lithium-ion battery safety: investigating failure modes and energy thresholds of LIBs under impact loading, building deep learning systems for real-time health monitoring via <a class="term" href="notes.html#acoustic-emission">acoustic emission</a>, and developing <a class="term" href="notes.html#multiphysics-fem">multiphysics FEM</a> models coupling structural damage with electrochemical degradation. Four papers appeared in 2026 and the stream is growing, with further work in preparation on cell-level damage and pack-level response.</p>
           <div class="roc-papers"><strong>4 papers</strong> · JPS, JES, EFA, JMST (all Q1/Q2) · 2026</div>
-          <a href="research_Battery PHM.html" class="btn btn-primary">Explore →</a>
+          <a href="research-battery-phm.html" class="btn btn-primary">Explore →</a>
         </div>
       </div>
 
       <!-- Card 3: Impact Mechanics (shared foundation) -->
       <div class="res-ov-card">
         <div class="roc-img">
-          <img src="assets/img/research/impact-dynamics.jpg" alt="Impact Mechanics">
+          <img src="assets/img/research/impact-dynamics.jpg" alt="Impact Mechanics" loading="lazy" decoding="async">
           <div class="roc-overlay"></div>
           <div class="roc-label">Impact Mechanics<br>&amp; Structural<br>Response</div>
         </div>
@@ -103,7 +125,7 @@
           <div style="margin-bottom:10px;"><span class="tag tag-navy">Foundation &amp; Emerging Directions</span></div>
           <p>The experimental foundation underneath both streams, and the ground where new directions begin. Published work spans high-velocity impact of metallic and polymer-aluminium layered plates, impact behavior and mesoscale damage modeling of 3D woven composites, energy absorption of sandwich structures under impulsive loading, and ANN surrogate models for critical perforation velocity and residual velocity across multi-parameter impact spaces. Several collaborative directions are currently in progress and not yet published.</p>
           <div class="roc-papers"><strong>10 publications</strong> · IJIE, Thin-Walled Structures, IJMS, Composite Structures · 2016–2026</div>
-          <a href="research_Impact dynamics.html" class="btn btn-primary">Explore →</a>
+          <a href="research-impact-dynamics.html" class="btn btn-primary">Explore →</a>
         </div>
       </div>
 
@@ -158,6 +180,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="research.html">Research</a></li>
           <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
           <li><a href="notes.html">Technical Notes</a></li>
           <li><a href="members.html">Members</a></li>
           <li><a href="contact.html">Contact</a></li>

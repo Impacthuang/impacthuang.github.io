@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Impact safety and health management of lithium-ion batteries: failure modes and energy thresholds, acoustic emission deep learning, and multiphysics finite element modeling.">
+  <title>Battery Impact Safety &amp; PHM — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/research-battery-phm.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Battery Impact Safety &amp; PHM">
+  <meta property="og:description" content="Impact safety and health management of lithium-ion batteries: failure modes and energy thresholds, acoustic emission deep learning, and multiphysics finite element modeling.">
+  <meta property="og:url" content="https://impacthuang.github.io/research-battery-phm.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Battery Impact Safety &amp; PHM">
+  <meta name="twitter:description" content="Impact safety and health management of lithium-ion batteries: failure modes and energy thresholds, acoustic emission deep learning, and multiphysics finite element modeling.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Battery Impact &amp; PHM</div>
+    <h1>Battery Impact Safety &amp; Health Management</h1>
+    <p>Experimental characterization, real-time monitoring, and multiphysics modeling of lithium-ion battery safety under impact loading.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <div class="res-intro">
+      <span class="s-label">Research Overview</span>
+      <p>
+        Lithium-ion batteries (LIBs) power electric vehicles, electric aircraft, and grid-scale storage, all of which can experience crash, drop, or puncture events in service. Mechanical abuse is one of the least understood triggers of <a class="term" href="notes.html#thermal-runaway">thermal runaway</a>: a cell can suffer internal damage in an impact, show no external sign, and fail catastrophically later. Understanding how LIBs fail under dynamic loading, and detecting that damage the moment it occurs, is therefore a prerequisite for the safe deployment of electrified transport and storage.
+      </p>
+      <p style="margin-top:14px;">
+        This research program addresses battery impact safety as an independent stream with its own experimental and computational methodology, organized around three questions. <strong>How do cells fail under impact?</strong> Systematic drop-weight and high-velocity impact campaigns characterize failure modes and identify the impact-energy thresholds that separate safe deformation from <a class="term" href="notes.html#isc">internal short circuit</a>. <strong>Can damage be detected in real time, without opening the cell?</strong> Deep learning models on <a class="term" href="notes.html#acoustic-emission">acoustic emission</a> signals classify damage states as they happen, reaching 98.3% accuracy with a <a class="term" href="notes.html#cnn-bilstm">CNN-BiLSTM</a> architecture. <strong>How does cell-level damage propagate to system level?</strong> <a class="term" href="notes.html#multiphysics-fem">Multiphysics finite element</a> models couple mechanical deformation with electrochemical response, linking local damage to pack-level instability across states of charge.
+      </p>
+      <p style="margin-top:14px;">
+        The stream is expanding rather than winding down. Four papers appeared in 2026, and further work is in preparation on cell-level damage mechanisms and on the response of complete packs, carried out both at KAIST and with collaborating groups.
+      </p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:20px;">
+        <div style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:6px;">Failure Physics</div>
+          <div style="font-size:14px; color:var(--muted); line-height:1.6;">Failure modes and impact-energy thresholds of cells under quasi-static, drop-weight, and high-velocity impact loading.</div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:6px;">Real-Time Monitoring</div>
+          <div style="font-size:14px; color:var(--muted); line-height:1.6;">Acoustic emission sensing plus deep learning for non-invasive, in-situ damage classification during impact.</div>
+        </div>
+        <div style="background:#fff; border:1px solid var(--border); border-radius:10px; padding:16px 18px;">
+          <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:6px;">Cell-to-Pack Simulation</div>
+          <div style="font-size:14px; color:var(--muted); line-height:1.6;">Multiphysics FE models coupling structural damage with electrochemical degradation, from single cell to pack.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAPER 1: Failure Modes -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Corresponding Author · 2026</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.est.2025.120037" target="_blank" rel="noopener">
+              Failure modes and failure energy threshold of lithium-ion batteries under extreme impact
+            </a>
+          </div>
+          <div class="pb-journal">Yunfei Deng, Han Zheng, <strong>Xianglin Huang</strong>* &nbsp;·&nbsp; <em>Journal of Energy Storage</em>, Vol. 150, 120037 (2026)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>Systematic experimental investigation coupling loading rate and energy input to LIB internal failure mechanisms</li>
+            <li>Failure mode map established: ductile deformation at low strain rates vs. shear-driven fracture at high strain rates</li>
+            <li>Critical energy thresholds for LIB failure determined across quasi-static, drop-weight, and high-velocity impact loading regimes</li>
+            <li>Counter-intuitive finding: higher strain rate hardens the material, reducing damage in certain impact energy ranges</li>
+            <li>Electrochemical diagnostics (impedance spectroscopy, capacity tests) integrated with mechanical characterization</li>
+            <li>Three design principles proposed: strain-rate adaptive materials, expanded elastic deformation range, fail-safe mechanisms</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/battery-failure-modes.jpg" alt="Battery failure modes under impact" loading="lazy" decoding="async">
+          <div class="fig-cap">Failure mode map of LIBs under dynamic loading — distinguishing ductile deformation and shear-driven fracture regimes.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Yunfei Deng, Han Zheng, Xianglin Huang*, "Failure modes and failure energy threshold of lithium-ion batteries under extreme impact," <em>Journal of Energy Storage</em>, Vol. 150, 120037 (2026).
+        DOI: <a href="https://doi.org/10.1016/j.est.2025.120037" target="_blank" rel="noopener">10.1016/j.est.2025.120037</a>
+      </div>
+    </div>
+
+    <!-- PAPER 2: Deep Learning Real-Time -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Corresponding Author · 2026</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.jpowsour.2025.238737" target="_blank" rel="noopener">
+              Deep Learning-Based Real-Time Damage Assessment of Lithium-Ion Batteries under Dynamic Impact
+            </a>
+          </div>
+          <div class="pb-journal">Yunfei Deng, Jiangtao Li, <strong>Xianglin Huang</strong>* &nbsp;·&nbsp; <em>Journal of Power Sources</em>, Vol. 662, 238737 (2026)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>CNN-BiLSTM deep learning framework for real-time, non-invasive detection of LIB impact damage</li>
+            <li>Acoustic emission (AE) signals used as the sensing modality — no modification to battery cell required</li>
+            <li>Four-level internal damage classification achieved with 98.3% accuracy</li>
+            <li>Savitzky-Golay smoothing and Gaussian noise augmentation implemented for robust model training</li>
+            <li>AE signal features physically correlated with electrochemical degradation modes confirmed by post-test analysis</li>
+            <li>Framework provides early safety warning capability directly applicable to battery management systems (BMS)</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/battery-phm-dl.jpg" alt="CNN-BiLSTM battery damage detection" loading="lazy" decoding="async">
+          <div class="fig-cap">CNN-BiLSTM framework for real-time acoustic emission-based battery damage classification.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Yunfei Deng, Jiangtao Li, Xianglin Huang*, "Deep learning-based real-time damage assessment of lithium-ion batteries under dynamic impact," <em>Journal of Power Sources</em>, Vol. 662, 238737 (2026).
+        DOI: <a href="https://doi.org/10.1016/j.jpowsour.2025.238737" target="_blank" rel="noopener">10.1016/j.jpowsour.2025.238737</a>
+      </div>
+    </div>
+
+    <!-- PAPER 3: Multiphysics Pack -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">Corresponding Author · 2026</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1016/j.engfailanal.2026.111084" target="_blank" rel="noopener">
+              Characterizing Critical Failure Impact on LIB Pack Stability via Multiphysics Response
+            </a>
+          </div>
+          <div class="pb-journal">Yunfei Deng, Han Zheng, Tiechun Zhang*, <strong>Xianglin Huang</strong>* &nbsp;·&nbsp; <em>Engineering Failure Analysis</em>, Vol. 196, 111084 (2026)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>Multidimensional performance stability assessment methodology for LIB systems under impact loading</li>
+            <li>Effects of state-of-charge (SOC) and battery-pack configuration on impact response systematically investigated</li>
+            <li>FEM models developed considering anisotropic material properties and SOC-dependent mechanical behavior</li>
+            <li>Key finding: high SOC improves stiffness and impact resistance but reduces post-impact electrochemical reversibility</li>
+            <li>Low-SOC batteries exhibit better energy absorption capacity but show worse post-impact degradation</li>
+            <li>Battery-pack configuration effectively mitigates SOC effects through load redistribution and stress redistribution</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/battery-pack-multiphysics.jpg" alt="LIB pack multiphysics simulation" loading="lazy" decoding="async">
+          <div class="fig-cap">Multiphysics FEM simulation of battery pack under impact — coupling mechanical and electrochemical response.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Yunfei Deng, Han Zheng, Tiechun Zhang*, Xianglin Huang*, "Characterizing critical failure impact on LIB pack stability via multiphysics response," <em>Engineering Failure Analysis</em>, Vol. 196, 111084 (2026).
+        DOI: <a href="https://doi.org/10.1016/j.engfailanal.2026.111084" target="_blank" rel="noopener">10.1016/j.engfailanal.2026.111084</a>
+      </div>
+    </div>
+
+    <!-- PAPER 4: PHM Review -->
+    <div class="paper-block">
+      <div class="pb-header">
+        <div class="pb-num">First Author · Invited Review · 2026</div>
+        <div>
+          <div class="pb-title">
+            <a href="https://doi.org/10.1007/s12206-026-0365-z" target="_blank" rel="noopener">
+              Advancing Battery Prognostics and Health Management: Challenges and Future Perspectives
+            </a>
+          </div>
+          <div class="pb-journal"><strong>Xianglin Huang</strong>, Heung Soo Kim &nbsp;·&nbsp; <em>Journal of Mechanical Science and Technology</em>, Vol. 40(4), pp. 2405–2415 (2026)</div>
+        </div>
+      </div>
+      <div class="pb-body">
+        <div class="pb-content">
+          <h4>Key Contributions</h4>
+          <ul class="pb-highlights">
+            <li>Comprehensive systematic review of the battery PHM field over the past decade</li>
+            <li>Identifies the "homogenization bottleneck" — current methods overfit to specific battery chemistries and neglect mechanistic understanding</li>
+            <li>Three paradigms reviewed: physics-based modeling, data-driven approaches, and hybrid methods</li>
+            <li>Proposes a research framework balancing data-driven efficiency with physics-based interpretability</li>
+            <li>Addresses multi-scale, multi-physics health modeling from electrode-level to pack-level</li>
+            <li>Future directions outlined: digital twins, explainable AI, edge computing integration, and industrial standardization</li>
+          </ul>
+        </div>
+        <div class="pb-figure">
+          <img src="assets/img/research/phm-review-table.png" alt="Comparison of physics-based, data-driven, and hybrid modelling approaches for battery PHM" loading="lazy" decoding="async">
+          <div class="fig-cap">Table 1 from the paper: systematic comparison of physics-based, data-driven, and hybrid modelling approaches across core principles, key advantages, and major limitations.</div>
+        </div>
+      </div>
+      <div class="pb-cite">
+        Xianglin Huang, Heung Soo Kim, "Advancing battery prognostics and health management: Challenges and future perspectives," <em>Journal of Mechanical Science and Technology</em>, Vol. 40(4), pp. 2405–2415 (2026).
+        DOI: <a href="https://doi.org/10.1007/s12206-026-0365-z" target="_blank" rel="noopener">10.1007/s12206-026-0365-z</a>
+      </div>
+    </div>
+
+    <!-- RESEARCH SIGNIFICANCE -->
+    <div class="vision-block" style="margin-top:40px;">
+      <blockquote>
+        "Current battery safety standards are built around quasi-static tests, yet real accidents are dynamic. The significance of this stream lies in closing that gap: quantified impact-energy thresholds that can inform test standards, a monitoring approach that detects internal damage without disassembling the cell, and simulation tools that trace how an impact on one cell destabilizes a pack. Future work will deepen the mechanical-electrochemical coupling and extend the experiments toward module- and pack-level dynamic abuse."
+      </blockquote>
+      <cite>— Research significance and outlook: from cell-level failure physics toward impact safety standards for energy storage</cite>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Research Areas</h4>
+        <ul>
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

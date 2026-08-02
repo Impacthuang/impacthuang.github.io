@@ -4,6 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Technical Notes &amp; Glossary — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/notes.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Technical Notes &amp; Glossary">
+  <meta property="og:description" content="Technical notes and a plain-language glossary of the methods and terminology used across this site: flow stress, SHPB and Taylor-Hopkinson testing, tensor decomposition (CP, NN-CP, SVD), neural network surrogates, and battery impact safety and prognostics.">
+  <meta property="og:url" content="https://impacthuang.github.io/notes.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Technical Notes &amp; Glossary">
+  <meta name="twitter:description" content="Technical notes and a plain-language glossary of the methods and terminology used across this site: flow stress, SHPB and Taylor-Hopkinson testing, tensor decomposition (CP, NN-CP, SVD), neural network surrogates, and battery impact safety and prognostics.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <meta name="description" content="Technical notes and a plain-language glossary of the methods and terminology used across this site: flow stress, SHPB and Taylor-Hopkinson testing, tensor decomposition (CP, NN-CP, SVD), neural network surrogates, and battery impact safety and prognostics.">
   <link rel="stylesheet" href="assets/css/shared.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -22,15 +42,17 @@
       <li>
         <a href="research.html">Research</a>
         <ul class="dd-menu">
-          <li><a href="research_Constitutive modelling.html">Constitutive Modeling</a></li>
-          <li><a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></li>
-          <li><a href="research_Impact dynamics.html">Impact Mechanics</a></li>
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
         </ul>
       </li>
       <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
       <li>
         <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
         <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
           <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
           <li><a href="members.html">Members</a></li>
           <li><a href="conferences.html">Conferences</a></li>
@@ -38,7 +60,6 @@
           <li><a href="downloads.html">Downloads</a></li>
         </ul>
       </li>
-      <li><a href="contact.html">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -61,7 +82,7 @@
 
     <div class="fp-block">
       <figure class="fp-fig">
-        <img src="assets/img/scicomm/simulation-anatomy.png" alt="Diagram showing the three parts of a numerical simulation: geometric representation, constitutive equation, and physical principles, with the flow stress equation highlighted inside the constitutive branch.">
+        <img src="assets/img/scicomm/simulation-anatomy.png" alt="Diagram showing the three parts of a numerical simulation: geometric representation, constitutive equation, and physical principles, with the flow stress equation highlighted inside the constitutive branch." loading="lazy" decoding="async">
         <figcaption><strong>Figure 1.</strong> The three parts of a numerical simulation of a metal structure under impact, with the flow stress equation highlighted. Reproduced from the author's PhD thesis, Fig. 1-1.</figcaption>
       </figure>
       <div class="fp-text">
@@ -73,18 +94,18 @@
 
     <div class="fp-block fp-rev">
       <figure class="fp-fig">
-        <img src="assets/img/scicomm/flow-stress-methods.png" alt="Diagram comparing three routes from characterized material data to a flow stress equation: the conventional fitted-equation route, the machine learning route, and the discrete-data route with data screening and SVD/CP decomposition.">
+        <img src="assets/img/scicomm/flow-stress-methods.png" alt="Diagram comparing three routes from characterized material data to a flow stress equation: the conventional fitted-equation route, the machine learning route, and the discrete-data route with data screening and SVD/CP decomposition." loading="lazy" decoding="async">
         <figcaption><strong>Figure 2.</strong> Three routes from measured material data to a usable flow stress equation. The shaded branch on the right is the route developed in the thesis. Reproduced from the author's PhD thesis, Fig. 1-3.</figcaption>
       </figure>
       <div class="fp-text">
         <h3>Three ways to get from data to an equation</h3>
         <p>The conventional route on the left picks a fixed formula in advance, the <a href="#johnson-cook" class="term">Johnson-Cook model</a> being the usual choice, and fits its constants to the measurements. It is fast and every solver accepts it, but the form of the equation is decided before the data is looked at, so whatever the material does that the formula cannot express is lost.</p>
         <p>The machine learning route in the middle drops the fixed form and trains a network directly on the data. It fits well inside the tested range and gives little confidence outside it, which is exactly where impact problems live.</p>
-        <p>The third route keeps the discrete data as the primary object. Measurements are first screened for validity, then <a href="#svd" class="term">SVD</a> or <a href="#cp-decomposition" class="term">CP decomposition</a> is used to separate the underlying structure from the noise, and an <a href="#ann" class="term">artificial neural network</a> handles the non-ideal data whose strain rate was never really constant. This is the line of work that became <a href="#tedi-fs" class="term">TEDI-FS</a>, described on the <a href="research_Constitutive modelling.html">constitutive modeling</a> page.</p>
+        <p>The third route keeps the discrete data as the primary object. Measurements are first screened for validity, then <a href="#svd" class="term">SVD</a> or <a href="#cp-decomposition" class="term">CP decomposition</a> is used to separate the underlying structure from the noise, and an <a href="#ann" class="term">artificial neural network</a> handles the non-ideal data whose strain rate was never really constant. This is the line of work that became <a href="#tedi-fs" class="term">TEDI-FS</a>, described on the <a href="research-constitutive-modeling.html">constitutive modeling</a> page.</p>
       </div>
     </div>
 
-    <p class="fp-src">Source: Xianglin Huang, <em>Determination of dynamic flow stress equation based on discrete material data</em>, PhD thesis, Department of Mechanical and Aerospace Engineering, The University of Manchester, 2024. Supervisor: Prof. Q.M. Li.</p>
+    <p class="fp-src">Source: Xianglin Huang, <a href="https://www.proquest.com/openview/fd1c3f7e73d58a585782044ea5319a55/1?pq-origsite=gscholar&amp;cbl=2026366&amp;diss=y" target="_blank" rel="noopener"><em>Determination of dynamic flow stress equation based on discrete material data</em></a>, PhD thesis, Department of Mechanical and Aerospace Engineering, The University of Manchester, 2024. Supervisor: Prof. Q.M. Li.</p>
   </div>
 </section>
 
@@ -139,7 +160,11 @@
         <div class="gl-full">also written as the flow stress equation, or constitutive relation</div>
         <p class="gl-body">The stress a metal sustains while it is plastically deforming, as a function of the accumulated plastic strain, the strain rate, and the temperature. It is the single material input that governs how a finite element solver such as ABAQUS or LS-DYNA predicts a crash, impact, or perforation event, so the accuracy of the flow stress description places a ceiling on the accuracy of the whole simulation.</p>
         <p class="gl-body">Determining it is difficult because the three variables cannot be controlled independently in a single experiment: a high strain rate test heats the specimen through plastic work, so strain rate and temperature effects arrive coupled and have to be separated afterwards.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Huang &amp; Li, the four-paper series in <em>International Journal of Impact Engineering</em>: <a href="publications.html#pub-7">173 (2023) 104453</a>, <a href="publications.html#pub-12">206 (2025) 105403, Part 1</a>, <a href="publications.html#pub-11">206 (2025) 105432, Part 2</a>, and <a href="publications.html#pub-18">accepted 2026</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
       </div>
 
       <div class="gl-entry" id="shpb">
@@ -147,14 +172,22 @@
         <div class="gl-full">also called the Kolsky bar</div>
         <p class="gl-body">The standard laboratory technique for measuring material response at strain rates of roughly 10<sup>2</sup> to 10<sup>4</sup> s<sup>-1</sup>. A short specimen is sandwiched between two long elastic bars; a striker generates a compressive stress wave in the incident bar, and the strains recorded on the two bars are used to reconstruct the stress, strain, and strain rate history of the specimen.</p>
         <p class="gl-body">Its accuracy depends on assumptions that are only approximately met: stress uniformity across the specimen, one-dimensional wave propagation, and negligible friction and inertia. These are the reasons a raw SHPB curve cannot simply be fitted, and why data screening comes before any model identification.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-12"><em>Int. J. Impact Eng.</em> 206 (2025) 105403, Part 1</a> and <a href="publications.html#pub-11">206 (2025) 105432, Part 2</a>, in which the flow stress equation is determined from screened Hopkinson bar data rather than from a fitted curve.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="taylor-hopkinson">
         <div class="gl-term">Taylor-Hopkinson impact test</div>
         <div class="gl-full">a Taylor cylinder experiment instrumented with a Hopkinson bar</div>
         <p class="gl-body">A cylindrical specimen is fired against a Hopkinson bar acting as the anvil, so that the deformed final shape of the specimen and the force history recorded by the bar are both available from the same experiment. It reaches strain rates above what a conventional SHPB can reach, but the deformation field is strongly non-uniform, so the flow stress is recovered by inverse identification: a finite element model of the test is run repeatedly until its predictions match the measurements.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-18"><em>Int. J. Impact Eng.</em>, accepted 2026</a>, where Taylor-Hopkinson tests supply the very-high-rate measurements used to validate the extrapolation.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="strain-rate">
@@ -162,14 +195,18 @@
         <div class="gl-full">quasi-static, intermediate, high, and very high strain rate</div>
         <p class="gl-body">Strain rate is how fast deformation accumulates, in units of s<sup>-1</sup>. Different experimental techniques cover different bands: conventional testing machines reach about 10<sup>-4</sup> to 10<sup>0</sup> s<sup>-1</sup>, servo-hydraulic machines the intermediate range, the Hopkinson bar roughly 10<sup>2</sup> to 10<sup>4</sup> s<sup>-1</sup>, and plate impact or laser-driven experiments beyond that.</p>
         <p class="gl-body">Metals typically show a marked upturn in strength somewhere above about 10<sup>3</sup> s<sup>-1</sup>. Because no single technique spans the full spectrum, the behaviour in the very-high-rate band has to be extrapolated from lower-rate data, and doing that extrapolation defensibly is a central problem of the constitutive modeling stream.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-12"><em>Int. J. Impact Eng.</em> 206 (2025) 105403, Part 1</a> for the rate dependence itself, and <a href="publications.html#pub-18">accepted 2026</a> for the extrapolation beyond the tested band.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="dif">
         <div class="gl-term">DIF <span class="gl-abbr">(Dynamic Increase Factor)</span></div>
         <div class="gl-full">the strain rate sensitivity of strength, expressed as a ratio</div>
         <p class="gl-body">The ratio of the dynamic strength at a given strain rate to the quasi-static strength of the same material. It is a compact way of reporting strain rate sensitivity, and it is the quantity most often plotted when comparing materials, but it is defined against a reference condition that is not always stated consistently in the literature, which makes cross-study comparison less straightforward than it appears.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a></div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
       </div>
 
       <div class="gl-entry" id="johnson-cook">
@@ -177,21 +214,29 @@
         <div class="gl-full">JC; the multiplicative strain, strain rate, and temperature flow stress equation</div>
         <p class="gl-body">The most widely used empirical flow stress equation in impact engineering, built into essentially every explicit finite element solver. It assumes the effects of strain hardening, strain rate, and thermal softening multiply together, each with its own small set of fitted constants.</p>
         <p class="gl-body">Its convenience is also its limitation: the multiplicative separability is an assumption, not a measurement, and it is exactly this assumption that a data-driven treatment can test rather than presume.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Tested rather than assumed in Huang &amp; Li, <a href="publications.html#pub-7"><em>Int. J. Impact Eng.</em> 173 (2023) 104453</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="tedi-fs">
         <div class="gl-term">TEDI-FS</div>
         <div class="gl-full">Tensor Decomposition and Interpolation for Flow Stress</div>
         <p class="gl-body">The framework developed in the constitutive modeling stream. Discrete experimental flow stress data over strain, strain rate, and temperature is arranged as an order-3 tensor, decomposed into non-negative one-dimensional factors, and then reconstructed and extended by a neural network, so that the strain rate dependence is carried by its own factor rather than being assumed to take a prescribed algebraic form.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html#tedi-fs">Constitutive Modeling</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Introduced in Huang &amp; Li, <a href="publications.html#pub-18"><em>Int. J. Impact Eng.</em>, accepted 2026</a>, Paper 4 of the series.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html#tedi-fs">Constitutive Modeling</a></div>
       </div>
 
       <div class="gl-entry" id="mape">
         <div class="gl-term">MAPE <span class="gl-abbr">(Mean Absolute Percentage Error)</span></div>
         <div class="gl-full">the standard accuracy metric in this flow stress work</div>
         <p class="gl-body">The average of the absolute differences between predicted and measured values, each expressed as a percentage of the measured value. It is used in preference to an absolute error metric because flow stress varies over a wide range across the test matrix, and a percentage measure weights the low-stress and high-stress regions comparably.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a></div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
       </div>
     </div>
 
@@ -204,7 +249,11 @@
         <div class="gl-full">CANDECOMP/PARAFAC; also called canonical polyadic decomposition</div>
         <p class="gl-body">A way of writing a multi-way array (a tensor) as a sum of a small number of simple components, each of which is the outer product of one vector per dimension. For flow stress data indexed by strain, strain rate, and temperature, this means expressing the whole three-dimensional dataset in terms of a few one-dimensional curves, one per variable per component.</p>
         <p class="gl-body">Unlike matrix decompositions, CP decomposition is essentially unique under mild conditions without needing an artificial constraint such as orthogonality, which is what makes its components candidates for physical interpretation rather than mere basis functions.</p>
-        <div class="gl-where">Full note: <a href="note_nncp.html">Non-negative CP Decomposition</a> &nbsp;·&nbsp; Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-11"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a>, where flow stress over strain, strain rate and temperature is treated as an order-3 tensor, and <a href="publications.html#pub-18">accepted 2026</a>.</div>
+        </div>
+        <div class="gl-where">Full note: <a href="note_nncp.html">Non-negative CP Decomposition</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
       </div>
 
       <div class="gl-entry" id="nncp">
@@ -212,6 +261,10 @@
         <div class="gl-full">CP decomposition with all factor matrices constrained to be non-negative</div>
         <p class="gl-body">CP decomposition in which every factor is required to be non-negative, making it the three-way generalization of non-negative matrix factorization. Because the components can then only add and never cancel, each one is a physically admissible partial contribution rather than an arbitrary signed basis vector, which matters when the quantity being decomposed, such as stress, is itself non-negative.</p>
         <p class="gl-body">It is the tensor-decomposition step underneath the <a href="#tedi-fs" class="term">TEDI-FS</a> framework.</p>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">The decomposition step in Huang &amp; Li, <a href="publications.html#pub-11"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a> and <a href="publications.html#pub-18">accepted 2026</a>.</div>
+        </div>
         <div class="gl-where">Full note: <a href="note_nncp.html">Non-negative CP Decomposition, with derivations and worked examples</a></div>
       </div>
 
@@ -220,7 +273,11 @@
         <div class="gl-full">the matrix counterpart of tensor decomposition</div>
         <p class="gl-body">The factorization of a matrix into orthogonal directions ordered by how much of the data each explains. Applied to two-way flow stress data, for instance stress over strain and strain rate at a fixed temperature, it separates the dominant trend from noise and gives a principled way of deciding how many components the data actually supports.</p>
         <p class="gl-body">Its factors are orthogonal by construction and can be negative, so they are useful for compression and denoising but harder to read physically than <a href="#nncp" class="term">NN-CP</a> factors.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-7"><em>Int. J. Impact Eng.</em> 173 (2023) 104453</a>, where the singular values of two-way flow stress data are used to test whether a decoupled equation is legitimate for a given material.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="ann">
@@ -228,14 +285,22 @@
         <div class="gl-full">used here as a surrogate model, not as a black-box replacement for mechanics</div>
         <p class="gl-body">A function approximator trained on data. In this work it is used in a deliberately narrow way: to reconstruct and interpolate a response surface that has already been given structure by decomposition, and to build fast surrogates for quantities such as perforation velocity that would otherwise each require a separate finite element run.</p>
         <p class="gl-body">A network trained directly on raw stress-strain points would fit the data and explain nothing; combining it with decomposition keeps the strain rate and temperature dependence visible as separate one-dimensional factors.</p>
-        <div class="gl-where">Used on: <a href="research_Constitutive modelling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research_Impact dynamics.html">Impact Mechanics</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Reconstruction step in Huang &amp; Li, <a href="publications.html#pub-11"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a>. Used as a surrogate model in Deng, Yang &amp; Huang, <a href="publications.html#pub-8"><em>Thin-Walled Structures</em> 203 (2024) 112161</a> and Deng et al., <a href="publications.html#pub-10"><em>Thin-Walled Structures</em> 216 Part B (2025) 113685</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research-impact-dynamics.html">Impact Mechanics</a></div>
       </div>
 
       <div class="gl-entry" id="cnn-bilstm">
         <div class="gl-term">CNN-BiLSTM</div>
         <div class="gl-full">convolutional layers followed by a bidirectional long short-term memory network</div>
         <p class="gl-body">A deep learning architecture for signals that have both local shape and temporal order. The convolutional layers pick out local waveform features, and the bidirectional recurrent layers relate them along the time axis in both directions. It is used in the battery stream to classify damage states from acoustic emission recordings, where the diagnostic information lies both in the shape of individual bursts and in how the bursts follow one another.</p>
-        <div class="gl-where">Used on: <a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Deng, Li &amp; Huang, <a href="publications.html#pub-13"><em>Journal of Power Sources</em> 662 (2026) 238737</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a></div>
       </div>
     </div>
 
@@ -247,7 +312,11 @@
         <div class="gl-term">PHM <span class="gl-abbr">(Prognostics and Health Management)</span></div>
         <div class="gl-full">condition monitoring, diagnosis, and remaining-life prediction</div>
         <p class="gl-body">The discipline concerned with inferring the internal condition of a system from measurable signals, diagnosing what has gone wrong, and estimating how much useful life remains. For lithium-ion batteries the practical question is whether a cell that has survived a mechanical impact without any visible external damage is still safe to use, which cannot be answered from voltage and capacity alone.</p>
-        <div class="gl-where">Used on: <a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Huang &amp; Kim, <a href="publications.html#pub-16"><em>Journal of Mechanical Science and Technology</em> 40(4) (2026) 2405-2415</a>, an invited review of the field.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a></div>
       </div>
 
       <div class="gl-entry" id="acoustic-emission">
@@ -255,35 +324,55 @@
         <div class="gl-full">passive listening to the elastic waves released by internal damage</div>
         <p class="gl-body">When a material cracks, delaminates, or slips internally, it releases a transient elastic wave that a surface-mounted piezoelectric sensor can pick up. The measurement is passive, so it detects damage as it happens rather than after the fact, and it reaches internal events that external inspection cannot see.</p>
         <p class="gl-body">In a battery cell the useful signals, such as separator tearing or electrode fracture, arrive mixed with electrochemical and environmental noise, so the sensing has to be paired with a classifier trained to tell them apart.</p>
-        <div class="gl-where">Used on: <a href="research_Battery PHM.html">Battery Impact &amp; PHM</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Deng, Li &amp; Huang, <a href="publications.html#pub-13"><em>Journal of Power Sources</em> 662 (2026) 238737</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="soc">
         <div class="gl-term">SOC <span class="gl-abbr">(State of Charge)</span></div>
         <div class="gl-full">the remaining charge as a fraction of full capacity</div>
         <p class="gl-body">How full the cell is, from 0 to 100 percent. It matters mechanically as well as electrically: the amount of lithium held in the electrodes changes their stiffness and the stress already stored in the cell, so a cell at high SOC responds differently to the same impact than the same cell at low SOC, and it carries more energy to release if it does fail.</p>
-        <div class="gl-where">Used on: <a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Deng, Zheng &amp; Huang, <a href="publications.html#pub-14"><em>Journal of Energy Storage</em> 150 (2026) 120037</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a></div>
       </div>
 
       <div class="gl-entry" id="isc">
         <div class="gl-term">Internal short circuit <span class="gl-abbr">(ISC)</span></div>
         <div class="gl-full">a direct electrical path formed inside the cell between the two electrodes</div>
         <p class="gl-body">Mechanical loading can tear or crush the thin polymer separator that keeps the electrodes apart, letting them touch. The resulting short circuit discharges the cell through a very small contact area, generating heat locally and quickly. It is the usual mechanical trigger for <a href="#thermal-runaway" class="term">thermal runaway</a>, and it can develop with a delay of minutes to hours after an impact that left no visible external damage.</p>
-        <div class="gl-where">Used on: <a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Deng, Zheng &amp; Huang, <a href="publications.html#pub-14"><em>Journal of Energy Storage</em> 150 (2026) 120037</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a></div>
       </div>
 
       <div class="gl-entry" id="thermal-runaway">
         <div class="gl-term">Thermal runaway</div>
         <div class="gl-full">self-sustaining exothermic failure of a cell</div>
         <p class="gl-body">Above a threshold temperature, the chemical reactions inside a lithium-ion cell begin to generate heat faster than the cell can shed it. The temperature then rises on its own, accelerating the reactions further, and ends in venting, fire, or rupture. Because the process is self-sustaining once started, safety engineering is concerned mainly with the conditions that initiate it, which is why the mechanical threshold for impact damage is the quantity worth measuring.</p>
-        <div class="gl-where">Used on: <a href="research_Battery PHM.html">Battery Impact &amp; PHM</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Deng, Zheng &amp; Huang, <a href="publications.html#pub-14"><em>Journal of Energy Storage</em> 150 (2026) 120037</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a></div>
       </div>
 
       <div class="gl-entry" id="multiphysics-fem">
         <div class="gl-term">Multiphysics FEM</div>
         <div class="gl-full">finite element modeling with coupled mechanical, electrical, and thermal fields</div>
         <p class="gl-body">A finite element model in which more than one physical field is solved together and each affects the others. For a battery under impact this means the mechanical deformation determines where the separator fails, that failure sets up an electrical short, the short generates heat, and the heat in turn changes the material properties feeding back into the mechanics. Treating any one of these fields alone gives the deformation without the consequence, or the consequence without its cause.</p>
-        <div class="gl-where">Used on: <a href="research_Battery PHM.html">Battery Impact &amp; PHM</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-src">
+          <span class="gl-src-lbl">From our papers</span>
+          <div class="gl-src-item">Deng, Zheng, Zhang &amp; Huang, <a href="publications.html#pub-17"><em>Engineering Failure Analysis</em> 196 (2026) 111084</a>.</div>
+        </div>
+        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
     </div>
 
@@ -310,6 +399,7 @@
           <li><a href="about.html">About</a></li>
           <li><a href="research.html">Research</a></li>
           <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
           <li><a href="notes.html">Technical Notes</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
