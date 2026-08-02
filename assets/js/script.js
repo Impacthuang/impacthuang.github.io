@@ -118,8 +118,6 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ---------- BibTeX viewer on the publications page ---------- */
   var bibBtns = document.querySelectorAll('.bib-btn');
   if (bibBtns.length) {
-    var BIB_URL = 'assets/bib/publications.bib';
-
     var bx = document.createElement('div');
     bx.className = 'bib-overlay';
     bx.innerHTML =
@@ -127,8 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         '<div class="bib-hdr"><span>BibTeX</span><span class="bib-close" aria-label="Close">&times;</span></div>' +
         '<pre class="bib-pre"></pre>' +
         '<div class="bib-actions">' +
-          '<button type="button" class="btn btn-primary bib-copy"><i class="fas fa-copy"></i> Copy</button>' +
-          '<a class="btn btn-outline" href="' + BIB_URL + '" download><i class="fas fa-download"></i> All entries</a>' +
+          '<button type="button" class="btn btn-primary bib-copy"><i class="fas fa-copy"></i> Copy this entry</button>' +
           '<span class="bib-note"></span>' +
         '</div>' +
       '</div>';
@@ -137,40 +134,34 @@ document.addEventListener('DOMContentLoaded', function () {
     var bibPre = bx.querySelector('.bib-pre');
     var bibNote = bx.querySelector('.bib-note');
     var bibCopy = bx.querySelector('.bib-copy');
-    var bibEntries = null;
 
     function closeBib() {
       bx.classList.remove('open');
       document.body.style.overflow = '';
     }
 
-    /* One entry runs from its @type line to the closing brace in column one. */
-    function splitBib(text) {
-      var map = {};
-      var re = /@\w+\{([^,]+),[\s\S]*?\n\}/g;
-      var m;
-      while ((m = re.exec(text)) !== null) {
-        map[m[1].trim()] = m[0];
-      }
-      return map;
-    }
-
-    function showBib(key) {
-      var entry = bibEntries && bibEntries[key];
-      bibPre.textContent = entry || 'Entry not found. Please use the full .bib file.';
-      bibNote.textContent = '';
-      bx.classList.add('open');
-      document.body.style.overflow = 'hidden';
+    /* Each entry is carried in the page next to its own button, so the modal
+       never needs to load or search the combined .bib file. The stored text is
+       indented to match the surrounding markup, so strip that indent back off. */
+    function dedent(text) {
+      var lines = text.replace(/^\s*\n/, '').replace(/\s+$/, '').split('\n');
+      var pad = null;
+      lines.forEach(function (ln) {
+        if (!ln.trim()) return;
+        var n = ln.match(/^[ \t]*/)[0].length;
+        if (pad === null || n < pad) pad = n;
+      });
+      return lines.map(function (ln) { return ln.slice(pad || 0); }).join('\n');
     }
 
     bibBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        var key = btn.getAttribute('data-bibkey');
-        if (bibEntries) { showBib(key); return; }
-        fetch(BIB_URL)
-          .then(function (r) { return r.text(); })
-          .then(function (t) { bibEntries = splitBib(t); showBib(key); })
-          .catch(function () { window.open(BIB_URL, '_blank'); });
+        var src = btn.parentElement.querySelector(
+          'script[type="application/x-bibtex"][data-bibkey="' + btn.getAttribute('data-bibkey') + '"]');
+        bibPre.textContent = src ? dedent(src.textContent) : 'Entry unavailable.';
+        bibNote.textContent = '';
+        bx.classList.add('open');
+        document.body.style.overflow = 'hidden';
       });
     });
 
