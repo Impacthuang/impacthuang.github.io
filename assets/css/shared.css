@@ -10,12 +10,23 @@
   --navy:     #0B1C34;
   --navy-d:   #071220;
   --accent:   #C8430F;
+  --accent-rgb: 200,67,15;
   --accent-h: #A3360C;
-  --link:     #2563EB;
-  --link-h:   #1D4ED8;
+  /* The accent above is dark enough to read on white but too dark on the navy
+     bands (3.3:1). Anything sitting on navy uses this lighter tint instead,
+     which clears 4.5:1 against both the flat navy and the hero gradient. */
+  --accent-d: #E86A2E;
+  --link:     #A8380B;
+  --link-rgb: 168,56,11;
+  --link-h:   #7F2A08;
+  /* Categorical only, used by the research-stream tags and nowhere else. */
+  --tag-blue:      #2C5282;
+  --tag-blue-rgb:  44,82,130;
+  --tag-green:     #0F6B4F;
+  --tag-green-rgb: 15,107,79;
   --bg:       #FFFFFF;
-  --bg-alt:   #F4F7FB;
-  --border:   #E2E8F0;
+  --bg-alt:   #F7F6F3;
+  --border:   #E6E3DD;
   --text:     #1A2333;
   --muted:    #5E6E82;
   --r:        8px;
@@ -75,10 +86,13 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   letter-spacing: 1.1px; text-transform: uppercase;
   padding: 3px 10px; border-radius: 99px;
 }
-.tag-accent { background: rgba(200,67,15,.12); color: var(--accent); }
-.tag-navy   { background: rgba(11,28,52,.09);  color: var(--navy);   }
-.tag-blue   { background: rgba(37,99,235,.10); color: var(--link);   }
-.tag-green  { background: rgba(16,185,129,.10);color: #059669;       }
+/* Tag colours are categorical: they separate the research streams, so they stay
+   distinguishable from one another and from the brand accent. Each text colour
+   is deep enough to clear 4.5:1 against its own tinted background. */
+.tag-accent { background: rgba(var(--accent-rgb),.12);   color: var(--accent-h);   }
+.tag-navy   { background: rgba(11,28,52,.09);            color: var(--navy);       }
+.tag-blue   { background: rgba(var(--tag-blue-rgb),.10); color: var(--tag-blue);   }
+.tag-green  { background: rgba(var(--tag-green-rgb),.10);color: var(--tag-green);  }
 .badge {
   display: inline-block; font-size: 11px; font-weight: 600;
   padding: 2px 8px; border-radius: 4px;
@@ -96,7 +110,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   height: 100%; display: flex; align-items: center; justify-content: space-between;
 }
 .nav-logo { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -.3px; }
-.nav-logo span { color: var(--accent); }
+.nav-logo span { color: var(--accent-d); }
 
 .nav-links { display: flex; align-items: center; gap: 2px; }
 .nav-links > li { position: relative; }
@@ -163,14 +177,14 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 
 /* ─── PAGE HEADER (inner pages) ─── */
 .page-header { background: var(--navy); padding: calc(var(--nav-h) + 48px) 0 48px; }
-.page-header .bc { font-size: 12.5px; color: rgba(255,255,255,.40); margin-bottom: 10px; }
-.page-header .bc a { color: var(--accent); transition: var(--t); }
+.page-header .bc { font-size: 12.5px; color: rgba(255,255,255,.55); margin-bottom: 10px; }
+.page-header .bc a { color: var(--accent-d); transition: var(--t); }
 .page-header .bc a:hover { text-decoration: underline; }
 .page-header .bc span { margin: 0 6px; }
 .page-header h1 { font-size: 38px; font-weight: 800; color: #fff; line-height: 1.15; }
 .page-header p  { font-size: 16px; color: rgba(255,255,255,.58); margin-top: 10px; max-width: 560px; line-height: 1.6; }
 .page-header p a { color: #fff; border-bottom: 1px solid rgba(255,255,255,.35); transition: var(--t); }
-.page-header p a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.page-header p a:hover { color: var(--accent-d); border-bottom-color: var(--accent-d); }
 
 /* ======================================================
    HOME — HERO
@@ -190,12 +204,12 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   text-transform: uppercase; color: rgba(255,255,255,.46); margin-bottom: 20px;
 }
 .hero-content h1 { font-size: 58px; font-weight: 800; color: #fff; line-height: 1.08; margin-bottom: 14px; }
-.hero-content h1 span { color: var(--accent); }
+.hero-content h1 span { color: var(--accent-d); }
 .hero-pos { font-size: 15px; color: rgba(255,255,255,.58); line-height: 1.6; margin-bottom: 22px; }
 .hero-vision {
   font-size: 17px; color: rgba(255,255,255,.82); line-height: 1.74;
   margin-bottom: 32px; max-width: 540px;
-  border-left: 3px solid var(--accent); padding-left: 18px;
+  border-left: 3px solid var(--accent-d); padding-left: 18px;
 }
 .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .hero-photo { flex-shrink: 0; }
@@ -269,7 +283,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .dl-item:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); }
 .dl-icon {
   width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
-  background: rgba(200,67,15,.10); color: var(--accent);
+  background: rgba(var(--accent-rgb),.10); color: var(--accent);
   display: grid; place-items: center; font-size: 19px;
 }
 .dl-body { flex: 1; }
@@ -291,7 +305,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   font-size: 14.5px; color: var(--muted); line-height: 1.72;
   max-width: 620px; margin: 0 auto 12px;
 }
-.dl-empty-text a { color: var(--link); font-weight: 600; border-bottom: 1px solid rgba(37,99,235,.35); transition: var(--t); }
+.dl-empty-text a { color: var(--link); font-weight: 600; border-bottom: 1px solid rgba(var(--link-rgb),.35); transition: var(--t); }
 .dl-empty-text a:hover { color: var(--link-h); border-bottom-color: var(--link-h); }
 .dl-empty .btn { margin-top: 14px; }
 
@@ -393,9 +407,9 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 }
 .vision-block blockquote {
   font-size: 19px; font-weight: 300; line-height: 1.72; color: rgba(255,255,255,.88);
-  border-left: 4px solid var(--accent); padding-left: 24px; font-style: italic; margin: 0;
+  border-left: 4px solid var(--accent-d); padding-left: 24px; font-style: italic; margin: 0;
 }
-.vision-block cite { display: block; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,.40); padding-left: 28px; }
+.vision-block cite { display: block; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,.55); padding-left: 28px; }
 
 .res-overview-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 48px; }
 .res-ov-card { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; transition: var(--t); }
@@ -435,7 +449,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 }
 .pb-num {
   font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--accent); background: rgba(200,67,15,.10);
+  color: var(--accent); background: rgba(var(--accent-rgb),.10);
   padding: 4px 10px; border-radius: 99px; white-space: nowrap; margin-top: 2px; flex-shrink: 0;
 }
 .pb-title { font-size: 18px; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 6px; }
@@ -486,7 +500,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
   display: flex; gap: 32px; flex-wrap: wrap;
   background: var(--navy); border-radius: var(--r-lg); padding: 28px 36px; margin-bottom: 40px;
 }
-.pub-stat-item .psn { font-size: 36px; font-weight: 800; color: var(--accent); line-height: 1; }
+.pub-stat-item .psn { font-size: 36px; font-weight: 800; color: var(--accent-d); line-height: 1; }
 .pub-stat-item .psl { font-size: 12px; color: rgba(255,255,255,.50); margin-top: 3px; }
 
 .pub-note { font-size: 13.5px; color: var(--muted); margin-bottom: 32px; font-style: italic; }
@@ -510,7 +524,7 @@ h1,h2,h3,h4,h5 { line-height: 1.2; }
 .pub-entry:hover { border-left-color: var(--accent); box-shadow: 0 4px 16px rgba(0,0,0,.07); background: #fafbfc; }
 /* Glossary and research pages link straight to a single entry. */
 .pub-entry { scroll-margin-top: calc(var(--nav-h) + 20px); }
-.pub-entry:target { border-left-color: var(--accent); background: rgba(200,67,15,.05); }
+.pub-entry:target { border-left-color: var(--accent); background: rgba(var(--accent-rgb),.05); }
 .pe-num { font-size: 13px; font-weight: 700; color: var(--muted); min-width: 22px; padding-top: 2px; }
 .pe-body { flex: 1; }
 .pe-title { font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 5px; line-height: 1.45; }
@@ -793,7 +807,7 @@ img.zoom-in { cursor: zoom-in; }
 .ci-block h3 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 22px; }
 .ci-item { display: flex; gap: 14px; margin-bottom: 22px; }
 .ci-icon {
-  width: 42px; height: 42px; background: rgba(200,67,15,.10); border-radius: 8px;
+  width: 42px; height: 42px; background: rgba(var(--accent-rgb),.10); border-radius: 8px;
   display: grid; place-items: center; color: var(--accent); font-size: 17px; flex-shrink: 0;
 }
 .ci-label { font-size: 11.5px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
@@ -857,10 +871,10 @@ img.zoom-in { cursor: zoom-in; }
    so a reader can tell an explanation from an external reference. */
 .term {
   color: var(--link); font-weight: 600;
-  border-bottom: 1px dashed rgba(37,99,235,.55);
+  border-bottom: 1px dashed rgba(var(--link-rgb),.55);
   cursor: help; transition: var(--t);
 }
-.term:hover { color: var(--link-h); background: rgba(37,99,235,.08); border-bottom-style: solid; }
+.term:hover { color: var(--link-h); background: rgba(var(--link-rgb),.08); border-bottom-style: solid; }
 
 /* ─── Hover preview card, built by assets/js/glossary.js ─── */
 .tt {
@@ -952,7 +966,7 @@ img.zoom-in { cursor: zoom-in; }
   padding: 20px 0; border-bottom: 1px solid var(--border);
   scroll-margin-top: calc(var(--nav-h) + 20px);
 }
-.gl-entry:target { background: rgba(200,67,15,.05); box-shadow: -14px 0 0 rgba(200,67,15,.05), 14px 0 0 rgba(200,67,15,.05); }
+.gl-entry:target { background: rgba(var(--accent-rgb),.05); box-shadow: -14px 0 0 rgba(var(--accent-rgb),.05), 14px 0 0 rgba(var(--accent-rgb),.05); }
 .gl-term { font-size: 16.5px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
 .gl-term .gl-abbr { color: var(--accent); }
 .gl-full { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 8px; }
@@ -1015,7 +1029,7 @@ img.zoom-in { cursor: zoom-in; }
 /* display equation block; scrolls on its own when the formula is wide */
 .na-eq { overflow-x: auto; margin: 18px 0; padding: 4px 0; }
 .na-note {
-  background: rgba(37,99,235,.05); border: 1px solid rgba(37,99,235,.16);
+  background: rgba(var(--link-rgb),.05); border: 1px solid rgba(var(--link-rgb),.16);
   border-radius: var(--r); padding: 16px 20px; margin: 18px 0;
 }
 .na-note p { font-size: 14px; margin-bottom: 0; color: var(--text); }
