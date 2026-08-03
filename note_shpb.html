@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Split Hopkinson Bar (SHPB) — Technical Note — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_shpb.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="The Split Hopkinson Bar (SHPB) — Technical Note">
+  <meta property="og:description" content="How the split Hopkinson pressure bar measures material behaviour at strain rates of 10^2 to 10^4 per second: one-dimensional wave theory, the two-wave and three-wave stress-strain reduction equations, the stress-equilibrium and constant-strain-rate requirements, pulse shaping, wave dispersion, and the tension and torsion variants of the technique.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_shpb.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Split Hopkinson Bar (SHPB) — Technical Note">
+  <meta name="twitter:description" content="One-dimensional wave theory, the stress-strain reduction equations, stress equilibrium, pulse shaping, dispersion, and the tension and torsion variants of the split Hopkinson bar.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="How the split Hopkinson pressure bar measures material behaviour at strain rates of 10^2 to 10^4 per second: one-dimensional wave theory, the two-wave and three-wave stress-strain reduction equations, the stress-equilibrium and constant-strain-rate requirements, pulse shaping, wave dispersion, and the tension and torsion variants of the technique.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="notes.html">Notes</a><span>/</span>Split Hopkinson Bar</div>
+    <h1>The Split Hopkinson Bar (SHPB)</h1>
+    <p>Wave theory, the data-reduction equations, and the compression, tension, and torsion variants.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. Introduction</a></li>
+          <li><a href="#s2">2. Apparatus &amp; principle</a></li>
+          <li><a href="#s3">3. Data reduction</a></li>
+          <li><a href="#s4">4. Validity conditions</a></li>
+          <li><a href="#s5">5. Pulse shaping &amp; dispersion</a></li>
+          <li><a href="#s6">6. Tension &amp; torsion variants</a></li>
+          <li><a href="#s7">7. Use in flow stress work</a></li>
+          <li><a href="#s8">8. Conclusions</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Abstract</div>
+          <p>
+            The split Hopkinson pressure bar (SHPB), also called the Kolsky bar, is the standard laboratory technique for measuring the mechanical response of materials at strain rates of roughly \( 10^2 \) to \( 10^4 \) s\(^{-1}\), the band between conventional and servo-hydraulic machines below and plate-impact experiments above. A short specimen is placed between two long elastic bars; a striker launches a compressive stress pulse, and the strains recorded on the two bars are converted, through one-dimensional elastic wave theory, into the stress, strain, and strain-rate history of the specimen. This note sets out the apparatus and the principle, derives the two-wave and three-wave data-reduction equations, states the stress-equilibrium and near-constant-strain-rate conditions that a valid test must satisfy, explains pulse shaping and wave dispersion, and summarizes the tension and torsion variants. The connection to the data-driven flow stress work, where the constant-strain-rate requirement is deliberately relaxed and replaced by data screening, is stated at the end.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> split Hopkinson pressure bar; Kolsky bar; high strain rate; stress equilibrium; pulse shaping; wave dispersion</p>
+
+        <h2 id="s1">1. Introduction</h2>
+        <p>
+          The strength of most metals rises with the rate at which they are deformed, and structures in crash, impact, blast, and machining problems are loaded far faster than any quasi-static testing machine can reproduce. Characterizing that rate dependence requires a technique that reaches strain rates of thousands per second while still measuring a well-defined stress and strain. The method traces to Bertram Hopkinson, who in 1914 used a long elastic bar to measure the pressure-time curve of an explosive detonation [1]. Kolsky in 1949 split the bar into two and inserted a specimen between them, so that the same wave measurement yields the specimen's stress-strain curve [2]; this "split" configuration is the technique in use today, and the bar is often named after him.
+        </p>
+        <p>
+          The appeal of the method is that it never requires a fast force transducer or a fast displacement sensor at the specimen. Everything is inferred from strain gauges mounted far away on slender elastic bars, where the signals are clean, one-dimensional, and slow enough to record. The price is a set of assumptions, stress uniformity across the specimen, one-dimensional wave propagation, and negligible friction and inertia, that hold only approximately and must be checked for each test [3,4]. Those checks are the reason a raw SHPB curve cannot simply be fitted, and the reason data screening precedes any constitutive identification in the flow stress work on this site.
+        </p>
+
+        <h2 id="s2">2. Apparatus and Principle</h2>
+        <p>
+          A compression SHPB has four coaxial parts: a striker bar, an incident (input) bar, the specimen, and a transmitter (output) bar, all of the same diameter and material, with the bars long enough to keep successive wave reflections separated in time. A gas gun fires the striker against the free end of the incident bar, generating a compressive pulse of duration \( \tau = 2L_{\text{striker}}/c_0 \), where \( c_0 = \sqrt{E/\rho} \) is the elastic wave speed of the bar material, \( E \) its Young's modulus and \( \rho \) its density.
+        </p>
+        <p>
+          This incident pulse \( \varepsilon_I \) travels to the bar-specimen interface. Because the specimen is softer and of different impedance, part of the pulse reflects back into the incident bar as \( \varepsilon_R \) (a tensile wave) and part transmits through the specimen into the transmitter bar as \( \varepsilon_T \). A strain gauge on the incident bar records \( \varepsilon_I \) and \( \varepsilon_R \) (separated in time), and a gauge on the transmitter bar records \( \varepsilon_T \). These three strain-time signals contain everything needed to reconstruct the specimen response.
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <svg viewBox="0 0 760 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schematic of a split Hopkinson pressure bar: striker, incident bar with strain gauge, specimen, transmitter bar with strain gauge, and momentum trap, with incident, reflected, and transmitted pulses labelled." style="width:100%;height:auto;font-family:inherit;">
+            <rect x="0" y="0" width="760" height="200" fill="none"/>
+            <!-- striker -->
+            <rect x="20" y="86" width="70" height="28" rx="3" fill="#9fb3c8"/>
+            <text x="55" y="132" text-anchor="middle" font-size="12" fill="#33475b">striker</text>
+            <!-- incident bar -->
+            <rect x="110" y="88" width="250" height="24" rx="3" fill="#c9d6e3"/>
+            <text x="215" y="80" text-anchor="middle" font-size="12" fill="#33475b">incident bar</text>
+            <!-- gauge 1 -->
+            <rect x="215" y="84" width="8" height="32" fill="#e4572e"/>
+            <text x="219" y="150" text-anchor="middle" font-size="11" fill="#e4572e">gauge</text>
+            <!-- specimen -->
+            <rect x="362" y="84" width="20" height="32" rx="2" fill="#0b1c34"/>
+            <text x="372" y="72" text-anchor="middle" font-size="12" fill="#0b1c34">specimen</text>
+            <!-- transmitter bar -->
+            <rect x="384" y="88" width="250" height="24" rx="3" fill="#c9d6e3"/>
+            <text x="509" y="80" text-anchor="middle" font-size="12" fill="#33475b">transmitter bar</text>
+            <!-- gauge 2 -->
+            <rect x="509" y="84" width="8" height="32" fill="#e4572e"/>
+            <text x="513" y="150" text-anchor="middle" font-size="11" fill="#e4572e">gauge</text>
+            <!-- momentum trap -->
+            <rect x="650" y="86" width="60" height="28" rx="3" fill="#9fb3c8"/>
+            <text x="680" y="132" text-anchor="middle" font-size="12" fill="#33475b">trap</text>
+            <!-- arrows -->
+            <line x1="150" y1="176" x2="200" y2="176" stroke="#0b7285" stroke-width="2" marker-end="url(#ah)"/>
+            <text x="130" y="180" text-anchor="middle" font-size="11" fill="#0b7285">&#949;&#8321;</text>
+            <line x1="200" y1="192" x2="150" y2="192" stroke="#a61e4d" stroke-width="2" marker-end="url(#ah)"/>
+            <text x="235" y="196" text-anchor="middle" font-size="11" fill="#a61e4d">&#949;&#7523; (reflected)</text>
+            <line x1="440" y1="176" x2="490" y2="176" stroke="#0b7285" stroke-width="2" marker-end="url(#ah)"/>
+            <text x="540" y="180" text-anchor="middle" font-size="11" fill="#0b7285">&#949;&#8348; (transmitted)</text>
+            <defs>
+              <marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="context-stroke"/></marker>
+            </defs>
+          </svg>
+          <figcaption><strong>Figure 1.</strong> Schematic of a compression split Hopkinson pressure bar. The incident pulse partly reflects and partly transmits at the specimen; two strain gauges record the three pulses.</figcaption>
+        </figure>
+
+        <h2 id="s3">3. Data Reduction</h2>
+        <p>
+          Let the bars have cross-sectional area \( A_b \), modulus \( E_b \), and wave speed \( c_0 \), and let the specimen have initial length \( L_s \) and area \( A_s \). One-dimensional elastic wave theory gives the particle velocities and forces at the two bar-specimen interfaces directly from the measured strains. The velocity of the incident-bar face is \( v_1 = c_0(\varepsilon_I - \varepsilon_R) \) and of the transmitter-bar face \( v_2 = c_0\,\varepsilon_T \). The specimen's engineering strain rate is the difference of face velocities divided by its length:
+        </p>
+        <div class="na-eq">\[ \dot{\varepsilon}_s(t) = \frac{v_1 - v_2}{L_s} = \frac{c_0}{L_s}\big(\varepsilon_I - \varepsilon_R - \varepsilon_T\big) \tag{1} \]</div>
+        <p>
+          Integrating gives the strain, and the forces on the two faces, \( F_1 = E_b A_b(\varepsilon_I + \varepsilon_R) \) and \( F_2 = E_b A_b \varepsilon_T \), give the stress. Averaging the two faces yields the three-wave expressions:
+        </p>
+        <div class="na-eq">\[ \varepsilon_s(t) = \frac{c_0}{L_s}\int_0^t \big(\varepsilon_I - \varepsilon_R - \varepsilon_T\big)\,\mathrm{d}t', \qquad \sigma_s(t) = \frac{E_b A_b}{2 A_s}\big(\varepsilon_I + \varepsilon_R + \varepsilon_T\big) \tag{2} \]</div>
+        <p>
+          When the specimen is in dynamic stress equilibrium (Section 4), the two faces carry equal force, \( \varepsilon_I + \varepsilon_R = \varepsilon_T \), so \( \varepsilon_I - \varepsilon_R - \varepsilon_T = -2\varepsilon_R \). The equations then collapse to the widely used two-wave / one-wave forms, in which the strain rate is read from the reflected pulse alone and the stress from the transmitted pulse alone:
+        </p>
+        <div class="na-eq">\[ \dot{\varepsilon}_s(t) = -\frac{2 c_0}{L_s}\,\varepsilon_R(t), \qquad \varepsilon_s(t) = -\frac{2 c_0}{L_s}\int_0^t \varepsilon_R(t')\,\mathrm{d}t', \qquad \sigma_s(t) = \frac{E_b A_b}{A_s}\,\varepsilon_T(t) \tag{3} \]</div>
+        <p>
+          Eliminating time between \( \sigma_s(t) \) and \( \varepsilon_s(t) \) traces out the dynamic stress-strain curve at the nominal strain rate of that test.
+        </p>
+
+        <h2 id="s4">4. Validity Conditions</h2>
+        <p>
+          Equations (3) are only as good as the assumptions behind them, and two conditions decide whether a given record is admissible.
+        </p>
+        <p>
+          <strong>Stress equilibrium.</strong> The reduction assumes the stress is uniform along the specimen, which requires the wave to reverberate through the short specimen several times before the loading is over. Equilibrium is quantified by comparing the two face forces; a common admissibility measure is
+        </p>
+        <div class="na-eq">\[ e_{\text{equi}}(t) = \frac{|F_1 - F_2|}{\tfrac{1}{2}(F_1 + F_2)} = \frac{|\varepsilon_I + \varepsilon_R - \varepsilon_T|}{\tfrac{1}{2}|\varepsilon_I + \varepsilon_R + \varepsilon_T|} < e_{\text{cr}} \tag{4} \]</div>
+        <p>
+          with a typical threshold \( e_{\text{cr}} \) of a few percent. Equilibrium is worst at the start of loading and whenever the strain rate changes abruptly; notably the early, small-strain part of the curve, including the dynamic yield point, often falls inside the non-equilibrium region and must be treated with care.
+        </p>
+        <p>
+          <strong>Near-constant strain rate.</strong> Because material rate sensitivity is usually reported at a single nominal rate, classical practice shapes the loading so that \( \dot\varepsilon_s(t) \), and hence \( \varepsilon_R(t) \) by Eq. (3), is roughly flat over the useful window. A varying strain rate is not an error of physics, only a departure from the reporting convention; the flow stress work on this site deliberately keeps varying-rate records and screens them, rather than discarding them, to obtain richer coverage of the strain-rate axis.
+        </p>
+
+        <h2 id="s5">5. Pulse Shaping and Wave Dispersion</h2>
+        <p>
+          <strong>Pulse shaping.</strong> A bare striker impact produces a nearly square incident pulse with a very steep rising edge, which drives the specimen out of equilibrium and imposes a large initial strain-rate spike. Placing a small, soft <em>pulse shaper</em> (a thin disc of copper, or a polymer such as nylon) on the impacted end spreads the rise time, so the specimen reaches equilibrium earlier and deforms at a more nearly constant rate [4,5]. The shaper is the main practical control the experimenter has over the shape of the loading.
+        </p>
+        <p>
+          <strong>Dispersion.</strong> One-dimensional theory assumes every frequency in the pulse travels at the same speed \( c_0 \). In a real cylindrical bar the higher-frequency components travel slightly slower (geometric, or Pochhammer-Chree, dispersion), so a pulse changes shape as it propagates and shows the characteristic high-frequency oscillations on its plateau [6,7]. For accurate reduction the gauge signals can be shifted to the specimen faces in the frequency domain with a dispersion correction; when a preliminary bar-only alignment check shows the distortion is within tolerance, the correction can be omitted. This dispersion is exactly the ringing that the dispersion-robust signal-matching work in the constitutive stream is designed to tolerate.
+        </p>
+
+        <h2 id="s6">6. Tension and Torsion Variants</h2>
+        <p>
+          The same wave-measurement principle works in other loading modes. In the <strong>split Hopkinson tension bar</strong> (SHTB, also called the tensile Kolsky bar), a tensile pulse is generated, for example by a tubular striker travelling along the incident bar and impacting a flange, or by the sudden release of stored elastic energy, and the specimen is threaded or bonded between the bars so it can be pulled [8,9]. The reduction equations are the tensile analogues of Eqs. (2) and (3). In the <strong>torsional split Hopkinson bar</strong>, a torque pulse propagates as a shear wave and a thin-walled tubular specimen is twisted, giving a shear-stress versus shear-strain curve free of the radial inertia and friction that complicate compression tests [10]. Very-high-rate loading beyond the conventional SHPB range is reached with miniaturized bars and with the <a href="notes.html#taylor-hopkinson" class="term">Taylor-Hopkinson</a> configuration, in which a fired cylinder impacts an instrumented bar.
+        </p>
+
+        <h2 id="s7">7. Use in the Flow Stress Work</h2>
+        <div class="na-note">
+          <p>
+            <strong>Where this is used.</strong> Screened SHPB records are the primary experimental input to the data-driven <a href="notes.html#flow-stress" class="term">flow stress</a> work. Two departures from classical practice are deliberate: the constant-strain-rate requirement of Section 4 is relaxed so that instantaneous strain-rate information is retained, and records that classical protocols would discard are kept and qualified by the equilibrium criterion of Eq. (4) instead. The qualified data then feed the neural-network reconstruction and the tensor-decomposition steps (<a href="note_svd.html">SVD</a> in 2D, <a href="note_cp.html">CP</a> / <a href="note_nncp.html">NN-CP</a> in 3D). See <a href="research-constitutive-modeling.html">Constitutive Modeling</a> for the research context, and the <a href="publications.html#pub-12">IJIE 2025 Part 1 and Part 2 papers</a> for the screening rules in use.
+          </p>
+        </div>
+
+        <h2 id="s8">8. Conclusions</h2>
+        <ol>
+          <li>The split Hopkinson bar infers a specimen's high-rate stress-strain response entirely from strain-gauge signals on two long elastic bars, using one-dimensional wave theory.</li>
+          <li>The three-wave equations reduce, under stress equilibrium, to the two-wave forms in which strain rate follows the reflected pulse and stress follows the transmitted pulse.</li>
+          <li>A valid test requires dynamic stress equilibrium and, in classical practice, a near-constant strain rate; both are engineered mainly through pulse shaping, and both must be verified rather than assumed.</li>
+          <li>Geometric dispersion distorts the pulses and is either corrected in the frequency domain or bounded by an alignment check. Tension and torsion variants extend the same principle to other loading modes.</li>
+        </ol>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Hopkinson, B. (1914). A method of measuring the pressure produced in the detonation of high explosives or by the impact of bullets. <em>Philosophical Transactions of the Royal Society A</em>, 213, 437-456.</li>
+          <li>Kolsky, H. (1949). An investigation of the mechanical properties of materials at very high rates of loading. <em>Proceedings of the Physical Society B</em>, 62(11), 676-700.</li>
+          <li>Gray, G. T. (2000). Classic split-Hopkinson pressure bar testing. In <em>ASM Handbook, Vol. 8: Mechanical Testing and Evaluation</em> (pp. 462-476). ASM International.</li>
+          <li>Chen, W., &amp; Song, B. (2011). <em>Split Hopkinson (Kolsky) Bar: Design, Testing and Applications</em>. Springer.</li>
+          <li>Gama, B. A., Lopatnikov, S. L., &amp; Gillespie, J. W. (2004). Hopkinson bar experimental technique: A critical review. <em>Applied Mechanics Reviews</em>, 57(4), 223-250.</li>
+          <li>Davies, E. D. H., &amp; Hunter, S. C. (1963). The dynamic compression testing of solids by the method of the split Hopkinson pressure bar. <em>Journal of the Mechanics and Physics of Solids</em>, 11(3), 155-179.</li>
+          <li>Follansbee, P. S., &amp; Frantz, C. (1983). Wave propagation in the split Hopkinson pressure bar. <em>Journal of Engineering Materials and Technology</em>, 105(1), 61-66.</li>
+          <li>Harding, J., Wood, E. O., &amp; Campbell, J. D. (1960). Tensile testing of materials at impact rates of strain. <em>Journal of Mechanical Engineering Science</em>, 2(2), 88-96.</li>
+          <li>Nemat-Nasser, S., Isaacs, J. B., &amp; Starrett, J. E. (1991). Hopkinson techniques for dynamic recovery experiments. <em>Proceedings of the Royal Society A</em>, 435(1894), 371-391.</li>
+          <li>Duffy, J., Campbell, J. D., &amp; Hawley, R. H. (1971). On the use of a torsional split Hopkinson bar to study rate effects in 1100-0 aluminum. <em>Journal of Applied Mechanics</em>, 38(1), 83-91.</li>
+        </ol>
+
+        <p style="margin-top:36px;">
+          <a href="notes.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Technical Notes</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

@@ -119,6 +119,28 @@
 
     <div class="note-grid">
 
+      <a href="note_svd.html" class="note-card">
+        <div class="nc-tags">
+          <span class="tag tag-accent">Linear Algebra</span>
+          <span class="badge">Technical Note</span>
+        </div>
+        <div class="nc-title">Singular Value Decomposition of a Matrix</div>
+        <div class="nc-desc">The SVD from the ground up: the factorization and its singular values and vectors, a constructive existence proof from the eigendecomposition of the Gram matrix, the four fundamental subspaces, the Eckart-Young-Mirsky optimal low-rank approximation theorem, the connection to PCA, and a fully worked 2x2 example, closing with the rank-1 legitimacy criterion for decoupled flow stress equations.</div>
+        <div class="nc-meta">8 sections &nbsp;·&nbsp; 7 equations &nbsp;·&nbsp; Aug 2026</div>
+        <div class="nc-link">Read the note →</div>
+      </a>
+
+      <a href="note_cp.html" class="note-card">
+        <div class="nc-tags">
+          <span class="tag tag-accent">Tensor Decomposition</span>
+          <span class="badge">Technical Note</span>
+        </div>
+        <div class="nc-title">CP (CANDECOMP/PARAFAC) Decomposition of Order-3 Tensors</div>
+        <div class="nc-desc">The canonical polyadic model as the tensor generalization of SVD: the rank-1 outer-product model, tensor rank, matricization and the Khatri-Rao product, the alternating least squares (CP-ALS) algorithm with its normal equations and MTTKRP kernel, rank selection, Kruskal's uniqueness condition, and a hand-verifiable worked example, with the relation to the non-negative variant used in the flow stress work.</div>
+        <div class="nc-meta">8 sections &nbsp;·&nbsp; 9 equations &nbsp;·&nbsp; Aug 2026</div>
+        <div class="nc-link">Read the note →</div>
+      </a>
+
       <a href="note_nncp.html" class="note-card">
         <div class="nc-tags">
           <span class="tag tag-accent">Tensor Decomposition</span>
@@ -127,6 +149,39 @@
         <div class="nc-title">Non-negative CP Decomposition of Order-3 Tensors</div>
         <div class="nc-desc">The mathematical principles of non-negative CP (CANDECOMP/PARAFAC) decomposition: the outer-product tensor model, matricization and the Khatri-Rao product, the non-negative least squares problem and its KKT conditions, the alternating multiplicative update algorithm, Kruskal's uniqueness condition, and worked Rank-1 to Rank-3 numerical examples that can be checked by hand.</div>
         <div class="nc-meta">8 sections &nbsp;·&nbsp; 15 equations &nbsp;·&nbsp; Jul 2026</div>
+        <div class="nc-link">Read the note →</div>
+      </a>
+
+      <a href="note_shpb.html" class="note-card">
+        <div class="nc-tags">
+          <span class="tag tag-blue">Dynamic Testing</span>
+          <span class="badge">Technical Note</span>
+        </div>
+        <div class="nc-title">The Split Hopkinson Bar (SHPB)</div>
+        <div class="nc-desc">How the split Hopkinson pressure bar measures material behaviour at 10^2 to 10^4 per second: the apparatus and one-dimensional wave principle, the two-wave and three-wave data-reduction equations, the stress-equilibrium and constant-strain-rate validity conditions, pulse shaping and geometric dispersion, and the tension and torsion variants of the technique.</div>
+        <div class="nc-meta">8 sections &nbsp;·&nbsp; 4 equations &nbsp;·&nbsp; diagram &nbsp;·&nbsp; Aug 2026</div>
+        <div class="nc-link">Read the note →</div>
+      </a>
+
+      <a href="note_constitutive.html" class="note-card">
+        <div class="nc-tags">
+          <span class="tag tag-blue">Constitutive Models</span>
+          <span class="badge">Reference Column</span>
+        </div>
+        <div class="nc-title">Common Constitutive Models in Impact Simulation</div>
+        <div class="nc-desc">A reference column on the models used most often in crash, impact, and penetration analysis: the Johnson-Cook flow stress and fracture models and their Cowper-Symonds and Zerilli-Armstrong relatives for metals, the pressure-dependent Drucker-Prager model, the Deshpande-Fleck crushable foam model for cellular solids, and the Johnson-Holmquist JH-2 model for brittle ceramics, each with its yield surface, governing equations, and primary references.</div>
+        <div class="nc-meta">8 sections &nbsp;·&nbsp; 8 equations &nbsp;·&nbsp; Aug 2026</div>
+        <div class="nc-link">Read the note →</div>
+      </a>
+
+      <a href="note_ml.html" class="note-card">
+        <div class="nc-tags">
+          <span class="tag tag-navy">Machine Learning</span>
+          <span class="badge">Reference Column</span>
+        </div>
+        <div class="nc-title">Neural Network Architectures: ANN, CNN, LSTM, Transformer</div>
+        <div class="nc-desc">A detailed column on the four architectures used most often in engineering and signal analysis: the fully connected ANN/MLP with the backpropagation derivation, the CNN with the convolution and pooling operations, the LSTM recurrent network with its gate equations, and the Transformer with the scaled dot-product self-attention derivation, each with a schematic diagram and primary references.</div>
+        <div class="nc-meta">8 sections &nbsp;·&nbsp; 9 equations &nbsp;·&nbsp; 4 diagrams &nbsp;·&nbsp; Aug 2026</div>
         <div class="nc-link">Read the note →</div>
       </a>
 
@@ -176,7 +231,7 @@
           <span class="gl-src-lbl">From our papers</span>
           <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-12"><em>Int. J. Impact Eng.</em> 206 (2025) 105403, Part 1</a> and <a href="publications.html#pub-11">206 (2025) 105432, Part 2</a>, in which the flow stress equation is determined from screened Hopkinson bar data rather than from a fitted curve.</div>
         </div>
-        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-where">Full note: <a href="note_shpb.html">The Split Hopkinson Bar, with wave theory and reduction equations</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="taylor-hopkinson">
@@ -218,16 +273,16 @@
           <span class="gl-src-lbl">From our papers</span>
           <div class="gl-src-item">Tested rather than assumed in Huang &amp; Li, <a href="publications.html#pub-7"><em>Int. J. Impact Eng.</em> 173 (2023) 104453</a>.</div>
         </div>
-        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-where">Full note: <a href="note_constitutive.html">Common Constitutive Models</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="tedi-fs">
         <div class="gl-term">TEDI-FS</div>
-        <div class="gl-full">Tensor Decomposition and Interpolation for Flow Stress</div>
-        <p class="gl-body">The framework developed in the constitutive modeling stream. Discrete experimental flow stress data over strain, strain rate, and temperature is arranged as an order-3 tensor, decomposed into non-negative one-dimensional factors, and then reconstructed and extended by a neural network, so that the strain rate dependence is carried by its own factor rather than being assumed to take a prescribed algebraic form.</p>
+        <div class="gl-full">Tensor-Decomposition-based Extrapolation and Dynamic Identification of Flow Stress</div>
+        <p class="gl-body">The framework developed in the constitutive modeling stream. Discrete experimental flow stress data over strain, strain rate, and temperature is arranged as an order-3 tensor and decomposed into non-negative one-dimensional latent modes, so that the strain rate dependence is carried by its own mode rather than being assumed to take a prescribed algebraic form. Those modes are then extrapolated beyond the calibrated domain under consistency constraints, and the extrapolated model is identified inversely against Taylor-Hopkinson impact experiments.</p>
         <div class="gl-src">
           <span class="gl-src-lbl">From our papers</span>
-          <div class="gl-src-item">Introduced in Huang &amp; Li, <a href="publications.html#pub-18"><em>Int. J. Impact Eng.</em>, accepted 2026</a>, Paper 4 of the series.</div>
+          <div class="gl-src-item">Introduced in Huang &amp; Li, <a href="publications.html#pub-18"><em>Int. J. Impact Eng.</em> (2026) 105863</a>, Paper 4 of the series.</div>
         </div>
         <div class="gl-where">Used on: <a href="research-constitutive-modeling.html#tedi-fs">Constitutive Modeling</a></div>
       </div>
@@ -253,7 +308,7 @@
           <span class="gl-src-lbl">From our papers</span>
           <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-11"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a>, where flow stress over strain, strain rate and temperature is treated as an order-3 tensor, and <a href="publications.html#pub-18">accepted 2026</a>.</div>
         </div>
-        <div class="gl-where">Full note: <a href="note_nncp.html">Non-negative CP Decomposition</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
+        <div class="gl-where">Full notes: <a href="note_cp.html">CP Decomposition (CP-ALS)</a> &nbsp;·&nbsp; <a href="note_nncp.html">Non-negative CP</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
       </div>
 
       <div class="gl-entry" id="nncp">
@@ -277,7 +332,7 @@
           <span class="gl-src-lbl">From our papers</span>
           <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-7"><em>Int. J. Impact Eng.</em> 173 (2023) 104453</a>, where the singular values of two-way flow stress data are used to test whether a decoupled equation is legitimate for a given material.</div>
         </div>
-        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
+        <div class="gl-where">Full note: <a href="note_svd.html">Singular Value Decomposition, with derivation and worked example</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
 
       <div class="gl-entry" id="ann">
@@ -289,7 +344,7 @@
           <span class="gl-src-lbl">From our papers</span>
           <div class="gl-src-item">Reconstruction step in Huang &amp; Li, <a href="publications.html#pub-11"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a>. Used as a surrogate model in Deng, Yang &amp; Huang, <a href="publications.html#pub-8"><em>Thin-Walled Structures</em> 203 (2024) 112161</a> and Deng et al., <a href="publications.html#pub-10"><em>Thin-Walled Structures</em> 216 Part B (2025) 113685</a>.</div>
         </div>
-        <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research-impact-dynamics.html">Impact Mechanics</a></div>
+        <div class="gl-where">Full note: <a href="note_ml.html">Neural Network Architectures</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research-impact-dynamics.html">Impact Mechanics</a></div>
       </div>
 
       <div class="gl-entry" id="cnn-bilstm">
@@ -300,7 +355,7 @@
           <span class="gl-src-lbl">From our papers</span>
           <div class="gl-src-item">Deng, Li &amp; Huang, <a href="publications.html#pub-13"><em>Journal of Power Sources</em> 662 (2026) 238737</a>.</div>
         </div>
-        <div class="gl-where">Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a></div>
+        <div class="gl-where">Full note: <a href="note_ml.html">Neural Network Architectures (CNN, LSTM)</a> &nbsp;·&nbsp; Used on: <a href="research-battery-phm.html">Battery Impact &amp; PHM</a></div>
       </div>
     </div>
 

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CP (CANDECOMP/PARAFAC) Decomposition — Technical Note — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_cp.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="CP (CANDECOMP/PARAFAC) Decomposition — Technical Note">
+  <meta property="og:description" content="Mathematical principles of the canonical polyadic (CP / CANDECOMP / PARAFAC) decomposition of order-3 tensors: the rank-1 outer-product model, tensor rank, matricization and the Khatri-Rao product, the alternating least squares (CP-ALS) algorithm with its normal equations and MTTKRP, rank selection, Kruskal uniqueness, and a hand-verifiable worked example.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_cp.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CP (CANDECOMP/PARAFAC) Decomposition — Technical Note">
+  <meta name="twitter:description" content="Mathematical principles of the canonical polyadic (CP) decomposition of order-3 tensors: the rank-1 outer-product model, tensor rank, matricization and the Khatri-Rao product, the alternating least squares algorithm, rank selection, Kruskal uniqueness, and a worked example.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="Mathematical principles of the canonical polyadic (CP / CANDECOMP / PARAFAC) decomposition of order-3 tensors: the rank-1 outer-product model, tensor rank, matricization and the Khatri-Rao product, the alternating least squares (CP-ALS) algorithm with its normal equations and MTTKRP, rank selection, Kruskal uniqueness, and a hand-verifiable worked example.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="notes.html">Notes</a><span>/</span>CP Decomposition</div>
+    <h1>CP (CANDECOMP/PARAFAC) Decomposition of Order-3 Tensors</h1>
+    <p>The canonical polyadic model, the alternating least squares algorithm, and a worked example.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. Introduction</a></li>
+          <li><a href="#s2">2. Basic definitions</a></li>
+          <li><a href="#s3">3. The CP-ALS algorithm</a></li>
+          <li><a href="#s4">4. Rank selection</a></li>
+          <li><a href="#s5">5. Uniqueness</a></li>
+          <li><a href="#s6">6. Worked example</a></li>
+          <li><a href="#s7">7. Use in flow stress work</a></li>
+          <li><a href="#s8">8. Conclusions</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Abstract</div>
+          <p>
+            The canonical polyadic decomposition, known equivalently as CP, CANDECOMP, or PARAFAC, writes a higher-order tensor as a sum of a small number of rank-1 tensors, each formed as the outer product of one vector per mode. It is the multi-way generalization of the matrix singular value decomposition, but it does not require the factors to be orthogonal and it is essentially unique under mild conditions, which is what makes its components candidates for physical interpretation. This note develops the CP model for an order-3 tensor from the ground up: the outer-product and rank-1 definitions, tensor rank, matricization (unfolding) and the Khatri-Rao product, and then the workhorse alternating least squares algorithm (CP-ALS), including the normal-equation solution of each subproblem, the matricized-tensor-times-Khatri-Rao-product (MTTKRP) kernel, the small Gram-matrix identity that makes it efficient, and column normalization. Rank selection, Kruskal's uniqueness condition, and a hand-verifiable numerical example are given, and the relation to the non-negative variant (<a href="note_nncp.html">NN-CP</a>) used in the flow stress work is stated.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> tensor decomposition; canonical polyadic; CANDECOMP/PARAFAC; alternating least squares; Khatri-Rao product; tensor rank</p>
+
+        <h2 id="s1">1. Introduction</h2>
+        <p>
+          A great deal of experimental and simulated data is naturally three-way. A flow stress dataset indexed by strain, strain rate, and temperature is one example; an excitation-emission-sample fluorescence dataset is the classical chemometrics example [1]. Flattening such data into a matrix and applying principal component analysis or the singular value decomposition (see the companion note on <a href="note_svd.html">SVD</a>) collapses two of the three modes together, discards the coupling structure, and yields factors that are only determined up to an arbitrary rotation.
+        </p>
+        <p>
+          The polyadic form of a tensor, a sum of outer products, was introduced by Hitchcock in 1927 [2]. It was rediscovered and turned into a practical data-analysis tool twice in 1970: as PARAFAC (parallel factor analysis) by Harshman [3], and as CANDECOMP (canonical decomposition) by Carroll and Chang [4]. The two are the same model, and the neutral modern name canonical polyadic (CP) decomposition is now common following the survey of Kolda and Bader [5]. Its defining property, in contrast to matrix factorization, is that under Kruskal's condition [6] the decomposition is unique up to the unavoidable permutation and scaling of components, without any orthogonality assumption being imposed. This uniqueness is why the individual CP components can be read as physical modes rather than as an arbitrary basis.
+        </p>
+        <p>
+          The rest of this note is organized as follows. Section 2 defines the outer product, rank-1 tensors, tensor rank, the CP model, matricization, and the Khatri-Rao product. Section 3 derives the CP-ALS algorithm and its efficient implementation. Section 4 discusses rank selection. Section 5 states Kruskal's uniqueness condition. Section 6 works a numerical example by hand. Section 7 connects the model to the constitutive-modeling work on this site, and Section 8 concludes.
+        </p>
+
+        <h2 id="s2">2. Basic Definitions</h2>
+
+        <h3>2.1 Outer product and rank-1 tensors</h3>
+        <p>
+          Let \( \mathcal{X} \in \mathbb{R}^{I \times J \times K} \) be an order-3 tensor with entries \( x_{ijk} \). Given three vectors \( a \in \mathbb{R}^{I} \), \( b \in \mathbb{R}^{J} \), \( c \in \mathbb{R}^{K} \), their outer product is the \( I \times J \times K \) rank-1 tensor
+        </p>
+        <div class="na-eq">\[ (a \circ b \circ c)_{ijk} = a_i\, b_j\, c_k \tag{1} \]</div>
+        <p>
+          A tensor is rank-1 if it can be written as a single such outer product. This is the direct three-way analogue of a rank-1 matrix \( a\,b^{\mathsf T} \).
+        </p>
+
+        <h3>2.2 The CP model and tensor rank</h3>
+        <p>
+          The CP decomposition approximates \( \mathcal{X} \) as a sum of \( R \) rank-1 tensors:
+        </p>
+        <div class="na-eq">\[ \mathcal{X} \;\approx\; [\![\lambda; A, B, C]\!] \;=\; \sum_{r=1}^{R} \lambda_r\, a_r \circ b_r \circ c_r, \qquad x_{ijk} \approx \sum_{r=1}^{R} \lambda_r\, a_{ir}\, b_{jr}\, c_{kr} \tag{2} \]</div>
+        <p>
+          The columns of the factor matrices \( A = [a_1,\dots,a_R] \in \mathbb{R}^{I \times R} \), \( B \in \mathbb{R}^{J \times R} \), and \( C \in \mathbb{R}^{K \times R} \) are usually normalized to unit length, and the scalar weights are collected into \( \lambda = (\lambda_1,\dots,\lambda_R) \). The tensor rank of \( \mathcal{X} \) is the smallest \( R \) for which Eq. (2) holds exactly. Unlike the matrix case, computing the exact tensor rank is NP-hard [5,7], and the maximum possible rank can exceed the largest dimension, so in practice one fixes a small target \( R \) and computes a low-rank approximation.
+        </p>
+
+        <h3>2.3 Matricization and the Khatri-Rao product</h3>
+        <p>
+          Unfolding (matricizing) \( \mathcal{X} \) along its three modes gives the matrices \( X_{(1)} \in \mathbb{R}^{I \times JK} \), \( X_{(2)} \in \mathbb{R}^{J \times IK} \), and \( X_{(3)} \in \mathbb{R}^{K \times IJ} \). The Khatri-Rao product of two matrices \( U \in \mathbb{R}^{I \times R} \) and \( V \in \mathbb{R}^{J \times R} \), written \( U \odot V \in \mathbb{R}^{IJ \times R} \), is the column-wise Kronecker product: its \( r \)-th column is \( u_r \otimes v_r \). With this notation the CP model of Eq. (2) has the three equivalent matricized forms [5]
+        </p>
+        <div class="na-eq">\[ X_{(1)} = A\,\Lambda\,(C \odot B)^{\mathsf{T}}, \qquad X_{(2)} = B\,\Lambda\,(C \odot A)^{\mathsf{T}}, \qquad X_{(3)} = C\,\Lambda\,(B \odot A)^{\mathsf{T}} \tag{3} \]</div>
+        <p>
+          where \( \Lambda = \mathrm{diag}(\lambda) \); when the weights are absorbed into one factor matrix, \( \Lambda \) can be dropped. The Khatri-Rao product obeys the Gram identity
+        </p>
+        <div class="na-eq">\[ (U \odot V)^{\mathsf{T}} (U \odot V) = (U^{\mathsf{T}}U) * (V^{\mathsf{T}}V) \tag{4} \]</div>
+        <p>
+          where \( * \) is the elementwise (Hadamard) product. Because \( \langle u_r \otimes v_r,\, u_s \otimes v_s \rangle = \langle u_r, u_s \rangle \langle v_r, v_s \rangle \), the identity collapses a \( JK \times R \) inner product into the Hadamard product of two \( R \times R \) matrices. This is the single fact that makes CP-ALS cheap.
+        </p>
+
+        <h2 id="s3">3. The Alternating Least Squares Algorithm (CP-ALS)</h2>
+
+        <h3>3.1 The subproblem</h3>
+        <p>
+          CP fitting minimizes the Frobenius-norm reconstruction error
+        </p>
+        <div class="na-eq">\[ \min_{A,B,C}\; f(A,B,C) = \tfrac{1}{2}\left\| \mathcal{X} - [\![A,B,C]\!] \right\|_F^2 \tag{5} \]</div>
+        <p>
+          This objective is non-convex in the three factor matrices jointly, but it is quadratic, hence convex, in any single factor matrix when the other two are held fixed. Fixing \( B \) and \( C \) and using the mode-1 matricization from Eq. (3), the problem for \( A \) becomes an ordinary linear least squares problem
+        </p>
+        <div class="na-eq">\[ \min_{A}\; \tfrac{1}{2}\left\| X_{(1)} - A\,(C \odot B)^{\mathsf{T}} \right\|_F^2 \tag{6} \]</div>
+        <p>
+          whose normal equations are \( A\,(C \odot B)^{\mathsf{T}}(C \odot B) = X_{(1)}(C \odot B) \). Applying the Gram identity of Eq. (4) to the coefficient matrix gives the CP-ALS update in closed form:
+        </p>
+        <div class="na-eq">\[ A \;\leftarrow\; X_{(1)}\,(C \odot B)\,\big[(C^{\mathsf{T}}C) * (B^{\mathsf{T}}B)\big]^{\dagger} \tag{7} \]</div>
+        <p>
+          where \( {}^{\dagger} \) is the Moore-Penrose pseudoinverse of the \( R \times R \) Gram matrix. The term \( X_{(1)}(C \odot B) \) is the matricized-tensor-times-Khatri-Rao-product, abbreviated MTTKRP; it is the dominant cost of the algorithm and never requires forming the large \( JK \times R \) matrix \( C \odot B \) explicitly. By symmetry, the updates for the other two modes are
+        </p>
+        <div class="na-eq">\[ B \;\leftarrow\; X_{(2)}\,(C \odot A)\,\big[(C^{\mathsf{T}}C) * (A^{\mathsf{T}}A)\big]^{\dagger}, \qquad C \;\leftarrow\; X_{(3)}\,(B \odot A)\,\big[(B^{\mathsf{T}}B) * (A^{\mathsf{T}}A)\big]^{\dagger} \tag{8} \]</div>
+
+        <h3>3.2 Normalization and stopping</h3>
+        <p>
+          After each update the columns of the just-updated factor matrix are rescaled to unit norm and the removed norms are stored in \( \lambda \). This prevents one factor from growing while its partner shrinks (a scaling drift that leaves the product unchanged but degrades conditioning). One outer sweep performs the three updates of Eqs. (7) and (8), then evaluates the relative error \( \|\mathcal{X} - [\![A,B,C]\!]\|_F / \|\mathcal{X}\|_F \). Iteration stops when the change in this error between sweeps falls below a tolerance, or a maximum sweep count is reached.
+        </p>
+
+        <h3>3.3 The general algorithm</h3>
+        <div class="na-pseudo"><span class="pk">Input:</span>   tensor X in R^{I x J x K}, target rank R, max iterations N, tolerance tol
+<span class="pk">Init:</span>    A in R^{I x R}, B in R^{J x R}, C in R^{K x R}   <span class="pc">(random, or from HOSVD leading factors)</span>
+<span class="pk">Precompute:</span> X_(1), X_(2), X_(3)   <span class="pc">(matricizations along the three modes)</span>
+
+<span class="pk">for</span> it = 1 ... N:
+    A &lt;- X_(1)(C(.)B) [ (C^T C)*(B^T B) ]^+ ;  lambda = colnorm(A) ; A = A / lambda
+    B &lt;- X_(2)(C(.)A) [ (C^T C)*(A^T A) ]^+ ;  lambda = colnorm(B) ; B = B / lambda
+    C &lt;- X_(3)(B(.)A) [ (B^T B)*(A^T A) ]^+ ;  lambda = colnorm(C) ; C = C / lambda
+    err = ||X - [[lambda;A,B,C]]||_F / ||X||_F
+    <span class="pk">if</span> |err_{it-1} - err_it| &lt; tol: <span class="pk">break</span>
+
+<span class="pk">Output:</span>  factor matrices A, B, C and weight vector lambda</div>
+        <p>
+          Here <code>(.)</code> denotes the Khatri-Rao product and <code>[ ]^+</code> the pseudoinverse. Each sweep costs \( O(IJK \cdot R) \), dominated by the three MTTKRPs; the \( R \times R \) Gram products and their pseudoinverses are negligible by comparison. This is the algorithm implemented as <code>cp_als</code> in the MATLAB Tensor Toolbox [8] and as <code>parafac</code> in the N-way toolbox, and it is the exact routine used in the Part 2 flow stress paper below.
+        </p>
+        <p>
+          When the factors are additionally constrained to be non-negative, the closed-form pseudoinverse update of Eq. (7) is replaced by a non-negative least squares solve or a multiplicative update; that variant is the subject of the separate <a href="note_nncp.html">non-negative CP note</a>.
+        </p>
+
+        <h2 id="s4">4. Choosing the Rank</h2>
+        <p>
+          Because the true rank is not known in advance and is expensive to compute, \( R \) is chosen empirically. Three practical guides are used together. First, the residual error curve: fit the tensor at \( R = 1, 2, 3, \dots \) and plot the relative reconstruction error; the rank is taken at the knee, beyond which extra components buy little accuracy. Second, the core consistency diagnostic (CORCONDIA) of Bro and Kiers [9], which measures how close the fitted model is to an ideal trilinear one and drops sharply once \( R \) exceeds the trilinear rank. Third, interpretability and stability: an over-large \( R \) causes degeneracy, in which two components become nearly collinear with large equal-and-opposite weights, a symptom that the model is fitting noise rather than structure. In the flow stress work the rank is justified by the residual-error curve together with an accuracy target expressed in <a href="notes.html#mape" class="term">MAPE</a>.
+        </p>
+
+        <h2 id="s5">5. Uniqueness: Kruskal's Condition</h2>
+        <p>
+          The reason CP is preferred to matrix factorization for interpretation is its essential uniqueness. Let \( k_M \) denote the Kruskal rank (k-rank) of a matrix \( M \), the largest number \( k \) such that every set of \( k \) columns of \( M \) is linearly independent. Kruskal's sufficient condition [6] for the rank-\( R \) CP decomposition to be unique is
+        </p>
+        <div class="na-eq">\[ k_A + k_B + k_C \;\ge\; 2R + 2 \tag{9} \]</div>
+        <p>
+          When Eq. (9) holds, any two exact decompositions \( [\![A,B,C]\!] = [\![A',B',C']\!] \) are related by a single common permutation of the components and a rescaling of each component that leaves the product unchanged. There is no rotational freedom, in sharp contrast to the SVD, whose factors can be mixed by any orthogonal rotation once the singular values are equal. The unavoidable permutation and scaling mean that two decompositions must be aligned (for example by sorting on \( \lambda \)) before their components are compared.
+        </p>
+
+        <h2 id="s6">6. Worked Example</h2>
+        <p>
+          Take \( I = 3 \), \( J = 2 \), \( K = 2 \), and build an exact rank-2 tensor from
+        </p>
+        <div class="na-eq">\[ a_1 = (1,0,2),\; b_1 = (1,1),\; c_1 = (2,0); \qquad a_2 = (0,1,1),\; b_2 = (2,0),\; c_2 = (1,1) \]</div>
+        <p>
+          with both weights equal to 1, so \( \mathcal{X} = a_1 \circ b_1 \circ c_1 + a_2 \circ b_2 \circ c_2 \). Its two mode-3 slices are
+        </p>
+        <div class="na-eq">\[ \mathcal{X}_{:,:,1} = \begin{bmatrix} 2 & 2 \\ 2 & 0 \\ 6 & 4 \end{bmatrix}, \qquad \mathcal{X}_{:,:,2} = \begin{bmatrix} 0 & 0 \\ 2 & 0 \\ 2 & 0 \end{bmatrix} \]</div>
+        <p>
+          Running CP-ALS at \( R = 2 \) from a random start, the sweeps converge to a relative error below \( 10^{-10} \) and recover, after column normalization and component alignment,
+        </p>
+        <div class="na-table-wrap">
+          <table class="na-table">
+            <thead>
+              <tr><th>Component \( r \)</th><th>\( \hat{\lambda}_r \)</th><th>True \( \lambda_r = \|a_r\|\|b_r\|\|c_r\| \)</th><th>\( \hat{a}_r \)</th><th>\( \hat{b}_r \)</th><th>\( \hat{c}_r \)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>6.3246</td><td>\( \sqrt{5}\cdot\sqrt{2}\cdot 2 = 6.3246 \)</td><td>(0.4472, 0, 0.8944)</td><td>(0.7071, 0.7071)</td><td>(1, 0)</td></tr>
+              <tr><td>2</td><td>4.0000</td><td>\( \sqrt{2}\cdot 2 \cdot \sqrt{2} = 4.0000 \)</td><td>(0, 0.7071, 0.7071)</td><td>(1, 0)</td><td>(0.7071, 0.7071)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The recovered factors match the construction to within numerical noise, but the algorithm output them in a data-driven order that need not match the construction order, and each component is recovered only up to the sign-free scaling absorbed into \( \hat\lambda \). Both facts are direct manifestations of the permutation-and-scaling indeterminacy of Section 5. Fitting the same tensor at \( R = 1 \) leaves a large residual, and at \( R = 3 \) the third weight collapses toward zero, so the residual-error curve of Section 4 correctly identifies the rank as 2.
+        </p>
+
+        <h2 id="s7">7. Use in the Flow Stress Work</h2>
+        <div class="na-note">
+          <p>
+            <strong>Where this is used.</strong> In the constitutive-modeling stream a discrete <a href="notes.html#flow-stress" class="term">flow stress</a> dataset over strain, strain rate, and temperature is arranged as an order-3 tensor and decomposed by CP so that each mode carries its own one-dimensional factor: an eigen strain-hardening curve, an eigen strain-rate factor, and an eigen temperature factor. A rank-1 CP model is exactly a Johnson-Cook-type multiplicative equation, so the rank needed to reach a target accuracy becomes a quantitative test of whether a decoupled equation is legitimate for that material. The non-negative variant used there is developed in the <a href="note_nncp.html">NN-CP note</a>; the two-way counterpart is the <a href="note_svd.html">SVD</a>. See <a href="research-constitutive-modeling.html">Constitutive Modeling</a> for the research context.
+          </p>
+        </div>
+
+        <h2 id="s8">8. Conclusions</h2>
+        <ol>
+          <li>CP decomposition writes an order-3 tensor as a sum of rank-1 outer products. Its matricized forms \( X_{(1)} = A(C \odot B)^{\mathsf T} \), with the Khatri-Rao Gram identity \( (U \odot V)^{\mathsf T}(U \odot V) = (U^{\mathsf T}U)*(V^{\mathsf T}V) \), turn the trilinear fit into a sequence of ordinary least squares subproblems.</li>
+          <li>The CP-ALS algorithm solves each subproblem in closed form via one MTTKRP and one \( R \times R \) pseudoinverse, followed by column normalization, at a per-sweep cost of \( O(IJK\,R) \).</li>
+          <li>Tensor rank is NP-hard to compute exactly, so \( R \) is chosen empirically from the residual-error knee, the core consistency diagnostic, and the absence of degeneracy.</li>
+          <li>Under Kruskal's condition the decomposition is unique up to component permutation and scaling, with no orthogonality imposed, which is what allows its components to be interpreted as physical modes.</li>
+        </ol>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Bro, R. (1997). PARAFAC. Tutorial and applications. <em>Chemometrics and Intelligent Laboratory Systems</em>, 38(2), 149-171.</li>
+          <li>Hitchcock, F. L. (1927). The expression of a tensor or a polyadic as a sum of products. <em>Journal of Mathematics and Physics</em>, 6(1-4), 164-189.</li>
+          <li>Harshman, R. A. (1970). Foundations of the PARAFAC procedure: Models and conditions for an explanatory multi-modal factor analysis. <em>UCLA Working Papers in Phonetics</em>, 16, 1-84.</li>
+          <li>Carroll, J. D., &amp; Chang, J. J. (1970). Analysis of individual differences in multidimensional scaling via an N-way generalization of the Eckart-Young decomposition. <em>Psychometrika</em>, 35(3), 283-319.</li>
+          <li>Kolda, T. G., &amp; Bader, B. W. (2009). Tensor decompositions and applications. <em>SIAM Review</em>, 51(3), 455-500.</li>
+          <li>Kruskal, J. B. (1977). Three-way arrays: rank and uniqueness of trilinear decompositions, with application to arithmetic complexity and statistics. <em>Linear Algebra and Its Applications</em>, 18(2), 95-138.</li>
+          <li>Hastad, J. (1990). Tensor rank is NP-complete. <em>Journal of Algorithms</em>, 11(4), 644-654.</li>
+          <li>Bader, B. W., &amp; Kolda, T. G. (2007). Efficient MATLAB computations with sparse and factored tensors. <em>SIAM Journal on Scientific Computing</em>, 30(1), 205-231.</li>
+          <li>Bro, R., &amp; Kiers, H. A. L. (2003). A new efficient method for determining the number of components in PARAFAC models. <em>Journal of Chemometrics</em>, 17(5), 274-286.</li>
+        </ol>
+
+        <p style="margin-top:36px;">
+          <a href="notes.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Technical Notes</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

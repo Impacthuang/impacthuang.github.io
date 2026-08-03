@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neural Network Architectures — Technical Note — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_ml.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Neural Network Architectures — Technical Note">
+  <meta property="og:description" content="A detailed column on the four neural network architectures used most often in engineering and signal analysis: the fully connected artificial neural network (ANN/MLP) with the backpropagation derivation, the convolutional neural network (CNN) with the convolution and pooling operations, the long short-term memory (LSTM) recurrent network with its gate equations, and the Transformer with the scaled dot-product self-attention derivation, each with a schematic diagram and primary references.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_ml.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Neural Network Architectures — Technical Note">
+  <meta name="twitter:description" content="A detailed column on ANN, CNN, LSTM, and Transformer architectures, with schematic diagrams, the backpropagation and self-attention derivations, and primary references.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="A detailed column on the four neural network architectures used most often in engineering and signal analysis: the fully connected ANN/MLP with the backpropagation derivation, the CNN with convolution and pooling, the LSTM recurrent network with its gate equations, and the Transformer with the scaled dot-product self-attention derivation, each with a schematic diagram and primary references.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="notes.html">Notes</a><span>/</span>Neural Networks</div>
+    <h1>Neural Network Architectures</h1>
+    <p>ANN, CNN, LSTM, and Transformer: what each computes, why it is built that way, and where it is used.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Overview</a></li>
+          <li><a href="#s1">1. The artificial neuron</a></li>
+          <li><a href="#s2">2. ANN / MLP</a></li>
+          <li><a href="#s3">3. Training: backpropagation</a></li>
+          <li><a href="#s4">4. CNN</a></li>
+          <li><a href="#s5">5. LSTM</a></li>
+          <li><a href="#s6">6. Transformer</a></li>
+          <li><a href="#s7">7. Choosing an architecture</a></li>
+          <li><a href="#s8">8. Use on this site</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Overview</div>
+          <p>
+            Neural networks are function approximators built from many simple, differentiable units and trained by gradient descent. Four architectures account for most of their use in engineering and signal analysis, and they differ mainly in the structural prior they build in: the fully connected network (ANN or multilayer perceptron) assumes nothing about the input's structure; the convolutional network (CNN) assumes local, translation-invariant structure, as in images and waveforms; the long short-term memory network (LSTM) assumes sequential, order-dependent structure; and the Transformer replaces recurrence with an attention mechanism that lets every element of a sequence attend to every other in parallel. This note derives each in turn, gives a schematic for each, and states the primary references. It develops the backpropagation algorithm once, in the ANN section, since all four architectures are trained the same way. The connection to the surrogate-model and acoustic-emission work on this site is stated at the end.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> neural network; multilayer perceptron; backpropagation; convolutional network; LSTM; self-attention; Transformer</p>
+
+        <h2 id="s1">1. The Artificial Neuron</h2>
+        <p>
+          The common building block is a single artificial neuron: it forms a weighted sum of its inputs, adds a bias, and passes the result through a non-linear activation function \( \phi \). For an input vector \( \mathbf{x} \in \mathbb{R}^{d} \), weights \( \mathbf{w} \), and bias \( b \),
+        </p>
+        <div class="na-eq">\[ z = \mathbf{w}^{\mathsf{T}}\mathbf{x} + b, \qquad a = \phi(z) \tag{1} \]</div>
+        <p>
+          The activation \( \phi \) is what makes a stack of neurons more expressive than a single linear map; without it, any depth of network collapses to one linear layer. Common choices are the logistic sigmoid \( \sigma(z) = 1/(1 + e^{-z}) \), the hyperbolic tangent \( \tanh(z) \), and the rectified linear unit \( \operatorname{ReLU}(z) = \max(0, z) \), the last being the default in deep networks because its gradient does not vanish for positive inputs [6].
+        </p>
+
+        <h2 id="s2">2. The Fully Connected Network (ANN / MLP)</h2>
+        <p>
+          Stacking neurons into layers, where every neuron in a layer receives all outputs of the previous layer, gives the multilayer perceptron. Writing the weights of layer \( \ell \) as a matrix \( W^{[\ell]} \) and the biases as a vector \( \mathbf{b}^{[\ell]} \), the forward pass is a chain of affine maps and activations:
+        </p>
+        <div class="na-eq">\[ \mathbf{a}^{[0]} = \mathbf{x}, \qquad \mathbf{z}^{[\ell]} = W^{[\ell]}\mathbf{a}^{[\ell-1]} + \mathbf{b}^{[\ell]}, \qquad \mathbf{a}^{[\ell]} = \phi\big(\mathbf{z}^{[\ell]}\big), \qquad \ell = 1,\dots,L \tag{2} \]</div>
+        <p>
+          with \( \hat{\mathbf{y}} = \mathbf{a}^{[L]} \) the output. A network with even one sufficiently wide hidden layer can approximate any continuous function on a bounded domain to arbitrary accuracy, the universal approximation theorem of Cybenko [1] and Hornik [2]; depth makes that approximation reachable with far fewer units. This expressiveness is also the caution: an MLP fits well inside the range of its training data and offers little guarantee outside it, which is exactly why, in the flow stress work, a network is paired with a tensor decomposition that keeps the physical structure visible rather than being used as a stand-alone black box.
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A multilayer perceptron with three input nodes, two hidden layers of four nodes, and two output nodes, fully connected between adjacent layers." style="width:100%;height:auto;font-family:inherit;">
+            <g stroke="#c9d6e3" stroke-width="1">
+              <!-- input to h1 -->
+              <g>
+                <line x1="90" y1="70" x2="230" y2="45"/><line x1="90" y1="70" x2="230" y2="105"/><line x1="90" y1="70" x2="230" y2="165"/><line x1="90" y1="70" x2="230" y2="215"/>
+                <line x1="90" y1="130" x2="230" y2="45"/><line x1="90" y1="130" x2="230" y2="105"/><line x1="90" y1="130" x2="230" y2="165"/><line x1="90" y1="130" x2="230" y2="215"/>
+                <line x1="90" y1="190" x2="230" y2="45"/><line x1="90" y1="190" x2="230" y2="105"/><line x1="90" y1="190" x2="230" y2="165"/><line x1="90" y1="190" x2="230" y2="215"/>
+              </g>
+              <!-- h1 to h2 -->
+              <g>
+                <line x1="230" y1="45" x2="410" y2="45"/><line x1="230" y1="45" x2="410" y2="105"/><line x1="230" y1="45" x2="410" y2="165"/><line x1="230" y1="45" x2="410" y2="215"/>
+                <line x1="230" y1="105" x2="410" y2="45"/><line x1="230" y1="105" x2="410" y2="105"/><line x1="230" y1="105" x2="410" y2="165"/><line x1="230" y1="105" x2="410" y2="215"/>
+                <line x1="230" y1="165" x2="410" y2="45"/><line x1="230" y1="165" x2="410" y2="105"/><line x1="230" y1="165" x2="410" y2="165"/><line x1="230" y1="165" x2="410" y2="215"/>
+                <line x1="230" y1="215" x2="410" y2="45"/><line x1="230" y1="215" x2="410" y2="105"/><line x1="230" y1="215" x2="410" y2="165"/><line x1="230" y1="215" x2="410" y2="215"/>
+              </g>
+              <!-- h2 to out -->
+              <g>
+                <line x1="410" y1="45" x2="560" y2="100"/><line x1="410" y1="45" x2="560" y2="160"/>
+                <line x1="410" y1="105" x2="560" y2="100"/><line x1="410" y1="105" x2="560" y2="160"/>
+                <line x1="410" y1="165" x2="560" y2="100"/><line x1="410" y1="165" x2="560" y2="160"/>
+                <line x1="410" y1="215" x2="560" y2="100"/><line x1="410" y1="215" x2="560" y2="160"/>
+              </g>
+            </g>
+            <g>
+              <circle cx="90" cy="70" r="14" fill="#0b7285"/><circle cx="90" cy="130" r="14" fill="#0b7285"/><circle cx="90" cy="190" r="14" fill="#0b7285"/>
+              <circle cx="230" cy="45" r="14" fill="#9fb3c8"/><circle cx="230" cy="105" r="14" fill="#9fb3c8"/><circle cx="230" cy="165" r="14" fill="#9fb3c8"/><circle cx="230" cy="215" r="14" fill="#9fb3c8"/>
+              <circle cx="410" cy="45" r="14" fill="#9fb3c8"/><circle cx="410" cy="105" r="14" fill="#9fb3c8"/><circle cx="410" cy="165" r="14" fill="#9fb3c8"/><circle cx="410" cy="215" r="14" fill="#9fb3c8"/>
+              <circle cx="560" cy="100" r="14" fill="#e4572e"/><circle cx="560" cy="160" r="14" fill="#e4572e"/>
+            </g>
+            <text x="90" y="240" text-anchor="middle" font-size="12" fill="#33475b">input x</text>
+            <text x="320" y="240" text-anchor="middle" font-size="12" fill="#33475b">hidden layers</text>
+            <text x="560" y="200" text-anchor="middle" font-size="12" fill="#33475b">output &#375;</text>
+          </svg>
+          <figcaption><strong>Figure 1.</strong> A fully connected network (MLP): each layer applies an affine map followed by a non-linear activation, Eq. (2).</figcaption>
+        </figure>
+
+        <h2 id="s3">3. Training: The Backpropagation Algorithm</h2>
+        <p>
+          Training chooses the weights and biases to minimize a loss \( \mathcal{L}(\hat{\mathbf{y}}, \mathbf{y}) \), for example the mean squared error for regression or the cross-entropy for classification, averaged over the training set. Minimization is by gradient descent, and the gradients are computed efficiently by backpropagation [3], which is the chain rule applied layer by layer from the output backwards. Define the error signal of layer \( \ell \) as \( \boldsymbol\delta^{[\ell]} = \partial \mathcal{L} / \partial \mathbf{z}^{[\ell]} \). At the output layer,
+        </p>
+        <div class="na-eq">\[ \boldsymbol\delta^{[L]} = \nabla_{\hat{\mathbf{y}}}\mathcal{L} \;\odot\; \phi'\big(\mathbf{z}^{[L]}\big) \tag{3} \]</div>
+        <p>
+          and it propagates backwards through the transpose of each weight matrix:
+        </p>
+        <div class="na-eq">\[ \boldsymbol\delta^{[\ell]} = \Big(W^{[\ell+1]\mathsf{T}}\boldsymbol\delta^{[\ell+1]}\Big) \odot \phi'\big(\mathbf{z}^{[\ell]}\big) \tag{4} \]</div>
+        <p>
+          where \( \odot \) is the elementwise product. The parameter gradients then follow directly,
+        </p>
+        <div class="na-eq">\[ \frac{\partial \mathcal{L}}{\partial W^{[\ell]}} = \boldsymbol\delta^{[\ell]}\,\mathbf{a}^{[\ell-1]\mathsf{T}}, \qquad \frac{\partial \mathcal{L}}{\partial \mathbf{b}^{[\ell]}} = \boldsymbol\delta^{[\ell]} \tag{5} \]</div>
+        <p>
+          and each parameter is updated by a step against its gradient, \( W \leftarrow W - \eta\,\partial\mathcal{L}/\partial W \), with learning rate \( \eta \), in practice using a mini-batch stochastic optimizer such as Adam [7]. Equations (3) to (5) are the whole of supervised training; the architectures that follow change only the form of the forward pass, and their gradients are obtained by the same backward recursion, today performed automatically by differentiation frameworks.
+        </p>
+
+        <h2 id="s4">4. The Convolutional Neural Network (CNN)</h2>
+        <p>
+          When the input has grid structure, an image, a spectrogram, or a one-dimensional waveform, a fully connected layer is wasteful and ignores the fact that a useful feature (an edge, a burst) looks the same wherever it occurs. A convolutional layer instead slides a small shared filter (kernel) \( K \) across the input, computing a local weighted sum at every position. For a 2D input \( X \) and kernel of size \( (2m{+}1)\times(2n{+}1) \),
+        </p>
+        <div class="na-eq">\[ (K * X)_{ij} = \sum_{u=-m}^{m}\sum_{v=-n}^{n} K_{uv}\, X_{i+u,\,j+v}, \qquad A_{ij} = \phi\big((K*X)_{ij} + b\big) \tag{6} \]</div>
+        <p>
+          Two properties fall out of Eq. (6): <em>weight sharing</em>, because the same kernel is used at every position, so the layer has far fewer parameters than a dense one and detects a feature regardless of where it sits (translation equivariance); and <em>locality</em>, because each output depends only on a small receptive field. A layer applies many kernels to produce a stack of feature maps. Between convolutional layers a <em>pooling</em> operation downsamples each map, for example max-pooling over a \( 2\times2 \) window, \( P_{ij} = \max_{(u,v)\in\text{window}} A_{i+u,\,j+v} \), which shrinks the representation and adds a small tolerance to translation. Stacked convolution-plus-pooling blocks build features from local edges up to whole objects; the design traces to LeCun's LeNet [4] and became dominant after AlexNet [5], with residual connections [8] later enabling very deep networks.
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A convolutional network pipeline: input grid, a convolution kernel producing feature maps, a pooling step reducing their size, a second convolution, and a flattening into a fully connected output." style="width:100%;height:auto;font-family:inherit;">
+            <!-- input -->
+            <rect x="20" y="60" width="80" height="80" fill="#c9d6e3" stroke="#9fb3c8"/>
+            <g stroke="#9fb3c8" stroke-width="0.8">
+              <line x1="40" y1="60" x2="40" y2="140"/><line x1="60" y1="60" x2="60" y2="140"/><line x1="80" y1="60" x2="80" y2="140"/>
+              <line x1="20" y1="80" x2="100" y2="80"/><line x1="20" y1="100" x2="100" y2="100"/><line x1="20" y1="120" x2="100" y2="120"/>
+            </g>
+            <rect x="20" y="60" width="20" height="20" fill="#e4572e" opacity="0.55"/>
+            <text x="60" y="160" text-anchor="middle" font-size="12" fill="#33475b">input</text>
+            <!-- conv arrow -->
+            <line x1="108" y1="100" x2="150" y2="100" stroke="#0b7285" stroke-width="2" marker-end="url(#a2)"/>
+            <text x="129" y="92" text-anchor="middle" font-size="10" fill="#0b7285">conv</text>
+            <!-- feature maps -->
+            <rect x="165" y="55" width="60" height="60" fill="#9fb3c8" opacity="0.5"/>
+            <rect x="158" y="62" width="60" height="60" fill="#9fb3c8" opacity="0.7"/>
+            <rect x="151" y="69" width="60" height="60" fill="#9fb3c8"/>
+            <text x="181" y="150" text-anchor="middle" font-size="12" fill="#33475b">feature maps</text>
+            <!-- pool arrow -->
+            <line x1="230" y1="100" x2="272" y2="100" stroke="#0b7285" stroke-width="2" marker-end="url(#a2)"/>
+            <text x="251" y="92" text-anchor="middle" font-size="10" fill="#0b7285">pool</text>
+            <!-- pooled -->
+            <rect x="295" y="78" width="40" height="40" fill="#9fb3c8" opacity="0.7"/>
+            <rect x="288" y="85" width="40" height="40" fill="#9fb3c8"/>
+            <text x="308" y="150" text-anchor="middle" font-size="12" fill="#33475b">pooled</text>
+            <!-- conv2 -->
+            <line x1="340" y1="100" x2="382" y2="100" stroke="#0b7285" stroke-width="2" marker-end="url(#a2)"/>
+            <text x="361" y="92" text-anchor="middle" font-size="10" fill="#0b7285">conv</text>
+            <rect x="398" y="82" width="26" height="26" fill="#9fb3c8" opacity="0.7"/>
+            <rect x="392" y="88" width="26" height="26" fill="#9fb3c8"/>
+            <text x="405" y="150" text-anchor="middle" font-size="12" fill="#33475b">maps</text>
+            <!-- flatten arrow -->
+            <line x1="428" y1="100" x2="470" y2="100" stroke="#0b7285" stroke-width="2" marker-end="url(#a2)"/>
+            <text x="449" y="92" text-anchor="middle" font-size="10" fill="#0b7285">flatten</text>
+            <!-- dense -->
+            <g fill="#9fb3c8">
+              <circle cx="500" cy="70" r="8"/><circle cx="500" cy="100" r="8"/><circle cx="500" cy="130" r="8"/>
+            </g>
+            <g fill="#e4572e"><circle cx="560" cy="85" r="8"/><circle cx="560" cy="115" r="8"/></g>
+            <g stroke="#c9d6e3"><line x1="508" y1="70" x2="552" y2="85"/><line x1="508" y1="70" x2="552" y2="115"/><line x1="508" y1="100" x2="552" y2="85"/><line x1="508" y1="100" x2="552" y2="115"/><line x1="508" y1="130" x2="552" y2="85"/><line x1="508" y1="130" x2="552" y2="115"/></g>
+            <text x="560" y="150" text-anchor="middle" font-size="12" fill="#33475b">class</text>
+            <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#0b7285"/></marker></defs>
+          </svg>
+          <figcaption><strong>Figure 2.</strong> A CNN alternates convolution (local shared filters, Eq. 6) with pooling (downsampling), then flattens the final maps into a dense classifier.</figcaption>
+        </figure>
+
+        <h2 id="s5">5. The Long Short-Term Memory Network (LSTM)</h2>
+        <p>
+          For sequential data, where order carries meaning, a recurrent network processes one element at a time while carrying a hidden state \( \mathbf{h}_t \) forward. A plain recurrent network struggles to learn long-range dependencies because repeated multiplication through the recurrence makes gradients vanish or explode. The long short-term memory unit of Hochreiter and Schmidhuber [9] solves this by adding a protected <em>cell state</em> \( \mathbf{c}_t \) that information can flow along nearly unchanged, regulated by three multiplicative <em>gates</em>. At each step, given input \( \mathbf{x}_t \) and previous state \( \mathbf{h}_{t-1} \):
+        </p>
+        <div class="na-eq">\[ \begin{aligned}
+          \mathbf{f}_t &= \sigma\big(W_f[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_f\big) &&\text{(forget gate)}\\
+          \mathbf{i}_t &= \sigma\big(W_i[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_i\big) &&\text{(input gate)}\\
+          \tilde{\mathbf{c}}_t &= \tanh\big(W_c[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_c\big) &&\text{(candidate)}\\
+          \mathbf{c}_t &= \mathbf{f}_t \odot \mathbf{c}_{t-1} + \mathbf{i}_t \odot \tilde{\mathbf{c}}_t &&\text{(cell update)}\\
+          \mathbf{o}_t &= \sigma\big(W_o[\mathbf{h}_{t-1}, \mathbf{x}_t] + \mathbf{b}_o\big) &&\text{(output gate)}\\
+          \mathbf{h}_t &= \mathbf{o}_t \odot \tanh(\mathbf{c}_t) &&\text{(hidden state)}
+        \end{aligned} \tag{7} \]</div>
+        <p>
+          The forget gate \( \mathbf{f}_t \) decides what to erase from the cell, the input gate \( \mathbf{i}_t \) what new information to write, and the output gate \( \mathbf{o}_t \) what to expose as the hidden state. Because the cell update in Eq. (7) is additive rather than a repeated matrix product, the gradient can travel many steps without decaying, which is what lets an LSTM relate events far apart in a sequence. A <em>bidirectional</em> LSTM runs two such chains, one forward and one backward, and concatenates their states, so each position sees both past and future context; this is the recurrent half of the CNN-BiLSTM used in the battery acoustic-emission work. A lighter-weight variant, the gated recurrent unit (GRU) [10], merges the gates into two.
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <svg viewBox="0 0 620 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An LSTM cell showing the cell-state line running across the top, the previous hidden state and input entering the forget, input, candidate, and output gates, and the new hidden state leaving." style="width:100%;height:auto;font-family:inherit;">
+            <rect x="120" y="45" width="380" height="150" rx="10" fill="none" stroke="#9fb3c8" stroke-width="1.5"/>
+            <!-- cell state line -->
+            <line x1="120" y1="70" x2="500" y2="70" stroke="#e4572e" stroke-width="3"/>
+            <text x="110" y="66" text-anchor="end" font-size="12" fill="#e4572e">c&#8348;&#8331;&#8321;</text>
+            <text x="512" y="66" text-anchor="start" font-size="12" fill="#e4572e">c&#8348;</text>
+            <circle cx="240" cy="70" r="9" fill="#fff" stroke="#0b1c34"/><text x="240" y="74" text-anchor="middle" font-size="12" fill="#0b1c34">&#215;</text>
+            <circle cx="330" cy="70" r="9" fill="#fff" stroke="#0b1c34"/><text x="330" y="75" text-anchor="middle" font-size="14" fill="#0b1c34">+</text>
+            <!-- gates -->
+            <rect x="200" y="120" width="42" height="24" rx="4" fill="#0b7285"/><text x="221" y="137" text-anchor="middle" font-size="12" fill="#fff">f</text>
+            <rect x="255" y="120" width="42" height="24" rx="4" fill="#0b7285"/><text x="276" y="137" text-anchor="middle" font-size="12" fill="#fff">i</text>
+            <rect x="310" y="120" width="42" height="24" rx="4" fill="#9fb3c8"/><text x="331" y="137" text-anchor="middle" font-size="11" fill="#0b1c34">c&#771;</text>
+            <rect x="400" y="120" width="42" height="24" rx="4" fill="#0b7285"/><text x="421" y="137" text-anchor="middle" font-size="12" fill="#fff">o</text>
+            <line x1="221" y1="120" x2="240" y2="79" stroke="#33475b" stroke-width="1"/>
+            <line x1="276" y1="120" x2="322" y2="79" stroke="#33475b" stroke-width="1"/>
+            <line x1="331" y1="120" x2="338" y2="79" stroke="#33475b" stroke-width="1"/>
+            <circle cx="421" cy="90" r="9" fill="#fff" stroke="#0b1c34"/><text x="421" y="94" text-anchor="middle" font-size="12" fill="#0b1c34">&#215;</text>
+            <line x1="421" y1="120" x2="421" y2="99" stroke="#33475b" stroke-width="1"/>
+            <line x1="400" y1="70" x2="421" y2="81" stroke="#33475b" stroke-width="1"/>
+            <!-- inputs/outputs -->
+            <text x="60" y="180" text-anchor="middle" font-size="12" fill="#33475b">h&#8348;&#8331;&#8321;</text>
+            <line x1="70" y1="175" x2="200" y2="140" stroke="#c9d6e3" stroke-width="1.5"/>
+            <text x="60" y="205" text-anchor="middle" font-size="12" fill="#33475b">x&#8348;</text>
+            <line x1="70" y1="200" x2="200" y2="144" stroke="#c9d6e3" stroke-width="1.5"/>
+            <line x1="421" y1="81" x2="421" y2="35" stroke="#33475b" stroke-width="1.5"/>
+            <text x="421" y="28" text-anchor="middle" font-size="12" fill="#33475b">h&#8348;</text>
+            <line x1="430" y1="90" x2="560" y2="90" stroke="#33475b" stroke-width="1.5"/>
+            <text x="575" y="94" text-anchor="middle" font-size="12" fill="#33475b">h&#8348;</text>
+          </svg>
+          <figcaption><strong>Figure 3.</strong> One LSTM cell (Eq. 7). The protected cell state (orange) runs across the top, edited only by the forget (&#215;) and input (+) operations; three gates regulate the flow.</figcaption>
+        </figure>
+
+        <h2 id="s6">6. The Transformer</h2>
+        <p>
+          Recurrence forces sequential processing: step \( t \) cannot be computed until step \( t{-}1 \) is done. The Transformer of Vaswani et al. [11] removes recurrence entirely and lets every position of a sequence interact with every other position directly, through <em>self-attention</em>, which is fully parallel. Each input element is first projected into three vectors, a query \( \mathbf{q} \), a key \( \mathbf{k} \), and a value \( \mathbf{v} \); stacking these over all positions gives matrices \( Q, K, V \). Scaled dot-product attention computes, for every query, a weighted average of all values, weighted by how well the query matches each key:
+        </p>
+        <div class="na-eq">\[ \operatorname{Attention}(Q, K, V) = \operatorname{softmax}\!\left(\frac{Q K^{\mathsf{T}}}{\sqrt{d_k}}\right) V \tag{8} \]</div>
+        <p>
+          The product \( QK^{\mathsf T} \) scores every query-key pair; dividing by \( \sqrt{d_k} \), the key dimension, keeps the scores from growing large enough to saturate the softmax; the softmax turns each row into attention weights that sum to one; and multiplying by \( V \) mixes the values accordingly. Running several such attention functions in parallel with different learned projections, then concatenating them, is <em>multi-head attention</em>, which lets the model attend to several kinds of relationship at once:
+        </p>
+        <div class="na-eq">\[ \operatorname{MultiHead}(Q,K,V) = [\,\text{head}_1, \dots, \text{head}_h\,]\,W^{O}, \qquad \text{head}_i = \operatorname{Attention}(QW_i^{Q}, KW_i^{K}, VW_i^{V}) \tag{9} \]</div>
+        <p>
+          Because attention alone is order-blind (permuting the inputs permutes the outputs identically), a <em>positional encoding</em> is added to the inputs to inject sequence order. Each Transformer block wraps multi-head attention and a position-wise feed-forward MLP, each with a residual connection [8] and layer normalization. This architecture is the basis of modern large language models and has spread to vision and time-series problems; its cost is quadratic in sequence length, since \( QK^{\mathsf T} \) compares all pairs.
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <svg viewBox="0 0 620 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A Transformer block: input embeddings plus positional encoding feed into multi-head self-attention producing query, key, and value, followed by add-and-norm, a feed-forward network, and another add-and-norm." style="width:100%;height:auto;font-family:inherit;">
+            <!-- input -->
+            <rect x="40" y="105" width="90" height="34" rx="5" fill="#0b7285"/><text x="85" y="126" text-anchor="middle" font-size="11" fill="#fff">input + pos</text>
+            <line x1="132" y1="122" x2="168" y2="122" stroke="#33475b" stroke-width="1.5" marker-end="url(#a3)"/>
+            <!-- Q K V -->
+            <rect x="172" y="60" width="34" height="24" rx="4" fill="#9fb3c8"/><text x="189" y="77" text-anchor="middle" font-size="12" fill="#0b1c34">Q</text>
+            <rect x="172" y="110" width="34" height="24" rx="4" fill="#9fb3c8"/><text x="189" y="127" text-anchor="middle" font-size="12" fill="#0b1c34">K</text>
+            <rect x="172" y="160" width="34" height="24" rx="4" fill="#9fb3c8"/><text x="189" y="177" text-anchor="middle" font-size="12" fill="#0b1c34">V</text>
+            <!-- attention box -->
+            <rect x="240" y="70" width="120" height="104" rx="6" fill="none" stroke="#e4572e" stroke-width="1.5"/>
+            <text x="300" y="60" text-anchor="middle" font-size="11" fill="#e4572e">multi-head attention</text>
+            <text x="300" y="112" text-anchor="middle" font-size="11" fill="#33475b">softmax(QK&#7488;/&#8730;d)</text>
+            <text x="300" y="132" text-anchor="middle" font-size="11" fill="#33475b">&#215; V</text>
+            <line x1="206" y1="72" x2="240" y2="90" stroke="#c9d6e3"/><line x1="206" y1="122" x2="240" y2="122" stroke="#c9d6e3"/><line x1="206" y1="172" x2="240" y2="154" stroke="#c9d6e3"/>
+            <!-- add norm -->
+            <line x1="362" y1="122" x2="398" y2="122" stroke="#33475b" stroke-width="1.5" marker-end="url(#a3)"/>
+            <rect x="402" y="105" width="74" height="34" rx="5" fill="#9fb3c8"/><text x="439" y="126" text-anchor="middle" font-size="10" fill="#0b1c34">add &amp; norm</text>
+            <line x1="478" y1="122" x2="510" y2="122" stroke="#33475b" stroke-width="1.5" marker-end="url(#a3)"/>
+            <rect x="514" y="98" width="70" height="48" rx="5" fill="#0b7285"/><text x="549" y="118" text-anchor="middle" font-size="10" fill="#fff">feed</text><text x="549" y="132" text-anchor="middle" font-size="10" fill="#fff">forward</text>
+            <text x="312" y="205" text-anchor="middle" font-size="11" fill="#33475b">every position attends to every other, in parallel</text>
+            <defs><marker id="a3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#33475b"/></marker></defs>
+          </svg>
+          <figcaption><strong>Figure 4.</strong> A Transformer block: self-attention (Eq. 8) mixes information across all positions, followed by add-and-norm and a position-wise feed-forward network.</figcaption>
+        </figure>
+
+        <h2 id="s7">7. Choosing an Architecture</h2>
+        <p>
+          The four architectures embody increasingly weak assumptions about the input, traded for increasingly large data appetite. An MLP suits fixed-length feature vectors with no known structure. A CNN suits data with local, translation-invariant patterns: images, and one-dimensional signals such as stress waves or acoustic-emission bursts. An LSTM suits sequences whose order matters and whose useful dependencies may be short or long. A Transformer suits sequences where long-range, all-to-all relationships dominate and enough data and compute are available to learn them. The choice is a matter of matching the structural prior to the data, not of picking the newest model; a small, well-structured engineering dataset is often served better by a modest CNN or LSTM, or by a physics-structured hybrid, than by a large attention model.
+        </p>
+
+        <h2 id="s8">8. Use on This Site</h2>
+        <div class="na-note">
+          <p>
+            <strong>Where these are used.</strong> In the constitutive-modeling stream a compact <a href="notes.html#ann" class="term">ANN</a> is used deliberately narrowly, to reconstruct and interpolate a flow stress response surface that has already been given structure by <a href="note_cp.html">tensor decomposition</a>, and to build fast surrogates for quantities such as perforation velocity. In the battery stream a <a href="notes.html#cnn-bilstm" class="term">CNN-BiLSTM</a> combines the CNN of Section 4 with the bidirectional LSTM of Section 5 to classify damage states from acoustic-emission recordings, where the diagnostic information lies both in the shape of individual bursts (local, for the CNN) and in how bursts follow one another (sequential, for the LSTM). See <a href="research-constitutive-modeling.html">Constitutive Modeling</a> and <a href="research-battery-phm.html">Battery Impact &amp; PHM</a> for the research context.
+          </p>
+        </div>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Cybenko, G. (1989). Approximation by superpositions of a sigmoidal function. <em>Mathematics of Control, Signals and Systems</em>, 2(4), 303-314.</li>
+          <li>Hornik, K., Stinchcombe, M., &amp; White, H. (1989). Multilayer feedforward networks are universal approximators. <em>Neural Networks</em>, 2(5), 359-366.</li>
+          <li>Rumelhart, D. E., Hinton, G. E., &amp; Williams, R. J. (1986). Learning representations by back-propagating errors. <em>Nature</em>, 323(6088), 533-536.</li>
+          <li>LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P. (1998). Gradient-based learning applied to document recognition. <em>Proceedings of the IEEE</em>, 86(11), 2278-2324.</li>
+          <li>Krizhevsky, A., Sutskever, I., &amp; Hinton, G. E. (2012). ImageNet classification with deep convolutional neural networks. <em>Advances in Neural Information Processing Systems</em>, 25, 1097-1105.</li>
+          <li>Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep Learning</em>. MIT Press.</li>
+          <li>Kingma, D. P., &amp; Ba, J. (2015). Adam: A method for stochastic optimization. In <em>3rd International Conference on Learning Representations (ICLR)</em>.</li>
+          <li>He, K., Zhang, X., Ren, S., &amp; Sun, J. (2016). Deep residual learning for image recognition. In <em>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</em> (pp. 770-778).</li>
+          <li>Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. <em>Neural Computation</em>, 9(8), 1735-1780.</li>
+          <li>Cho, K., van Merrienboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., &amp; Bengio, Y. (2014). Learning phrase representations using RNN encoder-decoder for statistical machine translation. In <em>Proceedings of EMNLP</em> (pp. 1724-1734).</li>
+          <li>Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., &amp; Polosukhin, I. (2017). Attention is all you need. <em>Advances in Neural Information Processing Systems</em>, 30, 5998-6008.</li>
+        </ol>
+
+        <p style="margin-top:36px;">
+          <a href="notes.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Technical Notes</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

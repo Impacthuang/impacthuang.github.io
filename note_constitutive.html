@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Common Constitutive Models — Technical Note — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_constitutive.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Common Constitutive Models — Technical Note">
+  <meta property="og:description" content="A reference column on the constitutive models used most often in impact and crash simulation: the Johnson-Cook flow stress and fracture models and their Cowper-Symonds and Zerilli-Armstrong relatives for metals, the Drucker-Prager pressure-dependent model for geomaterials and polymers, the Deshpande-Fleck crushable foam model for cellular solids, and the Johnson-Holmquist JH-2 model for brittle ceramics, each with its yield surface, governing equations, and primary references.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_constitutive.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Common Constitutive Models — Technical Note">
+  <meta name="twitter:description" content="A reference column on the constitutive models used most often in impact and crash simulation: Johnson-Cook, Drucker-Prager, Deshpande-Fleck crushable foam, and Johnson-Holmquist JH-2, with equations and references.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="A reference column on the constitutive models used most often in impact and crash simulation: the Johnson-Cook flow stress and fracture models and their Cowper-Symonds and Zerilli-Armstrong relatives for metals, the Drucker-Prager pressure-dependent model for geomaterials and polymers, the Deshpande-Fleck crushable foam model for cellular solids, and the Johnson-Holmquist JH-2 model for brittle ceramics, each with its yield surface, governing equations, and primary references.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="notes.html">Notes</a><span>/</span>Constitutive Models</div>
+    <h1>Common Constitutive Models in Impact Simulation</h1>
+    <p>A reference column: yield surfaces, governing equations, and primary sources for the models used most often in crash, impact, and penetration analysis.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Overview</a></li>
+          <li><a href="#s1">1. What a model must supply</a></li>
+          <li><a href="#s2">2. Johnson-Cook (metals)</a></li>
+          <li><a href="#s3">3. Cowper-Symonds &amp; Zerilli-Armstrong</a></li>
+          <li><a href="#s4">4. Drucker-Prager</a></li>
+          <li><a href="#s5">5. Deshpande-Fleck foam</a></li>
+          <li><a href="#s6">6. Johnson-Holmquist JH-2</a></li>
+          <li><a href="#s7">7. Ductile damage</a></li>
+          <li><a href="#s8">8. Where data-driven fits</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Overview</div>
+          <p>
+            A finite element solver cannot predict an impact event without a constitutive model: the equation that tells it what stress a material carries for a given deformation, rate, temperature, and pressure. Different classes of material need different models, because the physics that limits their strength differs. This column collects the models used most often in impact and crash analysis, each stated with its yield surface or flow rule, its governing equations, and its primary reference. It covers the Johnson-Cook flow stress and fracture models for metals, together with their Cowper-Symonds and Zerilli-Armstrong relatives; the pressure-dependent Drucker-Prager model for soils, concrete, and polymers; the Deshpande-Fleck crushable foam model for metallic and polymeric cellular solids; and the Johnson-Holmquist JH-2 model for brittle ceramics and glass. It closes by placing the data-driven flow stress work of this site in relation to these fixed-form models.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> constitutive model; Johnson-Cook; Drucker-Prager; crushable foam; Johnson-Holmquist; yield surface; flow stress</p>
+
+        <h2 id="s1">1. What a Constitutive Model Must Supply</h2>
+        <p>
+          In rate-independent plasticity a model provides three ingredients: a <em>yield function</em> \( f(\boldsymbol\sigma, \dots) = 0 \) marking the boundary between elastic and plastic response, a <em>flow rule</em> giving the direction of plastic straining (associated flow takes it normal to the yield surface), and a <em>hardening law</em> describing how the surface evolves with accumulated plastic strain. For dynamic problems two further dependencies matter: strain rate and temperature. The models below differ mainly in what their yield surface depends on: the deviatoric stress alone (metals, von Mises), the deviatoric stress and the pressure (geomaterials and foams), or a damage-degraded strength (brittle ceramics). Throughout, \( \sigma_e = \sqrt{3 J_2} \) is the von Mises equivalent stress, \( \sigma_m = I_1/3 \) the mean (hydrostatic) stress, \( p = -\sigma_m \) the pressure, and \( \bar\varepsilon^{\,p} \) the equivalent plastic strain.
+        </p>
+
+        <h2 id="s2">2. The Johnson-Cook Model (metals)</h2>
+        <p>
+          The Johnson-Cook (JC) model [1] is the most widely used empirical flow stress equation in impact engineering, built into essentially every explicit solver. It assumes the effects of strain hardening, strain rate, and thermal softening <em>multiply</em>:
+        </p>
+        <div class="na-eq">\[ \sigma_y = \big(A + B\,\bar\varepsilon^{\,p\,n}\big)\Big(1 + C\ln \dot{\varepsilon}^{*}\Big)\big(1 - T^{*\,m}\big) \tag{1} \]</div>
+        <p>
+          with \( \dot{\varepsilon}^{*} = \dot{\bar\varepsilon}^{\,p}/\dot{\varepsilon}_0 \) the dimensionless strain rate relative to a reference rate \( \dot{\varepsilon}_0 \), and the homologous temperature
+        </p>
+        <div class="na-eq">\[ T^{*} = \frac{T - T_{\text{room}}}{T_{\text{melt}} - T_{\text{room}}} \tag{2} \]</div>
+        <p>
+          The five constants \( A \) (yield stress), \( B, n \) (hardening), \( C \) (rate sensitivity), and \( m \) (thermal softening) are fitted to test data. Its convenience is also its limitation: the multiplicative separability of the three factors is an assumption, not a measurement. A rank-1 tensor decomposition of measured flow stress data is exactly a JC-type multiplicative form, which is why the legitimacy of the JC structure can be <em>tested</em> rather than presumed; see the <a href="note_svd.html">SVD</a> and <a href="note_cp.html">CP</a> notes and the <a href="publications.html#pub-7">IJIE 2023 paper</a>.
+        </p>
+        <p>
+          The companion <strong>Johnson-Cook fracture model</strong> [2] sets a strain to failure that falls with stress triaxiality \( \eta = \sigma_m/\sigma_e \) and rises with rate and temperature, and accumulates damage by \( D = \sum \Delta\bar\varepsilon^{\,p}/\varepsilon_f \):
+        </p>
+        <div class="na-eq">\[ \varepsilon_f = \big[D_1 + D_2 \exp(D_3\,\eta)\big]\big(1 + D_4 \ln \dot{\varepsilon}^{*}\big)\big(1 + D_5 T^{*}\big) \tag{3} \]</div>
+
+        <h2 id="s3">3. Two Relatives: Cowper-Symonds and Zerilli-Armstrong</h2>
+        <p>
+          Where the JC logarithmic rate term is a poor fit, the <strong>Cowper-Symonds</strong> overstress form [3] is a common alternative, scaling the static yield stress \( \sigma_0 \) by a power law of strain rate:
+        </p>
+        <div class="na-eq">\[ \frac{\sigma_y}{\sigma_0} = 1 + \left(\frac{\dot{\bar\varepsilon}^{\,p}}{D}\right)^{1/q} \tag{4} \]</div>
+        <p>
+          with material constants \( D \) and \( q \). Unlike JC, JC-fracture, and Cowper-Symonds, which are purely empirical, the <strong>Zerilli-Armstrong</strong> model [4] is physically based, deriving the rate and temperature dependence from dislocation mechanics and giving different functional forms for body-centred-cubic and face-centred-cubic metals, which reflects that thermal activation controls the yield stress in BCC metals but the hardening in FCC metals.
+        </p>
+
+        <h2 id="s4">4. The Drucker-Prager Model (geomaterials, polymers)</h2>
+        <p>
+          Soils, rock, concrete, and many polymers are <em>pressure-sensitive</em>: they are stronger in compression than in tension, so their yield depends on the hydrostatic stress, which a von Mises metal model ignores. The Drucker-Prager model [5] adds a linear pressure term to the deviatoric measure. A common form of its yield function is
+        </p>
+        <div class="na-eq">\[ f = \sqrt{J_2} + \alpha\, I_1 - k = 0 \tag{5} \]</div>
+        <p>
+          where \( I_1 = \operatorname{tr}\boldsymbol\sigma \) is the first stress invariant, \( J_2 \) the second deviatoric invariant, and \( \alpha, k \) are material constants that can be matched to the friction angle and cohesion of the Mohr-Coulomb criterion it smooths. In solver notation this is often written \( t - p\tan\beta - d = 0 \), with friction angle \( \beta \) and cohesion \( d \). Because the flow is frequently non-associated (the plastic strain direction uses a dilation angle different from \( \beta \)) to avoid over-predicting volumetric expansion, the plastic flow direction is not normal to the yield surface.
+        </p>
+
+        <h2 id="s5">5. The Deshpande-Fleck Crushable Foam Model (cellular solids)</h2>
+        <p>
+          Metallic and polymeric foams compact under pressure, so, like geomaterials but for a different reason, their yield depends on the mean stress; unlike geomaterials, they can yield under pure hydrostatic pressure because the cell walls buckle and the material densifies. The isotropic Deshpande-Fleck model [6] captures this with an <em>elliptical</em> yield surface in the mean-stress / equivalent-stress plane:
+        </p>
+        <div class="na-eq">\[ \hat\sigma = \frac{1}{1 + (\alpha/3)^2}\Big(\sigma_e^2 + \alpha^2 \sigma_m^2\Big) \;\le\; Y^2, \qquad \Phi = \hat\sigma - Y \le 0 \tag{6} \]</div>
+        <p>
+          Here \( \sigma_e \) is the von Mises stress, \( \sigma_m \) the mean stress, \( Y \) the current yield strength, and the shape parameter \( \alpha \) sets the aspect ratio of the ellipse and is fixed by the plastic Poisson's ratio \( \nu_p \) through \( \alpha^2 = 9(1 - 2\nu_p)/2(1 + \nu_p) \). As \( \alpha \to 0 \) the ellipse degenerates to the pressure-independent von Mises cylinder. The hardening law \( Y(\hat\varepsilon) \) rises steeply once the cells densify, reproducing the long stress plateau followed by rapid stiffening that is characteristic of foams under crush. This model underlies the battery-foam impact simulations referenced from the research pages.
+        </p>
+
+        <h2 id="s6">6. The Johnson-Holmquist JH-2 Model (brittle ceramics)</h2>
+        <p>
+          Ceramics, glass, and other brittle solids under ballistic impact do not yield plastically; they lose strength as they fracture, and their strength depends strongly on pressure and on the accumulated damage. The Johnson-Holmquist JH-2 model [7] represents the normalized equivalent strength \( \sigma^{*} = \sigma/\sigma_{\text{HEL}} \) as a smooth interpolation between an intact and a fully fractured strength, driven by a damage variable \( D \in [0,1] \):
+        </p>
+        <div class="na-eq">\[ \sigma^{*} = \sigma_i^{*} - D\,\big(\sigma_i^{*} - \sigma_f^{*}\big) \tag{7} \]</div>
+        <p>
+          with intact and fractured branches, functions of the normalized pressure \( P^{*} \) and tensile strength \( T^{*} \),
+        </p>
+        <div class="na-eq">\[ \sigma_i^{*} = A\,(P^{*} + T^{*})^{N}\big(1 + C\ln\dot{\varepsilon}^{*}\big), \qquad \sigma_f^{*} = B\,(P^{*})^{M}\big(1 + C\ln\dot{\varepsilon}^{*}\big) \tag{8} \]</div>
+        <p>
+          Damage accumulates as plastic strain relative to a pressure-dependent fracture strain, \( D = \sum \Delta\bar\varepsilon^{\,p}/\varepsilon_f^{\,p} \) with \( \varepsilon_f^{\,p} = D_1(P^{*} + T^{*})^{D_2} \), and is coupled to a polynomial equation of state with a bulking (dilatation) pressure released as the material fragments. JH-2 is the standard model for armour-ceramic penetration analysis.
+        </p>
+
+        <h2 id="s7">7. Ductile Damage: a Note</h2>
+        <p>
+          For ductile metals the JC fracture criterion of Eq. (3) is phenomenological. A micromechanical alternative is the <strong>Gurson</strong> porous-plasticity model and its Gurson-Tvergaard-Needleman extension [8], in which the yield surface depends on the void volume fraction, so that softening emerges from void nucleation, growth, and coalescence rather than from a fitted failure strain. The choice between a phenomenological and a micromechanical damage model is the ductile-fracture counterpart of the flow stress question this site studies: whether to impose a form or to let the data determine it.
+        </p>
+
+        <h2 id="s8">8. Where the Data-Driven Approach Fits</h2>
+        <div class="na-note">
+          <p>
+            <strong>Relation to this site's work.</strong> Every model above fixes an algebraic <em>form</em> in advance and fits its constants to data. The constitutive-modeling stream on this site asks a prior question: does the material actually obey that form? By decomposing measured <a href="notes.html#flow-stress" class="term">flow stress</a> data with <a href="note_svd.html">SVD</a> and <a href="note_cp.html">CP</a> decomposition, a Johnson-Cook-type multiplicative equation is recovered exactly as the rank-1 case, and the rank needed to reach a target accuracy quantifies how far a real material departs from it. The models here are therefore not competitors to the data-driven method but the reference forms it is designed to test and, where legitimate, to reconstruct. See <a href="research-constitutive-modeling.html">Constitutive Modeling</a>.
+          </p>
+        </div>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Johnson, G. R., &amp; Cook, W. H. (1983). A constitutive model and data for metals subjected to large strains, high strain rates and high temperatures. In <em>Proceedings of the 7th International Symposium on Ballistics</em> (pp. 541-547).</li>
+          <li>Johnson, G. R., &amp; Cook, W. H. (1985). Fracture characteristics of three metals subjected to various strains, strain rates, temperatures and pressures. <em>Engineering Fracture Mechanics</em>, 21(1), 31-48.</li>
+          <li>Cowper, G. R., &amp; Symonds, P. S. (1957). <em>Strain-hardening and strain-rate effects in the impact loading of cantilever beams</em>. Technical Report No. 28, Division of Applied Mathematics, Brown University.</li>
+          <li>Zerilli, F. J., &amp; Armstrong, R. W. (1987). Dislocation-mechanics-based constitutive relations for material dynamics calculations. <em>Journal of Applied Physics</em>, 61(5), 1816-1825.</li>
+          <li>Drucker, D. C., &amp; Prager, W. (1952). Soil mechanics and plastic analysis or limit design. <em>Quarterly of Applied Mathematics</em>, 10(2), 157-165.</li>
+          <li>Deshpande, V. S., &amp; Fleck, N. A. (2000). Isotropic constitutive models for metallic foams. <em>Journal of the Mechanics and Physics of Solids</em>, 48(6-7), 1253-1283.</li>
+          <li>Johnson, G. R., &amp; Holmquist, T. J. (1994). An improved computational constitutive model for brittle materials. In <em>High-Pressure Science and Technology 1993, AIP Conference Proceedings</em> 309 (pp. 981-984).</li>
+          <li>Tvergaard, V., &amp; Needleman, A. (1984). Analysis of the cup-cone fracture in a round tensile bar. <em>Acta Metallurgica</em>, 32(1), 157-169.</li>
+        </ol>
+
+        <p style="margin-top:36px;">
+          <a href="notes.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Technical Notes</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

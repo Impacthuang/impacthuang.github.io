@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singular Value Decomposition (SVD) — Technical Note — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_svd.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Singular Value Decomposition (SVD) — Technical Note">
+  <meta property="og:description" content="Mathematical principles of the singular value decomposition: existence and construction from the eigendecomposition of the Gram matrix, the four fundamental subspaces, the Eckart-Young-Mirsky low-rank approximation theorem, the connection to PCA, and a fully worked 2x2 example, with the rank-1 legitimacy criterion for decoupled flow stress equations.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_svd.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Singular Value Decomposition (SVD) — Technical Note">
+  <meta name="twitter:description" content="Mathematical principles of the singular value decomposition: construction, the four fundamental subspaces, the Eckart-Young-Mirsky low-rank approximation theorem, the PCA connection, and a fully worked example.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="Mathematical principles of the singular value decomposition: existence and construction from the eigendecomposition of the Gram matrix, the four fundamental subspaces, the Eckart-Young-Mirsky low-rank approximation theorem, the connection to PCA, and a fully worked 2x2 example, with the rank-1 legitimacy criterion for decoupled flow stress equations.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="notes.html">Notes</a><span>/</span>SVD</div>
+    <h1>Singular Value Decomposition of a Matrix</h1>
+    <p>Construction, the low-rank approximation theorem, and a worked example.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. Introduction</a></li>
+          <li><a href="#s2">2. Definition</a></li>
+          <li><a href="#s3">3. Existence &amp; construction</a></li>
+          <li><a href="#s4">4. Low-rank approximation</a></li>
+          <li><a href="#s5">5. Relation to PCA</a></li>
+          <li><a href="#s6">6. Worked example</a></li>
+          <li><a href="#s7">7. Use in flow stress work</a></li>
+          <li><a href="#s8">8. Conclusions</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Abstract</div>
+          <p>
+            The singular value decomposition (SVD) factors any real matrix into two orthogonal matrices and a diagonal matrix of non-negative singular values. It is the most important matrix factorization in numerical linear algebra: it exposes the rank, the four fundamental subspaces, and the exact sense in which a matrix is close to a low-rank one. This note states the decomposition, proves its existence constructively from the eigendecomposition of the Gram matrix \( A^{\mathsf T}A \), interprets the singular vectors as the axes along which the linear map acts by pure scaling, and derives the Eckart-Young-Mirsky theorem that makes the truncated SVD the optimal low-rank approximation in every unitarily invariant norm. A fully worked \( 2 \times 2 \) example is carried through by hand. The note closes with the two-way flow stress application, in which the leading singular value decides whether a decoupled (Johnson-Cook type) equation is legitimate for a given material, and points to the tensor generalization (<a href="note_cp.html">CP</a> / <a href="note_nncp.html">NN-CP</a>) for three-way data.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> singular value decomposition; low-rank approximation; Eckart-Young theorem; principal component analysis; matrix rank</p>
+
+        <h2 id="s1">1. Introduction</h2>
+        <p>
+          Given a rectangular matrix of measurements, two questions recur throughout data-driven modeling: how many independent trends does the data actually contain, and what is the best approximation of the data by a simpler object of a chosen complexity. The singular value decomposition answers both exactly. Introduced for real square matrices by Beltrami and Jordan in the 1870s and extended to the rectangular case by Eckart and Young [1], it is today the computational core of principal component analysis, latent semantic indexing, image compression, and model-order reduction [2,3].
+        </p>
+        <p>
+          For the flow stress work on this site, the SVD plays a specific role. A two-way flow stress dataset, stress measured over strain and strain rate at a fixed temperature, is a matrix. A decoupled Johnson-Cook-type equation, in which the strain part and the strain-rate part multiply, is exactly a rank-1 matrix. The SVD therefore turns the qualitative question of whether such an equation is legitimate into the quantitative one of how much of the data the first singular value already explains. The three-way case (adding temperature) needs the tensor generalization treated in the <a href="note_cp.html">CP</a> and <a href="note_nncp.html">NN-CP</a> notes.
+        </p>
+
+        <h2 id="s2">2. Definition</h2>
+        <p>
+          Let \( A \in \mathbb{R}^{m \times n} \) with \( m \ge n \). The singular value decomposition of \( A \) is
+        </p>
+        <div class="na-eq">\[ A = U \Sigma V^{\mathsf{T}} = \sum_{i=1}^{r} \sigma_i\, u_i\, v_i^{\mathsf{T}} \tag{1} \]</div>
+        <p>
+          where \( U = [u_1,\dots,u_m] \in \mathbb{R}^{m \times m} \) and \( V = [v_1,\dots,v_n] \in \mathbb{R}^{n \times n} \) are orthogonal (\( U^{\mathsf T}U = I \), \( V^{\mathsf T}V = I \)), and \( \Sigma \in \mathbb{R}^{m \times n} \) is zero except for the ordered non-negative diagonal entries
+        </p>
+        <div class="na-eq">\[ \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 = \sigma_{r+1} = \cdots = \sigma_n \tag{2} \]</div>
+        <p>
+          The \( \sigma_i \) are the singular values, the \( u_i \) the left singular vectors, the \( v_i \) the right singular vectors, and \( r \) is the rank of \( A \). The right-hand sum in Eq. (1) writes \( A \) as a sum of \( r \) rank-1 matrices \( \sigma_i u_i v_i^{\mathsf T} \) ordered by importance. This is the exact matrix counterpart of the rank-1 sum in the <a href="note_cp.html">CP tensor model</a>; the difference is that here the summands are forced to be mutually orthogonal.
+        </p>
+
+        <h2 id="s3">3. Existence and Construction</h2>
+        <p>
+          The decomposition always exists, and the standard constructive proof also gives the recipe used to compute it for small matrices. The matrix \( A^{\mathsf T}A \in \mathbb{R}^{n \times n} \) is symmetric and positive semi-definite, so by the spectral theorem it has an orthonormal set of eigenvectors \( v_1,\dots,v_n \) with real eigenvalues \( \mu_1 \ge \cdots \ge \mu_n \ge 0 \):
+        </p>
+        <div class="na-eq">\[ A^{\mathsf{T}}A\, v_i = \mu_i\, v_i, \qquad \mu_i \ge 0 \tag{3} \]</div>
+        <p>
+          Define the singular values as \( \sigma_i = \sqrt{\mu_i} \). For each \( i \) with \( \sigma_i > 0 \), define the left singular vector by
+        </p>
+        <div class="na-eq">\[ u_i = \frac{1}{\sigma_i}\, A\, v_i \tag{4} \]</div>
+        <p>
+          These \( u_i \) are orthonormal, because \( u_i^{\mathsf T} u_j = \dfrac{1}{\sigma_i \sigma_j} v_i^{\mathsf T} A^{\mathsf T} A v_j = \dfrac{\mu_j}{\sigma_i \sigma_j} v_i^{\mathsf T} v_j = \delta_{ij} \). Completing \( \{u_i\} \) to an orthonormal basis of \( \mathbb{R}^m \) and assembling \( U, \Sigma, V \) gives Eq. (1), since \( A v_i = \sigma_i u_i \) for all \( i \) is precisely the column-by-column statement of \( AV = U\Sigma \). This shows existence and, at the same time, that the right singular vectors diagonalize \( A^{\mathsf T}A \) and the left singular vectors diagonalize \( AA^{\mathsf T} \), with shared eigenvalues \( \sigma_i^2 \).
+        </p>
+        <p>
+          Geometrically, Eq. (4) says the linear map \( x \mapsto Ax \) sends the orthonormal right-singular directions \( v_i \) to the orthonormal left-singular directions \( u_i \), stretched by \( \sigma_i \). Every linear map is, in suitable orthonormal coordinates, a pure axis-aligned scaling: the SVD is the statement that a rotation, a scaling, and another rotation is all a matrix ever does. The singular vectors also read off the four fundamental subspaces: \( \{v_1,\dots,v_r\} \) span the row space, \( \{v_{r+1},\dots,v_n\} \) the null space, \( \{u_1,\dots,u_r\} \) the column space, and \( \{u_{r+1},\dots,u_m\} \) the left null space.
+        </p>
+
+        <h2 id="s4">4. Low-Rank Approximation: the Eckart-Young-Mirsky Theorem</h2>
+        <p>
+          Truncating the sum in Eq. (1) after \( k < r \) terms gives the rank-\( k \) matrix
+        </p>
+        <div class="na-eq">\[ A_k = \sum_{i=1}^{k} \sigma_i\, u_i\, v_i^{\mathsf{T}} \tag{5} \]</div>
+        <p>
+          The Eckart-Young theorem [1], extended to all unitarily invariant norms by Mirsky [4], states that \( A_k \) is the best rank-\( k \) approximation of \( A \): among all matrices \( B \) of rank at most \( k \),
+        </p>
+        <div class="na-eq">\[ \min_{\operatorname{rank}(B)\le k} \| A - B \|_2 = \| A - A_k \|_2 = \sigma_{k+1}, \qquad \min_{\operatorname{rank}(B)\le k} \| A - B \|_F = \| A - A_k \|_F = \sqrt{\sum_{i=k+1}^{r}\sigma_i^2} \tag{6} \]</div>
+        <p>
+          The error of the optimal rank-\( k \) approximation is thus governed entirely by the discarded singular values. A convenient relative measure of how much a rank-\( k \) truncation captures is the energy ratio
+        </p>
+        <div class="na-eq">\[ \alpha_k = \frac{\|A - A_k\|_F^2}{\|A\|_F^2} = \frac{\sum_{i>k}\sigma_i^2}{\sum_{i}\sigma_i^2} \tag{7} \]</div>
+        <p>
+          A rapid decay of the singular values means the matrix is close to low rank and can be compressed with little loss; a slow decay means every direction carries comparable information. This is the precise sense in which the SVD tells you how many independent trends a dataset contains.
+        </p>
+
+        <h2 id="s5">5. Relation to PCA</h2>
+        <p>
+          Principal component analysis is the SVD of a mean-centered data matrix. If the rows of \( A \) are observations and the columns are variables, and each column has had its mean removed, then the right singular vectors \( v_i \) are the principal directions, the columns of \( U\Sigma \) are the principal component scores, and \( \sigma_i^2/(m-1) \) is the variance explained by the \( i \)-th component. Computing PCA through the SVD of \( A \) is numerically preferable to forming and diagonalizing the covariance matrix \( A^{\mathsf T}A/(m-1) \), because squaring the data doubles the dynamic range and can lose small singular values to round-off [2].
+        </p>
+
+        <h2 id="s6">6. Worked Example</h2>
+        <p>
+          Take the \( 2 \times 2 \) matrix
+        </p>
+        <div class="na-eq">\[ A = \begin{bmatrix} 3 & 0 \\ 4 & 5 \end{bmatrix} \]</div>
+        <p>
+          Form the Gram matrix and find its eigenvalues:
+        </p>
+        <div class="na-eq">\[ A^{\mathsf{T}}A = \begin{bmatrix} 25 & 20 \\ 20 & 25 \end{bmatrix}, \qquad \det(A^{\mathsf T}A - \mu I) = (25-\mu)^2 - 400 = 0 \;\Rightarrow\; \mu = 45,\; 5 \]</div>
+        <p>
+          Hence the singular values are \( \sigma_1 = \sqrt{45} = 3\sqrt5 \approx 6.708 \) and \( \sigma_2 = \sqrt5 \approx 2.236 \). The eigenvectors of \( A^{\mathsf T}A \) are \( v_1 = \tfrac{1}{\sqrt2}(1,1) \) for \( \mu = 45 \) and \( v_2 = \tfrac{1}{\sqrt2}(1,-1) \) for \( \mu = 5 \). Using Eq. (4),
+        </p>
+        <div class="na-eq">\[ u_1 = \frac{1}{\sigma_1} A v_1 = \frac{1}{3\sqrt5}\begin{bmatrix} 3 \\ 9 \end{bmatrix}\frac{1}{\sqrt2} = \frac{1}{\sqrt{10}}\begin{bmatrix} 1 \\ 3 \end{bmatrix}, \qquad u_2 = \frac{1}{\sigma_2} A v_2 = \frac{1}{\sqrt5}\begin{bmatrix} 3 \\ -1 \end{bmatrix}\frac{1}{\sqrt2} = \frac{1}{\sqrt{10}}\begin{bmatrix} 3 \\ -1 \end{bmatrix} \]</div>
+        <p>
+          so that
+        </p>
+        <div class="na-eq">\[ A = U\Sigma V^{\mathsf T} = \frac{1}{\sqrt{10}}\begin{bmatrix} 1 & 3 \\ 3 & -1 \end{bmatrix} \begin{bmatrix} 3\sqrt5 & 0 \\ 0 & \sqrt5 \end{bmatrix} \frac{1}{\sqrt2}\begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \]</div>
+        <p>
+          The best rank-1 approximation is \( A_1 = \sigma_1 u_1 v_1^{\mathsf T} = \tfrac{3}{2}\left[\begin{smallmatrix} 1 & 1 \\ 3 & 3 \end{smallmatrix}\right] = \left[\begin{smallmatrix} 1.5 & 1.5 \\ 4.5 & 4.5 \end{smallmatrix}\right] \), with error \( \|A - A_1\|_2 = \sigma_2 = \sqrt5 \), exactly as Eq. (6) predicts. The energy ratio of Eq. (7) is \( \alpha_1 = \sigma_2^2/(\sigma_1^2+\sigma_2^2) = 5/50 = 0.10 \), so a rank-1 model captures 90% of this matrix. Read as a legitimacy test, a 10% residual would be judged too large if the acceptance threshold were, say, 1%, and a rank-2 (fully coupled) description would be required.
+        </p>
+
+        <h2 id="s7">7. Use in the Flow Stress Work</h2>
+        <div class="na-note">
+          <p>
+            <strong>Where this is used.</strong> A two-way <a href="notes.html#flow-stress" class="term">flow stress</a> matrix, stress over strain and strain rate, is decomposed by SVD. A decoupled Johnson-Cook-type equation is a rank-1 matrix, so the rank-1 energy ratio \( \alpha_1 \) of Eq. (7) becomes a quantitative legitimacy criterion: the decoupled form is accepted for a material only when the rank-1 approximation error stays below a preset threshold. Where it does not, the higher singular values quantify exactly how much coupling the data demands. For three-way data that also varies with temperature, the orthogonality that SVD imposes is no longer natural, and the model is replaced by the essentially unique, non-orthogonal <a href="note_cp.html">CP decomposition</a>. See <a href="research-constitutive-modeling.html">Constitutive Modeling</a> for the research context, and the <a href="publications.html#pub-7">IJIE 2023 paper</a> for the criterion in use.
+          </p>
+        </div>
+
+        <h2 id="s8">8. Conclusions</h2>
+        <ol>
+          <li>Every real matrix factors as \( A = U\Sigma V^{\mathsf T} \) with orthogonal \( U, V \) and ordered non-negative singular values on \( \Sigma \); the construction follows from the eigendecomposition of \( A^{\mathsf T}A \).</li>
+          <li>The singular vectors are the orthonormal axes along which the map acts by pure scaling, and they read off the rank and the four fundamental subspaces.</li>
+          <li>By the Eckart-Young-Mirsky theorem, truncating the SVD after \( k \) terms gives the optimal rank-\( k \) approximation in every unitarily invariant norm, with error set by the discarded singular values.</li>
+          <li>The decay of the singular values measures how many independent trends a dataset carries; a dominant first singular value is the matrix statement that a decoupled, rank-1 model suffices.</li>
+        </ol>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Eckart, C., &amp; Young, G. (1936). The approximation of one matrix by another of lower rank. <em>Psychometrika</em>, 1(3), 211-218.</li>
+          <li>Golub, G. H., &amp; Van Loan, C. F. (2013). <em>Matrix Computations</em> (4th ed.). Johns Hopkins University Press.</li>
+          <li>Trefethen, L. N., &amp; Bau, D. (1997). <em>Numerical Linear Algebra</em>. SIAM.</li>
+          <li>Mirsky, L. (1960). Symmetric gauge functions and unitarily invariant norms. <em>Quarterly Journal of Mathematics</em>, 11(1), 50-59.</li>
+          <li>Golub, G. H., &amp; Reinsch, C. (1970). Singular value decomposition and least squares solutions. <em>Numerische Mathematik</em>, 14(5), 403-420.</li>
+          <li>Jolliffe, I. T. (2002). <em>Principal Component Analysis</em> (2nd ed.). Springer.</li>
+          <li>Kolda, T. G., &amp; Bader, B. W. (2009). Tensor decompositions and applications. <em>SIAM Review</em>, 51(3), 455-500.</li>
+        </ol>
+
+        <p style="margin-top:36px;">
+          <a href="notes.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Technical Notes</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University–Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>
