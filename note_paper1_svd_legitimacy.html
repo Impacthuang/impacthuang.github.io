@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>When Is It Legitimate to Decouple a Flow Stress Equation? — Reading Guide to Paper 1 — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_paper1_svd_legitimacy.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="When Is It Legitimate to Decouple a Flow Stress Equation? — Reading Guide to Paper 1">
+  <meta property="og:description" content="A plain-language reading guide to 'The legitimacy of decoupled dynamic flow stress equations and their representation based on discrete experimental data' (IJIE 2023): why the Johnson-Cook-type factorised form was never actually verified, and how a rank-1 low-rank approximation turns that assumption into a testable number.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_paper1_svd_legitimacy.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="When Is It Legitimate to Decouple a Flow Stress Equation? — Reading Guide to Paper 1">
+  <meta name="twitter:description" content="Why the Johnson-Cook-type factorised form was never actually verified, and how a rank-1 low-rank approximation turns that assumption into a testable number.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="A reading guide to Paper 1 (IJIE 2023): why the legitimacy of decoupled (Johnson-Cook-type) flow stress equations was never rigorously tested, and how SVD/CP low-rank approximation turns that assumption into a measurable rank-1 criterion, with the paper's own four-dataset evidence.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research-constitutive-modeling.html">Constitutive Modeling</a><span>/</span>Reading Guide &middot; Paper 1</div>
+    <h1>When Is It Legitimate to Decouple a Flow Stress Equation?</h1>
+    <p>A reading guide to Paper 1 &mdash; why the Johnson-Cook-type factorised form was never actually verified, and how a rank-1 low-rank approximation turns that assumption into a testable number.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. The question this paper asks</a></li>
+          <li><a href="#s2">2. What &ldquo;decoupled&rdquo; means, mathematically</a></li>
+          <li><a href="#s3">3. Turning an assumption into a number</a></li>
+          <li><a href="#s4">4. Four datasets, two different answers</a></li>
+          <li><a href="#s5">5. A second, independent problem: how J-C is fitted</a></li>
+          <li><a href="#s6">6. Why it matters</a></li>
+          <li><a href="#s7">7. Takeaway</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Reading guide</div>
+          <p>
+            The Johnson-Cook (J-C) equation has been cited more than 30,000 times, and the Cowper-Symonds (C-S) equation more than 5,600. Both belong to the same family: they write flow stress as a product of separate functions, one for strain, one for strain-rate, one for temperature, so that each effect can be measured independently and multiplied together. Paper 1 asks a question that, remarkably, nobody had answered rigorously in the decades either equation had been in use: is that multiplicative, decoupled structure actually a legitimate description of real flow stress data, or just a convenient assumption that happens to work well enough, some of the time? The paper answers by recasting &ldquo;decoupled&rdquo; as a precise mathematical statement, a rank-1 low-rank approximation, and then testing it against real 2D and 3D flow stress datasets. This guide restates that argument and its evidence without requiring the original paper open.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> decoupled flow stress equation; Johnson-Cook equation; singular value decomposition (SVD); CP decomposition; rank-1 approximation; MAPE; legitimacy criterion</p>
+
+        <h2 id="s1">1. The question this paper asks</h2>
+        <p>
+          A dynamic flow stress depends, in general, on a whole set of variables at once, strain, strain-rate, temperature and more. Written out fully, that is a single multivariable function with no assumed internal structure. Almost every widely used empirical equation, however, does not use that general form. J-C, C-S, and their many variants all assume the effect of each variable can be pulled apart and multiplied: a strain-hardening term, times a strain-rate term, times a temperature-softening term. This factorised form is attractive for a concrete practical reason: each term can then be calibrated from a separate, simple test, a quasi-static tension test at room temperature for the strain term, a range of strain-rates at fixed temperature for the rate term, and so on, rather than needing one enormous combined test matrix.
+        </p>
+        <p>
+          That practical convenience is not the same thing as mathematical legitimacy. Paper 1 points out that the decoupled form has been accepted mainly because it has been used successfully in numerical simulations, not because anyone checked, for a given material's actual data, whether decoupling is a reasonable simplification or an outright distortion. Meanwhile, isolated evidence already existed that J-C performs poorly for some materials, which had prompted various <em>coupled</em> variants, equations that mix the variables back together, usually fitted ad hoc to whatever dataset was on hand, with no generic rule for when coupling is needed or how much of it. The paper's goal is to replace all of this trial and error with a single, quantitative test: given a material's measured flow stress data, is the decoupled form legitimate for it, yes or no, and by how much does it fall short if not.
+        </p>
+
+        <h2 id="s2">2. What &ldquo;decoupled&rdquo; means, mathematically</h2>
+        <p>
+          Start by assembling the raw experimental data itself, without assuming any functional form. For two variables, say strain \(\varepsilon\) and strain-rate \(\dot\varepsilon\), every stress-strain curve measured at a given rate becomes one row (or column) of a two-dimensional table, a <strong>flow stress data (FSD) matrix</strong> \(N\), whose entry \(N_{ij}\) is the measured stress at the \(i\)th strain value and \(j\)th strain-rate. For three variables (adding temperature), the data instead fill a three-dimensional array. No decoupling assumption has been made yet: \(N\) is simply the experiment, reorganised.
+        </p>
+        <p>
+          A decoupled equation is a very specific claim about the structure of \(N\): that it can be written as one function of \(\varepsilon\) alone, multiplied by one function of \(\dot\varepsilon\) alone (and, in 3D, one function of \(T\) alone):
+        </p>
+        <div class="na-eq">\[ \sigma(\varepsilon,\dot\varepsilon) \;=\; f_1(\varepsilon)\,f_2(\dot\varepsilon) \tag{1} \]</div>
+        <p>
+          This is exactly the mathematical definition of a <strong>rank-1</strong> matrix: a matrix that can be written as the outer product of two vectors, one running down the strain axis, one across the strain-rate axis. J-C, C-S and every other member of that family are, whether or not anyone had previously stated it this way, all rank-1 (or, in three variables, rank-one-tensor) models of the flow stress array. That reframing is the paper's central move: it turns a modelling philosophy debate (should effects be coupled or decoupled?) into an ordinary linear-algebra question (is this data array well approximated by a rank-1 array?), which has an exact, computable answer.
+        </p>
+
+        <h2 id="s3">3. Turning an assumption into a number</h2>
+        <p>
+          Real experimental data is essentially never exactly rank-1, so the real question is one of degree: how good is the best possible rank-1 approximation, and is it good enough. For the 2D case, the tool is the <a href="note_svd.html" class="term">singular value decomposition (SVD)</a>, which, by the Eckart-Young theorem, gives the best possible approximation of \(N\) at every rank \(r\):
+        </p>
+        <div class="na-eq">\[ N \;\approx\; N_r \;=\; \sum_{k=1}^{r} \sigma_k \, \mathbf{u}_k \otimes \mathbf{v}_k \tag{2} \]</div>
+        <p>
+          where each rank-1 term \(\sigma_k\,\mathbf{u}_k\otimes\mathbf{v}_k\) is exactly the decoupled form of Eq. (1), and the singular values \(\sigma_k\) are ranked so the first term carries the most weight. For three variables, the analogous tool is <a href="note_cp.html" class="term">CANDECOMP/PARAFAC (CP) decomposition</a>, which extends the same idea, a sum of rank-1 three-way terms, to a 3D array. Fig. 2 shows the procedure for the 2D case: the full matrix \(N\) is decomposed into weighted outer products, and the flow stress can equivalently be written as a sum of \(r\) factorised sub-functions.
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper1/fig2-svd-decomposition.png" alt="Low-rank approximation procedure for a 2D flow stress data matrix, showing decomposition into weighted rank-1 outer products and the equivalent factorised function form" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 2 (Paper 1).</strong> Low-rank approximation procedure for a 2D matrix. The measured flow stress array \(N\) is decomposed into a weighted sum of rank-1 outer products \(u_r\otimes v_r\), which is exactly a decoupled (factorised) representation \(f_1(\varepsilon)f_2(\dot\varepsilon)\) once the leading terms are kept.</figcaption>
+        </figure>
+        <p>
+          The quality of a rank-\(r\) approximation is measured with the mean absolute percentage error (MAPE) between the approximation and the real data:
+        </p>
+        <div class="na-eq">\[ \varepsilon_r \;=\; \frac{1}{n}\sum \left|\frac{N_{r} - N}{N}\right| \times 100\% \tag{3} \]</div>
+        <p>
+          This gives the paper's legitimacy criterion in one line: pick an acceptable error \(\varepsilon_c\) for the intended use; if the <strong>rank-1</strong> approximation already satisfies \(\varepsilon_1 \le \varepsilon_c\), a decoupled, J-C-type equation is a legitimate description of that material's data. If it does not, the data has genuine coupling between variables, and a decoupled equation should not be used, more terms (rank-2, rank-3, &hellip;) or a coupled model are needed instead. Crucially, this is not a judgement call made by eye; it is read directly off a computed error curve.
+        </p>
+
+        <h2 id="s4">4. Four datasets, two different answers</h2>
+        <p>
+          The paper tests the criterion on four real datasets, two in 2D (strain and strain-rate only) and two in 3D (strain, strain-rate and temperature), chosen specifically because they come out on opposite sides of the criterion:
+        </p>
+        <ul>
+          <li><strong>Data-1</strong> (titanium IMI 834, 2D): Rank-1 MAPE \(\varepsilon_1=0.12\%\). Increasing the rank barely improves this. The strain-rate effect has almost no dependence on strain, decoupling is essentially exact.</li>
+          <li><strong>Data-2</strong> (OFHC copper, 2D): Rank-1 MAPE \(\varepsilon_1=1.98\%\), which drops sharply to a good fit only at Rank-2. Below 10 s<sup>-1</sup>, the stress-strain curves do not scale together, i.e. strain-rate hardening is genuinely coupled with strain for this material.</li>
+          <li><strong>Data-3</strong> (titanium IMI 834, 3D: strain, strain-rate, temperature): Rank-1 MAPE \(\varepsilon_1=1.17\%\), comfortably under a 1.5% threshold. Decoupling is legitimate.</li>
+          <li><strong>Data-4</strong> (Al-0.8Mg-0.76Si, 3D): Rank-1 MAPE \(\varepsilon_1=10.17\%\), far above the same threshold; the criterion is only satisfied at Rank-3 (\(\varepsilon_3=0.93\%\)). Thermal softening, strain-rate strengthening and strain hardening all interact here, especially the temperature effect, which stops varying monotonically once strain-rate and strain change, exactly the kind of behaviour a single multiplicative temperature term cannot capture.</li>
+        </ul>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper1/fig12-mape-vs-rank.png" alt="MAPE versus decomposition rank for Data-3 and Data-4, showing Data-3 reaching 1.17% error at Rank-1 while Data-4 requires Rank-3 to reach 0.93% error" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 12 (Paper 1).</strong> MAPE for different Rank-r decomposition schemes. Data-3 (titanium) already satisfies a 1.5% error threshold at Rank-1 (1.17%): its decoupled J-C-type equation is legitimate. Data-4 (Al-0.8Mg-0.76Si) needs Rank-3 (0.93%) to reach the same threshold, its Rank-1 error is 10.17%: a decoupled equation is not a legitimate description of this material.</figcaption>
+        </figure>
+        <p>
+          The same conclusion shows up a second way: the leading (Rank-1) mode of the decomposition, for each variable separately, tracks the material's own averaged experimental curve closely for Data-1 and Data-3, but for Data-4 the leading temperature mode is monotonic while the real averaged temperature-softening behaviour is not, direct evidence that one multiplicative term cannot represent it. The result across all four datasets is the same message stated four different ways: whether decoupling is legitimate is a property of the material and the variable range, not a universal property of flow stress, and it has to be checked, not assumed.
+        </p>
+
+        <h2 id="s5">5. A second, independent problem: how J-C is fitted</h2>
+        <p>
+          Even when the legitimacy criterion is satisfied and a decoupled equation is the right choice, the paper identifies a separate flaw in how J-C itself is conventionally calibrated. The standard J-C procedure fits each factorised term using only the initial yield point of each curve, e.g. the strain-rate parameter \(C\) is calibrated purely from the dynamic increase factor (DIF) at initial yield, rather than from the full stress-strain response. The paper instead fits parameters to the entire Rank-1 CP result across the whole strain range, and additionally tests replacing J-C's logarithmic strain-rate term with the Cowper-Symonds exponential form, a variant the paper calls MJC (modified J-C).
+        </p>
+        <p>
+          The comparison is stark for Data-3 and Data-4: the conventional J-C procedure produces the worst match to experimental data among all the flow stress representations tested (a MAPE of 46.67% for Data-4), because a logarithmic strain-rate term cannot reproduce the DIF trend the material actually shows, while an exponential (C-S-type) term can. MJC fitted the same way performs far better, confirming that at least part of J-C's known weaknesses comes not from decoupling itself but from a specific, replaceable choice of functional form and a fitting procedure that only looks at one point on each curve.
+        </p>
+
+        <h2 id="s6">6. Why it matters</h2>
+        <p>
+          The practical payoff is a concrete decision rule rather than a modelling philosophy. Given a new material's flow stress data, this paper's criterion tells a modeller, before any equation is fitted, whether a simple decoupled equation can legitimately represent it, and if not, how many decomposition terms are actually needed to hit a target accuracy. When the criterion fails, the CP/SVD decomposition itself, rather than a hand-derived coupled equation, already provides a discrete, data-based flow stress representation with a known, controllable error, avoiding the ad hoc coupled models the introduction criticises for having no underpinning principle.
+        </p>
+        <p>
+          This is also the methodological seed for the rest of the constitutive-modeling stream: the same rank-1 legitimacy criterion, and the same SVD/CP machinery, is what Paper 2 and Paper 3 later combine with ANN-based reconstruction to build flow stress equations directly from qualified, irregularly-sampled SHPB data, first for strain and strain-rate, then adding temperature.
+        </p>
+
+        <h2 id="s7">7. Takeaway</h2>
+        <p>
+          &ldquo;Decoupled&rdquo; flow stress equations like J-C and C-S are, in exact mathematical terms, rank-1 approximations of the flow stress data array. Whether that approximation is legitimate for a given material is not something to assume from an equation's popularity; it is something to compute, by checking whether the Rank-1 SVD or CP approximation's error falls under an acceptable threshold. Some materials (titanium in this study) satisfy that criterion almost exactly; others (OFHC copper, an Al-Mg-Si alloy) clearly do not and need more decomposition terms or a coupled model. Separately, even where decoupling is legitimate, the conventional J-C fitting procedure, calibrated from initial yield alone with a fixed logarithmic rate term, is shown to be an avoidable source of error in its own right.
+        </p>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Huang, X., &amp; Li, Q. M. (2023). The legitimacy of decoupled dynamic flow stress equations and their representation based on discrete experimental data. <em>International Journal of Impact Engineering</em>, 173, 104453. <a href="https://doi.org/10.1016/j.ijimpeng.2022.104453" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2022.104453</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 1 &mdash; Methodology and the dependence of dynamic flow stress on strain-rate. <em>International Journal of Impact Engineering</em>, 206, 105403. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105403" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105403</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 2 &mdash; Dynamic flow stress depending on strain, strain-rate and temperature. <em>International Journal of Impact Engineering</em>, 206, 105432. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105432" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105432</a></li>
+        </ol>
+        <p class="na-keywords">For the full mathematics behind this guide, see the <a href="note_svd.html">SVD note</a> (existence, the Eckart-Young-Mirsky theorem, and this rank-1 legitimacy criterion) and the <a href="note_cp.html">CP decomposition note</a> (the ALS algorithm and rank choice for 3D arrays).</p>
+
+        <p style="margin-top:36px;">
+          <a href="publications.html#pub-7" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Paper 1 in Publications</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University&ndash;Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

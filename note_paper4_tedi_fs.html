@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Do You Extrapolate a Flow Stress Model Beyond Where It Was Calibrated? — Reading Guide to Paper 4 — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_paper4_tedi_fs.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="How Do You Extrapolate a Flow Stress Model Beyond Where It Was Calibrated? — Reading Guide to Paper 4">
+  <meta property="og:description" content="A plain-language reading guide to 'Tensor-decomposition-based inverse characterization of flow stress for very-high strain-rate impact' (IJIE 2026): the TEDI-FS framework, its rank-2 non-negative CP decomposition, and how a Taylor-Hopkinson impact test is used to identify and verify a flow stress model far beyond its SHPB calibration range.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_paper4_tedi_fs.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How Do You Extrapolate a Flow Stress Model Beyond Where It Was Calibrated? — Reading Guide to Paper 4">
+  <meta name="twitter:description" content="The TEDI-FS framework, its rank-2 non-negative CP decomposition, and how a Taylor-Hopkinson impact test identifies and verifies a flow stress model far beyond its SHPB calibration range.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="A reading guide to Paper 4 (IJIE 2026): the TEDI-FS framework, a rank-2 non-negative CP decomposition of strain, strain-rate and temperature that is consistency-constrained-extrapolated beyond SHPB range and inversely identified from Taylor-Hopkinson impact tests up to strain-rates of about 10^5 s^-1.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research-constitutive-modeling.html">Constitutive Modeling</a><span>/</span>Reading Guide &middot; Paper 4</div>
+    <h1>How Do You Extrapolate a Flow Stress Model Beyond Where It Was Calibrated?</h1>
+    <p>A reading guide to Paper 4 &mdash; the TEDI-FS framework, and how a Taylor-Hopkinson impact test is used to identify and verify a flow stress model far beyond its SHPB calibration range.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. The question this paper asks</a></li>
+          <li><a href="#s2">2. The TEDI-FS framework</a></li>
+          <li><a href="#s3">3. Extrapolating one mode, holding the other fixed</a></li>
+          <li><a href="#s4">4. A consistency constraint, then a two-stage inverse identification</a></li>
+          <li><a href="#s5">5. The Taylor-Hopkinson impact test</a></li>
+          <li><a href="#s6">6. Validation, extrapolation, and a head-to-head comparison</a></li>
+          <li><a href="#s7">7. Takeaway</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Reading guide</div>
+          <p>
+            Every flow stress model, however it is built, is calibrated within an experimentally accessible domain. For split Hopkinson pressure bar (SHPB) testing, that domain tops out at roughly \(10^3\)&ndash;\(10^4\ \text{s}^{-1}\). Yet high-velocity impact, crash and perforation simulations routinely call that model at strain-rates far beyond it, where nobody has actually checked what it predicts. <a href="note_paper1_svd_legitimacy.html" class="term">Paper 1</a> examined whether a flow stress equation's assumed decoupled structure is legitimate; <a href="note_paper2_strain_rate.html" class="term">Paper 2</a> and <a href="note_paper3_temperature.html" class="term">Paper 3</a> built data-driven, low-rank equations directly from qualified SHPB data for strain/strain-rate and strain/strain-rate/temperature respectively. Paper 4 asks a different question: once such a model is built, how can it be responsibly pushed beyond the SHPB domain, and how can that extrapolation actually be checked against something real? Its answer is TEDI-FS, a framework that decomposes the flow stress into a rank-2 tensor, extrapolates only the part of it that needs to change, constrains that extrapolation to stay consistent with the SHPB-calibrated behaviour it grew out of, and then identifies and verifies the extrapolated parameters against a purpose-built Taylor-Hopkinson impact test reaching strain-rates around \(10^5\ \text{s}^{-1}\).
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> strain-rate effect; Taylor-Hopkinson test; non-negative CP tensor decomposition; inverse characterization of flow stress</p>
+
+        <h2 id="s1">1. The question this paper asks</h2>
+        <p>
+          A flow stress model built from SHPB data, however carefully it is derived, is only ever validated inside the SHPB envelope. Beyond it, an analyst has no way to know whether the predefined functional form still makes sense, whether its calibrated parameters extend gracefully, or whether it is simply the wrong shape for what is actually happening in the material. Directly extrapolating a predefined equation, Johnson-Cook or otherwise, carries all three risks at once, and there has traditionally been no independent, physical way to check the result at the strain-rates where it matters, well above \(10^4\ \text{s}^{-1}\).
+        </p>
+        <p>
+          Paper 4 confronts this directly: how can a flow stress model be validly extrapolated beyond its calibrated strain-rate domain, and how can that extrapolation be verified by experiment? Its proposed answer, the Tensor-Decomposition-based Extrapolation and Dynamic Identification of Flow Stress (TEDI-FS) framework, integrates tensor decomposition, latent-mode extrapolation, and consistency-constrained inverse calibration into one methodology, then checks the result against Taylor-Hopkinson impact experiments reaching strain-rates of roughly \(10^5\ \text{s}^{-1}\), about an order of magnitude beyond the SHPB tests used to calibrate the model in the first place.
+        </p>
+
+        <h2 id="s2">2. The TEDI-FS framework</h2>
+        <p>
+          The starting point is the same kind of object used in Papers 2 and 3: a three-dimensional flow-stress tensor built from strain-, strain-rate-, and temperature-dependent data measured within the SHPB-accessible domain, here denoted \(\Omega_0\). Rather than an ANN-filled array followed by ordinary CP decomposition, TEDI-FS applies <a href="note_nncp.html" class="term">non-negative CP (NN-CP) decomposition</a>, which constrains every extracted latent mode to stay non-negative, preserving physical interpretability (a flow-stress-related latent mode should not go negative) and, the paper finds, stability of the identified modes. As in Appendix A of the paper, a rank-3 decomposition was tried and rejected: the third component becomes increasingly ill-conditioned and difficult to identify uniquely, so only rank-2 is carried forward.
+        </p>
+        <p>
+          The rank-2 decomposition represents the flow-stress tensor \(\mathcal{S}\) as a sum of two rank-1 terms, each an outer product of a strain mode, a strain-rate mode and a temperature mode:
+        </p>
+        <div class="na-eq">\[ \mathcal{S}(\varepsilon,\dot\varepsilon,T) \;\approx\; \sigma_0\, a_1(\varepsilon)\, b_1(\dot\varepsilon)\, c_1(T) \;+\; \sigma_0'\, a_2(\varepsilon)\, b_2(\dot\varepsilon)\, c_2(T) \tag{1} \]</div>
+        <p>
+          with scalar weights \(\sigma_0 = 325.4\) MPa and \(\sigma_0' = 47.9\) MPa fixed by normalising each mode at a reference state. The strain modes \(a_1, a_2\) are fitted with Ludwick-type hardening functions, directly from the extracted latent modes; the temperature modes \(c_1, c_2\) remain valid up to 823 K, the same upper temperature bound used in Paper 3's own dataset. The interesting behaviour sits in the two strain-rate modes.
+        </p>
+
+        <h2 id="s3">3. Extrapolating one mode, holding the other fixed</h2>
+        <p>
+          Within \(\Omega_0\), the first strain-rate mode rises to a peak near 380 s<sup>-1</sup> and then decreases, staying nearly flat as it approaches the upper strain-rate bound of the SHPB data (about 4700 s<sup>-1</sup>). Because it is already close to flat at that boundary, the paper simply holds the first mode fixed beyond \(\Omega_0\); there is little to be gained, and some risk to be avoided, in extrapolating a mode that has already saturated.
+        </p>
+        <p>
+          The second strain-rate mode is different: within \(\Omega_0\) it is fitted directly from the NN-CP results, but it is monotonically increasing and shows no sign of saturating, so it is the sole carrier of the extrapolation. To extend it into the expanded domain \(\Omega\) (beyond the SHPB range) while keeping a simple, physically admissible shape, the paper adopts a Cowper-Symonds-type relation as an extrapolation ansatz:
+        </p>
+        <div class="na-eq">\[ b_2(\dot\varepsilon) \;=\; 1 + \left(\frac{\dot\varepsilon}{D}\right)^{1/q} \tag{2} \]</div>
+        <p>
+          where \(D\) and \(q\) are the two of the three unknown parameters that TEDI-FS ultimately has to identify (the third, \(\sigma^*\), rescales the extrapolated second-mode contribution). Eq. (2) satisfies the same normalisation condition as the calibrated modes in the limit of vanishing strain-rate, so the extrapolated representation joins the SHPB-calibrated one smoothly at the boundary of \(\Omega_0\), by construction rather than by curve-matching after the fact.
+        </p>
+
+        <h2 id="s4">4. A consistency constraint, then a two-stage inverse identification</h2>
+        <p>
+          Extrapolating one mode with two free parameters is easy; making sure the result does not quietly break the model's already-validated behaviour inside \(\Omega_0\) is the actual difficulty. The paper's first safeguard is a consistency error, comparing the extended representation's predictions against the original SHPB-calibrated flow-stress data over \(M\) sampling points within \(\Omega_0\):
+        </p>
+        <div class="na-eq">\[ e_1 \;=\; \frac{1}{M}\sum_{m=1}^{M} \left| \frac{\hat\sigma_m - \sigma_m}{\sigma_m} \right| \tag{3} \]</div>
+        <p>
+          Only parameter sets satisfying \(e_1 < e_{tol1}\) are admissible for the next step; the paper sets \(e_{tol1} = 10\%\), described as &ldquo;a practical compromise&rdquo; between admitting enough candidates and not degrading the model's fidelity inside its already-validated range. Discretising the physically admissible parameter ranges (\(\sigma^*\in[25,100]\) MPa, \(D\in[50,1000]\), \(q\in[1,5]\)) at five points each gives \(5^3 = 125\) candidate parameter sets, of which 47 pass the \(e_1<10\%\) screen.
+        </p>
+        <p>
+          The consistency constraint alone cannot pick a single best set, since many different \((\sigma^*, D, q)\) combinations can all stay within 10% inside \(\Omega_0\) while diverging wildly once extrapolated. That is what the Taylor-Hopkinson test, described next, is for: each of the 47 admissible candidates is run through a Taylor-Hopkinson finite-element simulation, and the predicted force-time history is compared against the experimental one at a reference impact velocity of 72.33 m/s, using an impulse-normalised error \(e_2\) evaluated over an active time window (the interval during which the experimental force exceeds 1% of its peak).
+        </p>
+        <p>
+          The identification proceeds in two stages. <strong>Stage-1</strong> ranks all 47 admissible candidates by \(e_2\); the best, candidate Num&nbsp;#035, reaches \(e_2 = 0.1675\), with the second-best only 0.4% worse, and the ten lowest candidates clustered tightly between 0.1675 and 0.1906. <strong>Stage-2</strong> then refines locally around the Stage-1 optimum with 93 further candidates; the best of these, Num&nbsp;#038, improves on the Stage-1 optimum by 3.9%. The pairwise profile landscapes of \(e_2\) (Figs. 16&ndash;17 in the paper) show a single connected low-error basin with no competing minima in either stage, indicating a well-identified optimum rather than a lucky point in a rough landscape. The final identified parameters are:
+        </p>
+        <div class="na-eq">\[ \sigma^* = 55\ \text{MPa}, \qquad D = 575, \qquad q = 2.75 \tag{4} \]</div>
+        <p>
+          The resulting consistency error sits close to the prescribed 10% tolerance, which the paper flags explicitly as a trade-off: pushing \(e_1\) lower is possible, but it comes at the cost of degraded agreement with the Taylor-Hopkinson impact responses, since the two objectives, staying consistent with the SHPB domain and matching the impact response, are not perfectly aligned.
+        </p>
+
+        <h2 id="s5">5. The Taylor-Hopkinson impact test</h2>
+        <p>
+          Verifying an extrapolated model this far beyond SHPB range needs a test that reaches strain-rates SHPB cannot. The paper's Taylor-Hopkinson configuration is exactly that: a standard Taylor impact test, but with the usual rigid anvil replaced by an instrumented transmitter bar, so the impact force can be reconstructed from the bar's own measured strain signal, the same measurement principle used in SHPB testing.
+        </p>
+        <p>
+          The specimen is the same C54400 phosphor bronze-copper alloy characterised in Paper 3, 9.5 mm in diameter at the impact end and 55 mm overall length; the transmitter bar is 20 mm diameter, 1000 mm long GCr15 high-strength steel (elastic modulus 206 GPa, density 7900 kg/m<sup>3</sup>, Poisson's ratio 0.3). Impact velocities were measured at 51.79, 53.03, 62.23, 72.33, 91.09, 94.92, 102.37 and 114.33 m/s, with repeated shots near 52 m/s and 93 m/s confirming repeatability. Strain gauges were placed 50 mm from the impact interface, outside the roughly 44 mm zone disturbed by wave reflections, following the dynamic Saint-Venant's principle established in earlier work by He, Ma, Karp and Li. A high-speed camera (Photron FASTCAM SA-Z, 210,000 fps) provided an independent, DIC-based strain-rate measurement, which peaked at approximately 12,400 s<sup>-1</sup> at 23.8 &mu;s into the 102.37 m/s shot, itself well beyond the 4700 s<sup>-1</sup> SHPB calibration limit before the Taylor-Hopkinson data is even brought in.
+        </p>
+        <p>
+          On the simulation side, the specimen and transmitter bar were modelled in Abaqus/Explicit with the TEDI-FS flow-stress model implemented as a user-defined VUMAT subroutine, C3D8R elements, a 0.5 mm mesh near the impact interface coarsening to 2 mm along the rest of the bar, and kinematic surface-to-surface contact. A companion analysis in the paper's Appendix B confirms that the transmitter-bar mesh is not the source of any discrepancy discussed below: a mesh-sensitivity study shows a coarser mesh simply acts as a numerical low-pass filter, smoothing high-frequency content the way the finite gauge length does experimentally.
+        </p>
+
+        <h2 id="s6">6. Validation, extrapolation, and a head-to-head comparison</h2>
+        <p>
+          With the parameters from Eq. (4) fixed, the paper runs the model in three directions: back inside the calibration velocity (72.33 m/s, used to fit the parameters, so this is not shown as an independent check), just below it, and well above it.
+        </p>
+        <p>
+          At 53.03 and 62.23 m/s, both below the 72.33 m/s calibration velocity, the model reproduces the experimental force-time histories with good agreement across the whole impact event (Fig. 18). At 102.37 and 114.33 m/s, both well above it, the paper reports the numerical predictions are in &ldquo;very good agreement&rdquo; with experiment, including the oscillatory trends, which it summarises as demonstrating &ldquo;strong extrapolation performance&rdquo; (Fig. 19):
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper4/fig19b-extrapolation-114ms.png" alt="Comparison of experimental and numerical force-time histories at an impact velocity of 114.33 m/s, well above the 72.33 m/s calibration velocity, showing close agreement between the TEDI-FS rank-2 prediction and the experimental measurement" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 19(b) (Paper 4).</strong> Model extrapolation performance at an impact velocity of 114.33 m/s, roughly 1.6&times; the 72.33 m/s calibration velocity: experimental (Exp) versus TEDI-FS rank-2 (Num) force-time histories.</figcaption>
+        </figure>
+        <p>
+          A separate, independent check at the most extreme velocity (114.33 m/s) uses high-speed camera imaging rather than the transmitter-bar signal at all: the predicted residual length and residual velocity of the Taylor rod's free end both track the measured values closely (Fig. 20), the one caveat being an oscillation in the 20&ndash;30 &mu;s window that the simulation resolves but the camera's frame rate cannot, a limitation of the measurement, not evidence against the model.
+        </p>
+        <p>
+          The sharper test is a head-to-head comparison against two conventional strategies built from the same underlying data: the classical Johnson-Cook (J-C) model, and the analytical CP rank-1 model derived directly from Paper 2/3-style rank-1 decomposition (the paper notes, citing its own earlier work, that J-C can be regarded as a special case of the rank-1 model). Both are single-regime formulations extrapolated beyond their own calibration domain the conventional way, directly. At low velocities they perform reasonably, but as impact velocity increases both show &ldquo;pronounced discrepancies relative to experimental observations, including inaccurate peak force prediction and incorrect loading duration,&rdquo; attributed to &ldquo;the limited flexibility of single-regime constitutive formulations when extrapolated beyond their calibration domain.&rdquo; At the most extreme velocity tested, the gap is unmistakable:
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper4/fig21d-vs-jc-rank1-114ms.png" alt="Four-way comparison at 114.33 m/s of experimental force-time history against the J-C model, the analytical CP rank-1 model, and the proposed TEDI-FS model, with a highlighted region showing large deviations of the J-C and rank-1 predictions from the experimental late-stage decay while TEDI-FS tracks it closely" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 21(d) (Paper 4).</strong> Force-time histories at 114.33 m/s: experiment (Exp) versus the J&ndash;C model, the analytical CP rank-1 model, and the proposed TEDI-FS framework. The highlighted region marks the &ldquo;significant deviations&rdquo; the paper attributes to &ldquo;the limitations of a rank-1 representation under extreme loading conditions.&rdquo;</figcaption>
+        </figure>
+        <p>
+          The paper's own framing is direct: TEDI-FS &ldquo;provides a mathematically consistent representation of the experimentally observed response across a broader strain-rate range and achieves substantially improved agreements with both global and local experimental measurements,&rdquo; while the conventional model's deviations from experiment grow as impact velocity increases, precisely where a direct extrapolation of a predefined, single-regime equation is least trustworthy.
+        </p>
+
+        <h2 id="s7">7. Takeaway</h2>
+        <p>
+          Paper 4 does not propose a new way to fit SHPB data; it proposes a way to responsibly go beyond it. The rank-2 NN-CP decomposition splits the flow-stress tensor into a mode that is already saturated within the SHPB domain and a mode that is not; only the latter is extrapolated, using a simple Cowper-Symonds-type ansatz with two free parameters, under a hard consistency constraint that keeps the extrapolation from breaking what was already validated inside \(\Omega_0\). The genuinely new piece is the verification step: a Taylor-Hopkinson impact test built specifically to reach strain-rates the SHPB test cannot, used first to screen candidates by consistency and then to identify the final two parameters through a two-stage inverse calibration against measured force-time histories. The result, good agreement with impact responses up to roughly \(10^5\ \text{s}^{-1}\) and a clear advantage over directly-extrapolated J-C and rank-1 baselines at the highest velocities tested, is evidence for a general point: a model's validity beyond its calibration domain is not something to assume from its functional form, it is something that has to be built into the extrapolation procedure and then checked against an experiment designed to reach that domain.
+        </p>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Huang, X., &amp; Li, Q. M. (2026). Tensor-decomposition-based inverse characterization of flow stress for very-high strain-rate impact. <em>International Journal of Impact Engineering</em>, 105863. <a href="https://doi.org/10.1016/j.ijimpeng.2026.105863" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2026.105863</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2023). The legitimacy of decoupled dynamic flow stress equations and their representation based on discrete experimental data. <em>International Journal of Impact Engineering</em>, 173, 104453. <a href="https://doi.org/10.1016/j.ijimpeng.2022.104453" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2022.104453</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 1 &mdash; Methodology and the dependence of dynamic flow stress on strain-rate. <em>International Journal of Impact Engineering</em>, 206, 105403. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105403" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105403</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 2 &mdash; Dynamic flow stress depending on strain, strain-rate and temperature. <em>International Journal of Impact Engineering</em>, 206, 105432. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105432" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105432</a></li>
+          <li>Johnson, G. R., &amp; Cook, W. H. (1983). A constitutive model and data for metals subjected to large strains, high strain rates and high temperatures. In <em>Proceedings of the 7th International Symposium on Ballistics</em>, The Netherlands.</li>
+          <li>Ludwik, P. (1909). <em>Elemente der technologischen Mechanik</em>. Springer.</li>
+          <li>Cowper, G. R., &amp; Symonds, P. S. (1957). <em>Strain-hardening and strain-rate effects in the impact loading of cantilever beams</em>.</li>
+          <li>He, L., Ma, G. W., Karp, B., &amp; Li, Q. M. (2014). Investigation of dynamic Saint-Venant's principle in a cylindrical waveguide &ndash; Analytical results. <em>International Journal of Impact Engineering</em>, 73, 135&ndash;144.</li>
+        </ol>
+        <p class="na-keywords">For the tensor-decomposition mathematics behind Section 2, see the <a href="note_nncp.html">non-negative CP decomposition note</a>; for the two- and three-variable, SHPB-only versions of the same low-rank idea, see the reading guides to <a href="note_paper2_strain_rate.html">Paper 2</a> and <a href="note_paper3_temperature.html">Paper 3</a>.</p>
+
+        <p style="margin-top:36px;">
+          <a href="publications.html#pub-18" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Paper 4 in Publications</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University&ndash;Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

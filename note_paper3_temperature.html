@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Does the Conventional Flow Stress Equation Fail at High Temperature? — Reading Guide to Paper 3 — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_paper3_temperature.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Why Does the Conventional Flow Stress Equation Fail at High Temperature? — Reading Guide to Paper 3">
+  <meta property="og:description" content="A plain-language reading guide to 'Determination of dynamic flow stress equation based on discrete experimental data: Part 2 — Dynamic flow stress depending on strain, strain-rate and temperature' (IJIE 2025): extending the ANN+CP framework to three variables, and why the conventionally-calibrated flow stress equation collapses exactly where thermal softening matters most.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_paper3_temperature.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Why Does the Conventional Flow Stress Equation Fail at High Temperature? — Reading Guide to Paper 3">
+  <meta name="twitter:description" content="Extending the ANN+CP framework to three variables, and why the conventionally-calibrated flow stress equation collapses exactly where thermal softening matters most.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="A reading guide to Paper 3 (IJIE 2025): extending the strain/strain-rate ANN+CP framework of Paper 2 to a third variable, temperature, for a C54400 phosphor copper alloy from 293 K to 823 K, and why a conventionally-calibrated Johnson-Cook-type equation totally fails at high temperature while the CP Rank-2 analytical equation does not.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research-constitutive-modeling.html">Constitutive Modeling</a><span>/</span>Reading Guide &middot; Paper 3</div>
+    <h1>Why Does the Conventional Flow Stress Equation Fail at High Temperature?</h1>
+    <p>A reading guide to Paper 3 &mdash; extending the strain/strain-rate ANN+CP framework to a third variable, temperature, and showing exactly why a conventionally-calibrated equation collapses where thermal softening matters most.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. The question this paper asks</a></li>
+          <li><a href="#s2">2. From two variables to three</a></li>
+          <li><a href="#s3">3. CP decomposition: how many terms does temperature need?</a></li>
+          <li><a href="#s4">4. Two analytical equations, Rank-1 and Rank-2</a></li>
+          <li><a href="#s5">5. The conventional method and its three uncertainties</a></li>
+          <li><a href="#s6">6. Head-to-head: where the conventional equation fails</a></li>
+          <li><a href="#s7">7. Takeaway</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Reading guide</div>
+          <p>
+            <a href="note_paper2_strain_rate.html" class="term">Paper 2</a> built a discrete-plus-analytical flow stress equation for a C54400 phosphor copper alloy from strain and strain-rate alone, qualified split Hopkinson pressure bar (SHPB) data reconstructed by an artificial neural network (ANN), then decomposed by singular value decomposition (SVD) into a rank-1 sum. Paper 3 adds the third variable that any real dynamic loading problem eventually needs: temperature. The same material is now tested from 293 K to 823 K, the ANN is widened to three inputs, and the resulting order-three flow stress array is decomposed by <a href="note_cp.html" class="term">CANDECOMP/PARAFAC (CP) decomposition</a> instead of SVD. The paper then does something the earlier two papers did not: it builds a conventional, Johnson-Cook-type equation from the same data using the standard calibration procedure, and compares it head-to-head against the CP-based equation at all six tested temperatures. The comparison is not close. This guide walks through why.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> dynamic flow stress; split Hopkinson pressure bar (SHPB); artificial neural network (ANN); CANDECOMP/PARAFAC (CP); strain-rate effect; thermal effect</p>
+
+        <h2 id="s1">1. The question this paper asks</h2>
+        <p>
+          A general dynamic flow stress is a function of strain, strain-rate and temperature together, \(\sigma = f(\varepsilon,\dot\varepsilon,T)\). Almost every equation used in practice, Johnson-Cook (J-C) included, instead assumes a decoupled, multiplicative structure, one term per variable, calibrated from separate simple tests and multiplied together. <a href="note_paper1_svd_legitimacy.html" class="term">Paper 1</a> showed that this decoupling assumption is not automatically legitimate and gave a rank-based way to check it; Paper 2 then built, for strain and strain-rate only, a data-driven alternative that does not need the assumption at all, an ANN reconstructs the qualified SHPB data into a dense array, and a low-rank decomposition of that array gives both a discrete flow stress representation and, when each mode is curve-fitted, an analytical equation.
+        </p>
+        <p>
+          Paper 3 asks whether the same two-step recipe, ANN reconstruction followed by low-rank decomposition, still works once temperature is added as a third variable, and, separately, whether the resulting equation is actually better than what the conventional J-C-style procedure would produce from the same experimental data. Both questions matter because temperature is exactly where multiplicative flow stress equations are known to struggle: thermal softening can make flow stress fall as strain increases, a non-monotonic behaviour that a single temperature-only multiplicative term is not built to represent.
+        </p>
+
+        <h2 id="s2">2. From two variables to three</h2>
+        <p>
+          The experimental programme mirrors Paper 2's data-qualification approach (stress-equilibrium and non-unloading criteria) but now spans six temperatures, 293, 373, 523, 673, 748 and 823 K, combining quasi-static tension tests with SHPB tests at four impact-velocity groups (around 14, 20, 25 and 28 m/s). At the two highest temperatures, a phase-change-driven drop in the material's maximum tensile strain limits how far the quasi-static curves can be measured directly, so they are extended by Ludwick-equation extrapolation up to 673 K and by linear extrapolation at 748 and 823 K.
+        </p>
+        <p>
+          The ANN itself is widened from Paper 2's two inputs to three, normalised strain, strain-rate and temperature, mapping to one flow stress output. After comparing one- and two-hidden-layer networks of different widths, a two-hidden-layer network with four neurons per layer, denoted Network_H(4,4), is selected as the best trade-off between accuracy and overfitting, reaching a training MAPE of 4.49%. Critically, Network_H(4,4) reproduces the thermal-softening dips seen in the 748 K and 823 K data, regions where flow stress decreases with increasing plastic strain, which the paper notes is exactly where the standard return-mapping algorithm used in finite-element plasticity does not apply.
+        </p>
+        <p>
+          Once trained, Network_H(4,4) is used to densely fill an order-three array of flow stress values over plastic strain, strain-rate and temperature, the direct three-variable analogue of the finely-filled 2D array used in Paper 2. That array is the raw material for the decomposition step.
+        </p>
+
+        <h2 id="s3">3. CP decomposition: how many terms does temperature need?</h2>
+        <p>
+          For two variables, a decoupled equation is a rank-1 matrix and SVD gives the best rank-\(r\) approximation. For three variables, the equivalent statement is that a decoupled equation is a rank-1 three-way tensor, and CP decomposition generalises the same idea: an order-three array \(\mathcal{X}\) is approximated as a weighted sum of \(r\) rank-1 terms, each a strain-mode vector, a strain-rate-mode vector and a temperature-mode vector combined by an outer product:
+        </p>
+        <div class="na-eq">\[ \mathcal{X} \;\approx\; \sum_{k=1}^{r} \sigma_k\, \mathbf{a}_k \otimes \mathbf{b}_k \otimes \mathbf{c}_k , \qquad \mathcal{X}_{ijl} \;\approx\; \sum_{k=1}^{r} \sigma_k\, a_i^{(k)} b_j^{(k)} c_l^{(k)} \tag{1} \]</div>
+        <p>
+          exactly as in the 2D case, each rank-1 term of Eq. (1) is a decoupled, multiplicative representation of the flow stress; keeping more terms lets coupling between variables be represented without abandoning the same underlying decomposition machinery. Approximation quality at each rank is again read off the mean absolute percentage error against the ANN-filled array:
+        </p>
+        <div class="na-eq">\[ \text{MAPE}_r \;=\; \frac{1}{n}\sum \left|\frac{\mathcal{X}_{r} - \mathcal{X}}{\mathcal{X}}\right| \times 100\% \tag{2} \]</div>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper3/fig17-mape-vs-rank.png" alt="MAPE of the CP decomposition against decomposition rank, showing 4.20% at Rank-1, 0.90% at Rank-2 and 0.30% at Rank-3" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 17 (Paper 3).</strong> MAPE for different CP Rank-r approximations of the ANN-filled flow stress array. Rank-1 already reaches 4.20% MAPE, &ldquo;acceptable in most engineering cases&rdquo;; Rank-2 drops to 0.90%, and Rank-3 to 0.30%.</figcaption>
+        </figure>
+        <p>
+          Rank-1 alone is usable, but the paper carries both Rank-1 and Rank-2 forward as discrete flow stress representations (Eq. (8) in the original paper), each mode fitted with a simple curve so that the discrete decomposition becomes a closed-form equation.
+        </p>
+
+        <h2 id="s4">4. Two analytical equations, Rank-1 and Rank-2</h2>
+        <p>
+          Curve-fitting the three modes of the CP Rank-1 decomposition gives an analytical flow stress equation, \(f_{Ana\_R1}\), with a Ludwick-type strain-hardening term, a Cowper-Symonds-type strain-rate term, and a second-order polynomial temperature term, multiplied together:
+        </p>
+        <div class="na-eq">\[ f_{Ana\_R1}(\varepsilon,\dot\varepsilon,T) \;=\; \text{Ludwick}(\varepsilon)\cdot \text{CS}(\dot\varepsilon)\cdot \text{Poly}_2(T) \tag{3} \]</div>
+        <p>
+          against the ANN-filled array, \(f_{Ana\_R1}\) has an overall MAPE of 6.59% using eight material parameters. It reproduces the material's behaviour well in the training region except in the thermal-softening-dominated regions at low strain-rate, where the paper notes the softening feature is simply lost by a Rank-1 (single-term, fully multiplicative) representation, exactly the kind of coupling a decoupled equation cannot capture.
+        </p>
+        <p>
+          Repeating the fit for the CP Rank-2 decomposition, a sum of two such multiplicative terms, gives \(f_{Ana\_R2}\), with an overall MAPE of 1.46% (98.54% accuracy) using fifteen material parameters. Unlike \(f_{Ana\_R1}\), the two-term \(f_{Ana\_R2}\) also performs well in the thermal-softening regions, gaining the extra flexibility needed to represent non-monotonic temperature behaviour at the cost of roughly twice the parameters.
+        </p>
+
+        <h2 id="s5">5. The conventional method and its three uncertainties</h2>
+        <p>
+          To give the CP-based equations a genuine baseline, Paper 3 also builds a conventional flow stress equation, \(f_{MJC}\), modified from the widely used J-C form, from the same qualified dataset. The conventional procedure calibrates a strain-hardening term from a quasi-static test, a dynamic increase factor (DIF) from SHPB tests at a few chosen plastic strains, and a temperature factor (TF), here an order-three polynomial fitted from tests at those same chosen strains, then multiplies the three together. \(f_{MJC}\) needs only nine material parameters, fewer than either CP-based equation.
+        </p>
+        <p>
+          The paper identifies three uncertainties baked into that procedure: the predefined empirical equation used for each term may not actually fit the data well; the DIF obtained depends on which plastic strains were chosen for calibration; and the TF obtained likewise depends on which plastic strains were chosen. Because different chosen strains give different DIF and TF curves, &ldquo;the accuracy of \(f_{MJC}\) is questionable.&rdquo;
+        </p>
+        <p>
+          It also draws out three structural differences from the CP-based equations. First, the CP Rank-1 terms are fitted from the full CP Rank-1 discrete result across the whole strain range, while \(f_{MJC}\)'s terms are calibrated at a handful of specified plastic strains, so &ldquo;using other plastic strains will lead to different [DIF] and [TF].&rdquo; Second, the CP equation's multiplicative form falls directly out of the decomposition mathematics, while \(f_{MJC}\)'s multiplicative form &ldquo;is presumed based on experience.&rdquo; Third, the CP equations are fitted using the full qualified dataset, while \(f_{MJC}\) is calibrated from &ldquo;only a small portion of the data.&rdquo;
+        </p>
+
+        <h2 id="s6">6. Head-to-head: where the conventional equation fails</h2>
+        <p>
+          Comparing \(f_{Ana\_R1}\) against \(f_{MJC}\) at all six temperatures, both reproduce the quasi-static behaviour reasonably well below 673 K, and both fail once temperature climbs into the phase-change region. But at high strain-rate, the two diverge: the dynamic behaviour is well characterised by \(f_{Ana\_R1}\), while \(f_{MJC}\) mostly fails, confirming that the conventional procedure's single-point DIF calibration does not generalise across the full strain-rate range the way the CP-derived rate term does.
+        </p>
+        <p>
+          The sharper comparison is \(f_{Ana\_R2}\) against \(f_{MJC}\) at all six temperatures, shown in Fig. 23. \(f_{Ana\_R2}\) performs well across the full temperature range; \(f_{MJC}\) does not. The clearest single panel is 823 K, the highest temperature tested and deepest into the thermal-softening regime:
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper3/fig23f-rank2-vs-conventional-823k.png" alt="Comparison at 823 K between the CP Rank-2 analytical equation and the conventional MJC equation against four SHPB experiments and an extrapolated tension curve, showing the experimental data tracking the CP surface closely while sitting clearly above the conventional surface" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 23(f) (Paper 3).</strong> \(f_{Ana\_R2}\) (purple surface) versus \(f_{MJC}\) (blue surface) against experimental data (Exp-56 to Exp-59, plus an extrapolated tension point) at 823 K. The experimental points sit close to the CP Rank-2 surface and clearly above the conventional surface.</figcaption>
+        </figure>
+        <p>
+          The advantage of \(f_{MJC}\) over \(f_{Ana\_R2}\) is that the former needs only nine material parameters against fifteen; &ldquo;however, [\(f_{Ana\_R2}\)] is more accurate than [\(f_{MJC}\)].&rdquo; Stated in the paper's own words, from its conclusions: &ldquo;the flow stress equation obtained by following the conventional method totally fails at high temperatures. There are many uncertainties in the application of the conventional method in the determination of the flow stress, which cause the low reliability and accuracy of the determined flow stress equation.&rdquo;
+        </p>
+
+        <h2 id="s7">7. Takeaway</h2>
+        <p>
+          Paper 3 extends the ANN-plus-low-rank-decomposition framework from Paper 2's two variables (strain, strain-rate) to three (adding temperature), using CP decomposition in place of SVD. The CP Rank-2 analytical equation reaches 98.54% accuracy and, unlike its Rank-1 counterpart, reproduces the material's thermal-softening behaviour across all six tested temperatures. Built from the same experimental data, a conventional Johnson-Cook-type equation carries three identifiable calibration uncertainties, tied to which plastic strains its DIF and TF terms happen to be evaluated at, and this shows up directly in its performance: it totally fails at high temperature where the CP-based equation does not. The trade-off is transparent, not free: the conventional equation needs fewer material parameters, the CP Rank-2 equation needs more accuracy, and the paper's evidence is that, for this material and temperature range, accuracy is what actually breaks down first.
+        </p>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 2 &mdash; Dynamic flow stress depending on strain, strain-rate and temperature. <em>International Journal of Impact Engineering</em>, 206, 105432. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105432" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105432</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2023). The legitimacy of decoupled dynamic flow stress equations and their representation based on discrete experimental data. <em>International Journal of Impact Engineering</em>, 173, 104453. <a href="https://doi.org/10.1016/j.ijimpeng.2022.104453" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2022.104453</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 1 &mdash; Methodology and the dependence of dynamic flow stress on strain-rate. <em>International Journal of Impact Engineering</em>, 206, 105403. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105403" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105403</a></li>
+          <li>Johnson, G. R., &amp; Cook, W. H. (1983). A constitutive model and data for metals subjected to large strains, high strain rates and high temperatures. In <em>Proceedings of the 7th International Symposium on Ballistics</em>, The Netherlands.</li>
+        </ol>
+        <p class="na-keywords">For the decomposition mathematics behind Section 3, see the <a href="note_cp.html">CP decomposition note</a> (the ALS algorithm, tensor rank and uniqueness); for the two-variable, SVD-based version of the same idea, see the <a href="note_paper2_strain_rate.html">reading guide to Paper 2</a>.</p>
+
+        <p style="margin-top:36px;">
+          <a href="publications.html#pub-11" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Paper 3 in Publications</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University&ndash;Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>

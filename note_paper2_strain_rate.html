@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Does a Test Need a Constant Strain-Rate? — Reading Guide to Paper 2 — ImpactHuang</title>
+  <link rel="canonical" href="https://impacthuang.github.io/note_paper2_strain_rate.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/img/favicon/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B1C34">
+  <meta name="author" content="Xianglin Huang">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ImpactHuang">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:title" content="Does a Test Need a Constant Strain-Rate? — Reading Guide to Paper 2">
+  <meta property="og:description" content="A plain-language reading guide to 'Determination of dynamic flow stress equation based on discrete experimental data: Part 1' (IJIE 2025): why stress equilibrium and a constant strain-rate are independent conditions in an SHPB test, and why that lets varying-strain-rate data be used to build a better flow stress equation.">
+  <meta property="og:url" content="https://impacthuang.github.io/note_paper2_strain_rate.html">
+  <meta property="og:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dr. Xianglin Huang, impact mechanics and data-driven constitutive modeling">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Does a Test Need a Constant Strain-Rate? — Reading Guide to Paper 2">
+  <meta name="twitter:description" content="Why stress equilibrium and a constant strain-rate are independent conditions in an SHPB test, and why that matters for building flow stress equations.">
+  <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <meta name="description" content="A reading guide to Paper 2 (IJIE 2025, Part 1): why stress equilibrium and a constant strain-rate are independent conditions in an SHPB test, with the Lagrangian-coordinate argument and the paper's own experimental evidence.">
+  <link rel="stylesheet" href="assets/css/shared.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="inner">
+    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li>
+        <a href="research.html">Research</a>
+        <ul class="dd-menu">
+          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
+          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
+          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
+        </ul>
+      </li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li>
+        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
+        <ul class="dd-menu dd-right">
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
+          <li><a href="members.html">Members</a></li>
+          <li><a href="conferences.html">Conferences</a></li>
+          <li><a href="activities.html">Activities</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container">
+    <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research-constitutive-modeling.html">Constitutive Modeling</a><span>/</span>Reading Guide &middot; Paper 2</div>
+    <h1>Does a Test Need a Constant Strain-Rate to Be Valid?</h1>
+    <p>A reading guide to Paper 2 &mdash; why stress equilibrium and a constant strain-rate are independent conditions, and why that matters for building a flow stress equation.</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="na-wrap">
+
+      <!-- TABLE OF CONTENTS -->
+      <aside class="na-toc">
+        <h4>Contents</h4>
+        <ul>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#s1">1. The question this paper asks</a></li>
+          <li><a href="#s2">2. Two derivatives of one function</a></li>
+          <li><a href="#s3">3. What &ldquo;equilibrium&rdquo; actually constrains</a></li>
+          <li><a href="#s4">4. Why the velocity difference persists</a></li>
+          <li><a href="#s5">5. The paper&rsquo;s own evidence</a></li>
+          <li><a href="#s6">6. Why it matters</a></li>
+          <li><a href="#s7">7. Takeaway</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+
+      <!-- ARTICLE -->
+      <article class="na-body">
+
+        <div class="na-abstract" id="abstract">
+          <div class="na-ab-label">Reading guide</div>
+          <p>
+            Classical <a href="note_shpb.html" class="term">SHPB</a> practice shapes every test so that the strain-rate stays as close to constant as possible, because rate-dependent strength is conventionally reported at a single nominal rate. Paper 2 asks a more basic question: does the test actually need that? It shows, both by deriving the mechanics and by testing the claim against real records, that a specimen can be in dynamic stress equilibrium while its instantaneous strain-rate is still changing, and that deliberately keeping such varying-rate data, rather than discarding it, produces a better flow stress characterization. This guide is meant to be readable without the original paper open: it restates the paper&rsquo;s core finding, adds the underlying continuum-mechanics argument for <em>why</em> it is true, and points to the figures in the paper that show it experimentally.
+          </p>
+        </div>
+        <p class="na-keywords"><strong>Keywords:</strong> stress equilibrium; strain-rate; SHPB; Lagrangian coordinate; flow stress; data qualification</p>
+
+        <h2 id="s1">1. The question this paper asks</h2>
+        <p>
+          A textbook SHPB test is engineered, mainly through pulse shaping (see <a href="note_shpb.html#s5" class="term">Section 5 of the SHPB note</a>), to hold the specimen&rsquo;s strain-rate roughly flat once loading is under way. The purpose is bookkeeping: a stress-strain curve is easiest to report and compare when it corresponds to a single nominal rate. But the wave mechanics that make the test valid, one-dimensional propagation and dynamic stress equilibrium inside the specimen, do not by themselves demand a flat strain-rate history. They are a separate requirement, layered on top of the physics for reporting convenience.
+        </p>
+        <p>
+          Paper 2 takes that distinction seriously. Instead of shaping the pulse for a flat rate, it lets the strain-rate vary within each test, which sweeps a much wider band of the strain&ndash;strain-rate plane per specimen, and then asks only whether the record is <em>internally admissible</em>: is the specimen in stress equilibrium, and is it still loading rather than unloading, at each instant. Records that pass are qualified and used to train the paper&rsquo;s ANN and SVD-based flow stress equation (the same low-rank framework established in Paper 1&rsquo;s legitimacy criterion). The experimental and data-driven side of that argument is summarized in Section 6; the rest of this guide works through the mechanics that make it possible.
+        </p>
+
+        <h2 id="s2">2. Two derivatives of one function</h2>
+        <p>
+          Track a single material point inside the specimen with a Lagrangian coordinate \(X\), measured from the incident-bar end to the transmitter-bar end, and let \(v(X,t)\) be that point&rsquo;s particle velocity at time \(t\). Two quantities are built from \(v(X,t)\), and it is easy to conflate them because both are loosely called &ldquo;how fast things are changing&rdquo;:
+        </p>
+        <ul>
+          <li><strong>Local strain-rate</strong>, \(\dot\varepsilon(X,t) = \partial v/\partial X\): at a fixed instant \(t\), how the velocity varies from one material point to its neighbor along the specimen&rsquo;s length.</li>
+          <li><strong>Local acceleration</strong>, \(a(X,t) = \partial v/\partial t\): at a fixed material point \(X\), how that point&rsquo;s own velocity changes as time moves forward.</li>
+        </ul>
+        <div class="na-eq">\[ \dot\varepsilon(X,t) = \frac{\partial v}{\partial X}, \qquad a(X,t) = \frac{\partial v}{\partial t} \tag{1} \]</div>
+        <p>
+          These are two different partial derivatives of the same two-variable function. Nothing about calculus links them: one being zero at a point places no constraint on the other. Whatever relationship strain-rate and acceleration turn out to have in a real SHPB test has to come from the physics of the specimen, not from the definitions themselves.
+        </p>
+
+        <h2 id="s3">3. What &ldquo;equilibrium&rdquo; actually constrains</h2>
+        <p>
+          The physics comes from the equation of motion for a one-dimensional bar, written for the same material point:
+        </p>
+        <div class="na-eq">\[ \rho_0\,\frac{\partial v}{\partial t} = \frac{\partial P}{\partial X} \tag{2} \]</div>
+        <p>
+          where \(P(X,t)\) is the nominal (engineering) stress and \(\rho_0\) the material density. This equation says exactly what most SHPB discussions leave implicit: acceleration at a point is caused by a stress <em>gradient</em> at that point, not by the stress itself. &ldquo;Dynamic stress equilibrium,&rdquo; the condition SHPB practice checks with the force-balance measure of Eq. (4) in the <a href="note_shpb.html#s4" class="term">SHPB note</a>, means the stress is uniform along \(X\) at a given instant, \(\partial P/\partial X \approx 0\). Substituted into Eq. (2), that gives:
+        </p>
+        <div class="na-eq">\[ \frac{\partial P}{\partial X} \approx 0 \;\;\Longrightarrow\;\; a(X,t) = \frac{\partial v}{\partial t} \approx 0 \quad \text{for every } X \tag{3} \]</div>
+        <p>
+          Equilibrium pins down acceleration, and only acceleration. It says the velocity field has, at that instant, stopped evolving in time. It says nothing at all about whether the field is flat in space, i.e. whether \(\partial v/\partial X\) is zero. Those are the two derivatives from Section 2, and Eq. (3) only ever touches one of them.
+        </p>
+
+        <h2 id="s4">4. Why the velocity difference persists</h2>
+        <p>
+          The two ends of the specimen move at velocities \(v_1(t)\) (incident-bar face) and \(v_2(t)\) (transmitter-bar face). These are boundary conditions imposed from outside, set by the striker velocity and the wave transmitted through the bars, exactly the quantities used in the SHPB note&rsquo;s <a href="note_shpb.html#s3" class="term">data-reduction equations</a>. Nothing about the specimen&rsquo;s internal state can make \(v_1\) equal \(v_2\); the specimen can only decide how the velocity is distributed <em>between</em> them.
+        </p>
+        <div class="na-note">
+          <p>
+            <strong>The picture to hold onto:</strong> once the internal velocity profile&rsquo;s <em>shape</em> stops changing in time, every point has zero acceleration (equilibrium, Eq. (3)) even though the profile still ramps from \(v_1\) to \(v_2\) across the length \(L_0\) (a nonzero strain-rate). A frozen straight line is not a flat line.
+          </p>
+        </div>
+        <p>
+          Figure 1 puts the two snapshots side by side. Early in loading, the internal profile is still reshaping itself, so somewhere along \(X\) the velocity is still changing with time: acceleration is nonzero and the specimen is not yet in equilibrium. Once the reverberating wave has smoothed the profile into a shape that itself stops changing, the specimen enters the equilibrium window: acceleration is zero everywhere, but the frozen profile still runs from \(v_1\) down to \(v_2\), so it still has a slope. That slope is exactly the strain-rate:
+        </p>
+        <div class="na-eq">\[ \dot\varepsilon(t) \approx \frac{v_1(t) - v_2(t)}{L_0} \tag{4} \]</div>
+        <p>
+          If \(v_1(t)\) and \(v_2(t)\) themselves drift slowly compared with the time a wave needs to cross the short specimen, the frozen profile can re-settle to the new boundary values almost as fast as they change, so the specimen can stay inside the equilibrium window while Eq. (4) keeps producing a slowly varying, non-constant strain-rate. Equilibrium is a statement about the profile&rsquo;s shape being stationary at each instant; it is silent on whether the boundary values it stretches between are themselves fixed.
+        </p>
+        <figure class="fp-fig" style="margin:26px 0;">
+          <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Velocity profile v of X inside the specimen at two instants: an early, still-evolving curved profile, and the later equilibrium-window profile, a straight frozen line running from v1 to v2.">
+            <rect x="0" y="0" width="760" height="300" fill="none"/>
+            <!-- axes -->
+            <line x1="90" y1="20" x2="90" y2="190" stroke="#33475b" stroke-width="1.5"/>
+            <line x1="90" y1="190" x2="700" y2="190" stroke="#33475b" stroke-width="1.5"/>
+            <text x="60" y="30" font-size="12" fill="#33475b">v</text>
+            <text x="700" y="212" text-anchor="end" font-size="12" fill="#33475b">X (incident &#8594; transmitter)</text>
+            <text x="98" y="204" font-size="11" fill="#33475b">0</text>
+            <text x="686" y="204" font-size="11" fill="#33475b">L&#8320;</text>
+            <!-- early, non-equilibrium profile: curved, dashed -->
+            <path d="M 90 60 C 260 40, 340 110, 430 95 C 540 78, 620 130, 690 118" fill="none" stroke="#0b7285" stroke-width="2.5" stroke-dasharray="6,5"/>
+            <!-- equilibrium profile: straight line from v1 to v2 -->
+            <line x1="90" y1="55" x2="690" y2="150" stroke="#0b1c34" stroke-width="3"/>
+            <!-- markers -->
+            <circle cx="90" cy="55" r="4" fill="#0b1c34"/>
+            <circle cx="690" cy="150" r="4" fill="#0b1c34"/>
+            <text x="60" y="52" font-size="12" fill="#0b1c34">v&#8321;</text>
+            <text x="700" y="154" font-size="12" fill="#0b1c34">v&#8322;</text>
+            <!-- legend -->
+            <line x1="90" y1="235" x2="125" y2="235" stroke="#0b1c34" stroke-width="3"/>
+            <text x="132" y="239" font-size="12" fill="#33475b">equilibrium window: frozen, a &#8776; 0 everywhere, &#603;&#775; &#8800; 0</text>
+            <line x1="90" y1="260" x2="125" y2="260" stroke="#0b7285" stroke-width="2.5" stroke-dasharray="6,5"/>
+            <text x="132" y="264" font-size="12" fill="#33475b">early loading: shape still evolving, a &#8800; 0 somewhere</text>
+          </svg>
+          <figcaption><strong>Figure 1.</strong> Two snapshots of the velocity profile inside the specimen. Early in loading (dashed teal) the profile is still reshaping itself in time. Once equilibrium is reached (solid navy) the profile has frozen into a straight line running from \(v_1\) to \(v_2\): acceleration is zero everywhere, yet the profile keeps a nonzero slope, which is the strain-rate.</figcaption>
+        </figure>
+
+        <h2 id="s5">5. The paper&rsquo;s own evidence</h2>
+        <p>
+          Section 3 is a derivation; Paper 2 backs it with measured SHPB records on a C54400 phosphor bronze-copper alloy. Two figures make the point from opposite directions:
+        </p>
+        <ul>
+          <li><strong>Fig. 14</strong> shows a test in which the front/back force-balance criterion (equilibrium) is satisfied while the instantaneous strain-rate is still visibly time-varying, exactly the frozen-but-sloped profile of Section 4.</li>
+          <li><strong>Fig. 18(c)</strong> shows the converse case: a near-constant strain-rate recorded while the equilibrium criterion is <em>not</em> satisfied, confirming that a flat rate history is no guarantee of internal stress uniformity either.</li>
+        </ul>
+
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper2/fig14-equilibrium-varying-rate.jpg" alt="Stress wave equilibrium analysis for SHPB tests without a shaper, with a copper alloy shaper, and with a nylon shaper, showing the equilibrium error alongside the strain histories" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 14 (Paper 2).</strong> Front/back strain histories and the equilibrium error \(e_\mathrm{wave}\) for three SHPB configurations. Inside the green-shaded windows the equilibrium criterion is met (\(e_\mathrm{wave}<0.05\)) even though the incident, reflected and transmitted strains, and hence the instantaneous strain-rate, are still visibly evolving.</figcaption>
+        </figure>
+
+        <figure class="fp-fig" style="margin:26px 0;">
+          <img src="assets/img/notes/paper2/fig18c-constant-rate-nonequilibrium.png" alt="Flow stress and strain-rate history for a shaped SHPB test, Exp-23, showing a plateau region of near-constant strain-rate where the equilibrium criterion still fails" loading="lazy" decoding="async">
+          <figcaption><strong>Fig. 18(c) (Paper 2).</strong> Full data from a shaped test (Exp-23). Between roughly 0.1&ndash;0.2 plastic strain the strain-rate (green) plateaus to a near-constant value, yet the front and rear stress traces (black/blue) still diverge there, i.e. the equilibrium criterion fails precisely where the rate is flattest.</figcaption>
+        </figure>
+
+        <p>
+          Taken together, the two figures show equilibrium and rate-constancy moving independently of each other in the same dataset, which is the experimental counterpart of Eq. (3) telling only half the story. One caveat carried over from the underlying technique: the force-balance measure of Eq. (4) in the SHPB note is a necessary but not strictly sufficient proxy for true internal stress uniformity, a limitation the paper addresses by leaning on prior numerical validation of that criterion rather than treating it as exact.
+        </p>
+
+        <h2 id="s6">6. Why it matters</h2>
+        <p>
+          Once constant strain-rate is recognized as a reporting convention rather than a validity requirement, a qualified varying-rate record stops being a discard and becomes usable data. Paper 2 turns that into a two-part screening rule, a stress equilibrium check and a check that the instantaneous strain-rate stays positive (the specimen is loading, not unloading), and keeps every record that passes both, however much its rate wanders during the test.
+        </p>
+        <p>
+          The payoff is density, not just permission. A handful of shaped, flat-rate tests samples the strain&ndash;strain-rate plane at only a few discrete rates; the same number of varying-rate tests sweeps continuous bands across it. That denser, more irregular scatter is exactly what an ANN needs to reconstruct a finely-filled flow-stress array, which the paper then reduces, via the SVD framework Paper 1 established as the legitimacy criterion for decoupled (Johnson-Cook-type) equations, into a compact discrete-or-analytical flow stress equation. The paper reports that instantaneous strain-rate, not the averaged rate conventional SHPB reporting relies on, is what actually correlates with flow stress, and identifies five uncertainties in the conventional sequential-fitting procedure that this data-driven route avoids. Its companion, Paper 3, extends the same qualified-data machinery to a third variable, temperature.
+        </p>
+
+        <h2 id="s7">7. Takeaway</h2>
+        <p>
+          Strain-rate and acceleration are two different partial derivatives of the same velocity field, one along the specimen&rsquo;s length, one in time, and the equation of motion ties dynamic stress equilibrium only to the second. A specimen can therefore be internally stress-equilibrated while its strain-rate keeps changing, because equilibrium only requires the velocity profile&rsquo;s <em>shape</em> to stop evolving, not to be flat. Paper 2 shows this is not a corner case: it is common enough in real SHPB records (Fig. 14) that discarding varying-rate data on principle throws away information the physics never required removing, and using it instead is what lets the paper build a more accurate, more densely-supported flow stress equation.
+        </p>
+
+        <h2 id="refs">References</h2>
+        <ol class="na-refs">
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 1 &mdash; Methodology and the dependence of dynamic flow stress on strain-rate. <em>International Journal of Impact Engineering</em>, 206, 105403. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105403" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105403</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2023). The legitimacy of decoupled dynamic flow stress equations and their representation based on discrete experimental data. <em>International Journal of Impact Engineering</em>, 173, 104453. <a href="https://doi.org/10.1016/j.ijimpeng.2022.104453" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2022.104453</a></li>
+          <li>Huang, X., &amp; Li, Q. M. (2025). Determination of dynamic flow stress equation based on discrete experimental data: Part 2 &mdash; Dynamic flow stress depending on strain, strain-rate and temperature. <em>International Journal of Impact Engineering</em>, 206, 105432. <a href="https://doi.org/10.1016/j.ijimpeng.2025.105432" target="_blank" rel="noopener">https://doi.org/10.1016/j.ijimpeng.2025.105432</a></li>
+        </ol>
+        <p class="na-keywords">For the wave-mechanics side (data-reduction equations, the force-balance equilibrium measure, pulse shaping), see the <a href="note_shpb.html">Split Hopkinson Bar note</a>.</p>
+
+        <p style="margin-top:36px;">
+          <a href="publications.html#pub-12" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Paper 2 in Publications</a>
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
+        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
+        <div class="social-row">
+          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="publications.html">Publications</a></li>
+          <li><a href="news.html">News</a></li>
+          <li><a href="notes.html">Technical Notes</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
+          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
+          <li class="fc-txt">Dongguk University&ndash;Seoul, Korea</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
+      <span>KAIST &middot; Dongguk University</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/script.js"></script>
+<script src="assets/js/glossary.js"></script>
+</body>
+</html>
