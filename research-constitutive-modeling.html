@@ -68,7 +68,7 @@
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span><a href="research.html">Research</a><span>/</span>Constitutive Modeling</div>
     <h1>Dynamic Constitutive Modeling</h1>
-    <p>Data-driven determination and extrapolation of dynamic flow stress, from quasi-static loading to very-high strain-rate impact. Established on metals, designed to generalize.</p>
+    <p>Data-driven determination and extrapolation of dynamic flow stress, from quasi-static loading to very-high strain-rate impact, for isotropic metals under J2 plasticity.</p>
   </div>
 </div>
 
@@ -84,7 +84,7 @@
         This research builds a rigorous, data-driven programme of four first-authored papers in the <em>International Journal of Impact Engineering</em> (2023–2026): first <em>verifying</em> when decoupled constitutive equations are mathematically legitimate, then <em>determining</em> flow stress from varied <a class="term" href="notes.html#strain-rate">strain-rate</a> <a class="term" href="notes.html#shpb">SHPB</a> data, next <em>extending</em> the framework to the full three-dimensional (strain, strain-rate, temperature) constitutive surface, and now <em>extrapolating</em> the identified model beyond the experimentally calibrated domain to very-high strain rates, with direct validation against <a class="term" href="notes.html#taylor-hopkinson">Taylor-Hopkinson</a> impact tests. The methodology, combining <a class="term" href="notes.html#svd">SVD</a>/<a class="term" href="notes.html#cp-decomposition">CP tensor decomposition</a> with <a class="term" href="notes.html#ann">artificial neural networks</a>, applies beyond the J-C equation to any factorized constitutive model.
       </p>
       <p style="margin-top:14px;">
-        Metals were the natural starting point because their dynamic test data are abundant and their model forms are well established, which makes them the right setting for proving a method. The method itself makes no assumption that the material is a metal. The direction of the work from here is to carry it into material classes where the standard constitutive models are considerably weaker and the data are harder to interpret, in particular cellular materials such as foams and rate-sensitive polymers.
+        The method is built on an explicit assumption, stated in the thesis and carried through all four papers: an isotropic metal whose plastic flow is governed by J2 (von Mises) theory, so the entire dynamic behavior reduces to a single scalar flow stress σ(ε, ε̇, T). That assumption is why the tensor-decomposition procedure works cleanly; it is not incidental to the method. Extending it to material classes such as foams (pressure-sensitive, volumetrically compacting) or ceramics (brittle fracture rather than ductile flow) would require a different formulation, not a direct transfer, and is not part of the current research plan.
       </p>
     </div>
 
