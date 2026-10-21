@@ -1,0 +1,15 @@
+2026-08-03
+1. 下面这句话有误，JMST这篇论文是Q3,不能说所有都是Q1:
+Featured Works
+Highlights spanning constitutive modeling theory, impact mechanics prediction, and battery safety — all published in JCR Q1 journals.
+
+2.请在这里增加CP 分解的算法介绍，请完全NN-CP的模式给出。给出一些参考文献最好。
+Technical Notes
+Self-contained write-ups of the mathematics behind specific methods, written to be readable on their own rather than as supplements to a particular paper.
+3. 请增加SVD相关的介绍，公式推导，例子等。给出一些参考文献最好。
+
+4. 请增加notes: 介绍SHPB/STPB，给出一些参考文献最好。
+5. 请增加一个本构模型的介绍专栏： 介绍一些常用的本构模型，如J-C, Deshpande–Fleck crushable foam constitutive model,Druck-Prager, JH-2等，给出一些参考文献最好。
+6. 请增加一个machine learning介绍专栏，介绍ANN,CNN,LSTM,Transformer等常用模型，要详细些，给出示意图，公式推导等。给出一些参考文献最好。
+这些notes完成后，，给全网页需要相关notes的地方添加这些索引。
+7. Paper-4 TEDI-FS的DOI出来了，请更新网页https://doi.org/10.1016/j.ijimpeng.2026.105863
