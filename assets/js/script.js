@@ -192,3 +192,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
+
+/* ── Email links ──
+   The address is not written out in the markup so that harvesters scraping
+   the HTML do not pick it up. Links carry data-mail="user|domain" and fall
+   back to the contact page when scripts are off. */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('a[data-mail]').forEach(function (a) {
+    var p = a.getAttribute('data-mail').split('|');
+    var addr = p[0] + '@' + p[1];
+    a.href = 'mailto:' + addr;
+    if (a.hasAttribute('data-mail-text')) a.textContent = addr;
+  });
+});
