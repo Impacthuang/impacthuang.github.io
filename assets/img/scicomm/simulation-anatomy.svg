@@ -3,7 +3,7 @@
   <desc id="d">A numerical simulation combines (a) a discretized geometry: 1D bars, 2D triangles and quadrilaterals, 3D hexahedra, or meshless SPH particles; (b) the constitutive equation of the metal: elastic response by Hooke's law up to yield, then plastic flow governed by a flow stress equation that depends on plastic strain, strain rate and temperature, which sets the size of the von Mises yield surface, while the flow rule gives the direction of plastic flow; and (c) balance laws for mass, momentum and energy, into which the constitutive equation supplies the stress.</desc>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#222"/></marker>
-    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#B23A12"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#1F4E8C"/></marker>
     <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#888"/></marker>
   </defs>
   <style>
@@ -14,14 +14,14 @@
     .ink { fill: none; stroke: #222; stroke-width: 1.2; }
     .thin{ fill: none; stroke: #555; stroke-width: .8; }
     .gr  { fill: none; stroke: #9a9a9a; stroke-width: 1; }
-    .acc { fill: none; stroke: #B23A12; stroke-width: 2; }
-    .A   { fill: #B23A12; }
+    .acc { fill: none; stroke: #1F4E8C; stroke-width: 2; }
+    .A   { fill: #1F4E8C; }
   </style>
 
   <rect width="1200" height="600" fill="#FFFFFF"/>
 
   <!-- panel rules -->
-  <path d="M345,30 V500 M872,30 V500" stroke="#d6d2ca" stroke-width="1"/>
+  <path d="M345,30 V500 M872,30 V500" stroke="#C8C8C8" stroke-width="1"/>
 
   <!-- ═════ (a) Geometric representation ═════ -->
   <text x="30" y="46" class="hd"><tspan font-weight="700">(a)</tspan> Geometric representation</text>
@@ -32,7 +32,7 @@
 
   <text x="30" y="128" class="lb">2D · quadrilateral | triangle</text>
   <g class="thin">
-    <rect x="40" y="142" width="270" height="96" fill="#faf8f4" stroke="#222" stroke-width="1.2"/>
+    <rect x="40" y="142" width="270" height="96" fill="#F2F2F2" stroke="#222" stroke-width="1.2"/>
     <path d="M67,142 V238 M94,142 V238 M121,142 V238 M148,142 V238 M175,142 V238 M202,142 V238 M229,142 V238 M256,142 V238 M283,142 V238"/>
     <path d="M40,166 H310 M40,190 H310 M40,214 H310"/>
     <path d="M175,166 L202,142 M175,190 L229,142 M175,214 L256,142 M175,238 L283,142 M202,238 L310,142 M229,238 L310,166 M256,238 L310,190 M283,238 L310,214"/>
@@ -84,8 +84,8 @@
   <path stroke="#888" stroke-width="1" fill="none" marker-end="url(#aG)" d="M565,232 L565,158"/>
   <g font-size="13" fill="#666"><text x="572" y="248" font-style="italic">ε</text><circle cx="576.5" cy="238" r="1.1"/><text x="582" y="248">↑ ,</text><text x="600" y="248" font-style="italic">T</text><text x="609" y="248">↓</text></g>
 
-  <text x="402" y="424" class="lb" fill="#B23A12" font-weight="700">Flow stress equation</text>
-  <g fill="#B23A12" font-size="15" font-style="italic">
+  <text x="402" y="424" class="lb" fill="#1F4E8C" font-weight="700">Flow stress equation</text>
+  <g fill="#1F4E8C" font-size="15" font-style="italic">
     <text x="402" y="446">σ</text><text x="411" y="450" font-size="11">y</text>
     <text x="421" y="446" font-style="normal">=</text><text x="434" y="446">f</text><text x="442" y="446" font-style="normal">(</text>
     <text x="448" y="446">ε</text><text x="455" y="450" font-size="11">p</text><text x="461" y="446" font-style="normal">,</text>
@@ -103,9 +103,9 @@
   <text x="652" y="330" class="lb m" font-size="13" fill="#777">σ′<tspan font-size="10" dy="3">2</tspan></text>
   <text x="848" y="330" class="lb m" font-size="13" fill="#777">σ′<tspan font-size="10" dy="3">3</tspan></text>
   <circle cx="760" cy="268" r="64" class="ink" stroke-width="1.6"/>
-  <circle cx="760" cy="268" r="82" fill="none" stroke="#B23A12" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <circle cx="760" cy="268" r="82" fill="none" stroke="#1F4E8C" stroke-width="1.6" stroke-dasharray="5 4"/>
   <path class="acc" stroke-width="1.4" marker-end="url(#aA)" d="M704.6,236 L690,227.6"/>
-  <text x="626" y="214" class="lb" font-size="12.5" fill="#B23A12">hardening</text>
+  <text x="626" y="214" class="lb" font-size="12.5" fill="#1F4E8C">hardening</text>
   <circle cx="815.4" cy="236" r="3" fill="#222"/>
   <path class="ink" stroke-width="1.4" marker-end="url(#a)" d="M815.4,236 L851,215.5"/>
   <text x="826" y="204" class="lb m" font-size="14">dε<tspan font-size="10" dy="-6">p</tspan></text>
@@ -119,7 +119,7 @@
   <!-- ═════ (c) Physical principles ═════ -->
   <text x="892" y="46" class="hd"><tspan font-weight="700">(c)</tspan> Physical principles</text>
 
-  <path d="M960,110 C990,82 1080,84 1110,104 C1140,124 1132,176 1102,190 C1068,206 990,204 962,186 C936,168 934,130 960,110 Z" fill="#faf8f4" stroke="#222" stroke-width="1.2"/>
+  <path d="M960,110 C990,82 1080,84 1110,104 C1140,124 1132,176 1102,190 C1068,206 990,204 962,186 C936,168 934,130 960,110 Z" fill="#F2F2F2" stroke="#222" stroke-width="1.2"/>
   <text x="1028" y="152" class="lb m" font-size="17">Ω</text>
   <text x="1114" y="98" class="lb m" font-size="14">∂Ω</text>
   <path class="ink" marker-end="url(#a)" d="M1106,186 L1128,206"/>
@@ -132,9 +132,9 @@
   <text x="892" y="256" class="lb" font-size="12.5" fill="#777">mass</text>
   <text x="975" y="256" class="lb m" font-size="16">∂ρ/∂t + ∇·(ρv) = 0</text>
   <text x="892" y="294" class="lb" font-size="12.5" fill="#777">momentum</text>
-  <text x="975" y="294" class="lb m" font-size="16">ρ Dv/Dt = ∇·<tspan fill="#B23A12" font-weight="700">σ</tspan> + ρ b</text>
+  <text x="975" y="294" class="lb m" font-size="16">ρ Dv/Dt = ∇·<tspan fill="#1F4E8C" font-weight="700">σ</tspan> + ρ b</text>
   <text x="892" y="332" class="lb" font-size="12.5" fill="#777">energy</text>
-  <text x="975" y="332" class="lb m" font-size="16">ρ De/Dt = <tspan fill="#B23A12" font-weight="700">σ</tspan> : D − ∇·q</text>
+  <text x="975" y="332" class="lb m" font-size="16">ρ De/Dt = <tspan fill="#1F4E8C" font-weight="700">σ</tspan> : D − ∇·q</text>
   <text x="892" y="372" class="lb" font-size="13" fill="#666">+ boundary and initial conditions,</text>
   <text x="892" y="390" class="lb" font-size="13" fill="#666">  closures such as an equation of state</text>
 
@@ -142,6 +142,6 @@
   <text x="892" y="458" class="cap">is supplied by the constitutive equation (b).</text>
 
 
-  <path d="M30,516 H1170" stroke="#d6d2ca" stroke-width="1"/>
-  <text x="600" y="556" text-anchor="middle" font-size="17" fill="#222">Numerical simulation  =  discretized geometry <tspan font-weight="700">(a)</tspan>  +  <tspan fill="#B23A12">constitutive equation</tspan> <tspan font-weight="700" fill="#B23A12">(b)</tspan>  +  balance laws <tspan font-weight="700">(c)</tspan></text>
+  <path d="M30,516 H1170" stroke="#C8C8C8" stroke-width="1"/>
+  <text x="600" y="556" text-anchor="middle" font-size="17" fill="#222">Numerical simulation  =  discretized geometry <tspan font-weight="700">(a)</tspan>  +  <tspan fill="#1F4E8C">constitutive equation</tspan> <tspan font-weight="700" fill="#1F4E8C">(b)</tspan>  +  balance laws <tspan font-weight="700">(c)</tspan></text>
 </svg>
