@@ -6,41 +6,41 @@
 
 /* ─── CSS VARIABLES ─── */
 :root {
-  --navy:     #0B1C34;
-  --navy-d:   #071220;
-  --accent:   #C8430F;
-  --accent-rgb: 200,67,15;
-  --accent-h: #A3360C;
-  /* The accent above is dark enough to read on white but too dark on the navy
-     bands (3.3:1). Anything sitting on navy uses this lighter tint instead,
-     which clears 4.5:1 against both the flat navy and the hero gradient. */
-  --accent-d: #E86A2E;
-  --link:     #A8380B;
-  --link-rgb: 168,56,11;
-  --link-h:   #7F2A08;
+  /* Ink for headings and the few remaining dark surfaces. */
+  --navy:     #14171C;
+  --navy-d:   #0D0F12;
+  /* One accent, shared with the redrawn figures. */
+  --accent:   #1F4E8C;
+  --accent-rgb: 31,78,140;
+  --accent-h: #173B6B;
+  --accent-d: #1F4E8C;
+  --link:     #1F4E8C;
+  --link-rgb: 31,78,140;
+  --link-h:   #173B6B;
   /* Categorical only, used by the research-stream tags and nowhere else. */
-  --tag-blue:      #2C5282;
-  --tag-blue-rgb:  44,82,130;
+  --tag-blue:      #4A5568;
+  --tag-blue-rgb:  74,85,104;
   --tag-green:     #0F6B4F;
   --tag-green-rgb: 15,107,79;
   --bg:       #FFFFFF;
-  --bg-alt:   #F7F6F3;
-  --border:   #E6E3DD;
-  --text:     #1A2333;
-  --muted:    #5E6E82;
-  --r:        8px;
-  --r-lg:     14px;
+  --bg-alt:   #F5F6F8;
+  --border:   #E2E5EA;
+  --text:     #1B1F24;
+  --muted:    #5C6672;
+  --r:        4px;
+  --r-lg:     6px;
   --max:      1100px;
   --nav-h:    68px;
   --t:        0.22s ease;
+  --serif:    'Source Serif 4', Georgia, 'Times New Roman', serif;
 }
 
 /* ─── RESET ─── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html  { scroll-behavior: smooth; }
 body  {
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-size: 16px; line-height: 1.65;
+  font-family: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 17px; line-height: 1.65;
   color: var(--text); background: var(--bg); overflow-x: hidden;
 }
 a    { color: inherit; text-decoration: none; }
@@ -1178,3 +1178,80 @@ img.zoom-in { cursor: zoom-in; }
 .fa-user{--fa:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48cGF0aCBkPSJNMjI0IDI1NmM3MC43IDAgMTI4LTU3LjMgMTI4LTEyOFMyOTQuNyAwIDIyNCAwIDk2IDU3LjMgOTYgMTI4czU3LjMgMTI4IDEyOCAxMjh6bTg5LjYgMzJoLTE2LjdjLTIyLjIgMTAuMi00Ni45IDE2LTcyLjkgMTZzLTUwLjYtNS44LTcyLjktMTZoLTE2LjdDNjAuMiAyODggMCAzNDguMiAwIDQyMi40VjQ2NGMwIDI2LjUgMjEuNSA0OCA0OCA0OGgzNTJjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTQxLjZjMC03NC4yLTYwLjItMTM0LjQtMTM0LjQtMTM0LjR6Ii8+PC9zdmc+")}
 .fa-user-graduate{--fa:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48cGF0aCBkPSJNMzE5LjQgMzIwLjZMMjI0IDQxNmwtOTUuNC05NS40QzU3LjEgMzIzLjcgMCAzODIuMiAwIDQ1NC40djkuNmMwIDI2LjUgMjEuNSA0OCA0OCA0OGgzNTJjMjYuNSAwIDQ4LTIxLjUgNDgtNDh2LTkuNmMwLTcyLjItNTcuMS0xMzAuNy0xMjguNi0xMzMuOHpNMTMuNiA3OS44bDYuNCAxLjV2NTguNGMtNyA0LjItMTIgMTEuNS0xMiAyMC4zIDAgOC40IDQuNiAxNS40IDExLjEgMTkuN0wzLjUgMjQyYy0xLjcgNi45IDIuMSAxNCA3LjYgMTRoNDEuOGM1LjUgMCA5LjMtNy4xIDcuNi0xNGwtMTUuNi02Mi4zQzUxLjQgMTc1LjQgNTYgMTY4LjQgNTYgMTYwYzAtOC44LTUtMTYuMS0xMi0yMC4zVjg3LjFsNjYgMTUuOWMtOC42IDE3LjItMTQgMzYuNC0xNCA1NyAwIDcwLjcgNTcuMyAxMjggMTI4IDEyOHMxMjgtNTcuMyAxMjgtMTI4YzAtMjAuNi01LjMtMzkuOC0xNC01N2w5Ni4zLTIzLjJjMTguMi00LjQgMTguMi0yNy4xIDAtMzEuNWwtMTkwLjQtNDZjLTEzLTMuMS0yNi43LTMuMS0zOS43IDBMMTMuNiA0OC4yYy0xOC4xIDQuNC0xOC4xIDI3LjIgMCAzMS42eiIvPjwvc3ZnPg==")}
 .fa-user-plus{--fa:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNTEyIj48cGF0aCBkPSJNNjI0IDIwOGgtNjR2LTY0YzAtOC44LTcuMi0xNi0xNi0xNmgtMzJjLTguOCAwLTE2IDcuMi0xNiAxNnY2NGgtNjRjLTguOCAwLTE2IDcuMi0xNiAxNnYzMmMwIDguOCA3LjIgMTYgMTYgMTZoNjR2NjRjMCA4LjggNy4yIDE2IDE2IDE2aDMyYzguOCAwIDE2LTcuMiAxNi0xNnYtNjRoNjRjOC44IDAgMTYtNy4yIDE2LTE2di0zMmMwLTguOC03LjItMTYtMTYtMTZ6bS00MDAgNDhjNzAuNyAwIDEyOC01Ny4zIDEyOC0xMjhTMjk0LjcgMCAyMjQgMCA5NiA1Ny4zIDk2IDEyOHM1Ny4zIDEyOCAxMjggMTI4em04OS42IDMyaC0xNi43Yy0yMi4yIDEwLjItNDYuOSAxNi03Mi45IDE2cy01MC42LTUuOC03Mi45LTE2aC0xNi43QzYwLjIgMjg4IDAgMzQ4LjIgMCA0MjIuNFY0NjRjMCAyNi41IDIxLjUgNDggNDggNDhoMzUyYzI2LjUgMCA0OC0yMS41IDQ4LTQ4di00MS42YzAtNzQuMi02MC4yLTEzNC40LTEzNC40LTEzNC40eiIvPjwvc3ZnPg==")}
+
+
+/* ======================================================
+   LIGHT ACADEMIC THEME
+   White surfaces, serif headings, a single blue accent.
+   Placed last so it overrides the dark navbar, page
+   headers and footer defined above.
+   ====================================================== */
+h1, h2, h3,
+.s-title, .rc-title, .pe-title, .pc-title, .ne-title, .news-title,
+.pb-title, .course-title, .collab-name, .nc-title, .gl-term, .tt-term {
+  font-family: var(--serif); font-weight: 600; letter-spacing: 0;
+}
+.hero-content h1, .page-header h1, .profile-name { font-family: var(--serif); font-weight: 600; letter-spacing: -.2px; }
+
+.navbar { background: #fff; border-bottom: 1px solid var(--border); box-shadow: none; }
+.nav-logo { color: var(--navy); }
+.nav-logo span { color: var(--accent); }
+.nav-links > li > a, .nav-more { color: #3A424C; }
+.nav-links > li > a:hover, .nav-links > li > a.active,
+.nav-more:hover, .nav-more.active { color: var(--accent); background: transparent; box-shadow: inset 0 -2px 0 var(--accent); border-radius: 0; }
+.dd-menu { background: #fff; border: 1px solid var(--border); box-shadow: 0 8px 24px rgba(20,23,28,.08); }
+.dd-menu a { color: #3A424C; }
+.dd-menu a:hover { background: var(--bg-alt); color: var(--accent); }
+.nav-toggle span { background: var(--navy); }
+
+.hero { background: #fff; border-bottom: 1px solid var(--border); min-height: 88vh; }
+.hero-eyebrow { color: var(--muted); }
+.hero-content h1, .hero-content h1 span { color: var(--navy); }
+.hero-pos { color: var(--muted); }
+.hero-vision { color: #2A3038; border-left-color: var(--accent); }
+.hero-photo img { border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: 0 12px 32px rgba(20,23,28,.12); }
+
+.page-header, .profile-hero { background: #fff; border-bottom: 1px solid var(--border); }
+.page-header .bc { color: var(--muted); }
+.page-header .bc a { color: var(--accent); }
+.page-header h1, .profile-name { color: var(--navy); }
+.page-header p, .profile-title { color: var(--muted); }
+.page-header p a { color: var(--accent); border-bottom-color: rgba(var(--accent-rgb),.35); }
+.page-header p a:hover { color: var(--accent-h); border-bottom-color: var(--accent-h); }
+.profile-photo-lg { border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: 0 8px 24px rgba(20,23,28,.10); }
+.profile-links a { background: #fff; color: #2A3038; border: 1px solid var(--border); }
+.profile-links a:hover { background: var(--bg-alt); color: var(--accent); }
+.profile-links a.pa-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.btn-white { border-color: var(--border); }
+.btn-ghost { background: #fff; color: var(--navy); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+.s-label { color: var(--muted); letter-spacing: 1.5px; }
+
+.pub-stats { background: var(--bg-alt); border: 1px solid var(--border); }
+.pub-stat-item .psn { color: var(--accent); }
+.pub-stat-item .psl { color: var(--muted); }
+.vision-block { background: var(--bg-alt); border: 1px solid var(--border); }
+.vision-block blockquote { color: var(--text); }
+.vision-block cite { color: var(--muted); }
+.bib-hdr { background: var(--bg-alt); color: var(--navy); border-bottom: 1px solid var(--border); }
+.bib-close { color: var(--muted); }
+.bib-close:hover { color: var(--navy); }
+
+.footer { background: var(--bg-alt); border-top: 1px solid var(--border); }
+.footer .nav-logo { color: var(--navy); }
+.footer-brand p, .footer-col a, .footer-col .fc-txt, .footer-bottom, .footer-col h4 { color: var(--muted); }
+.footer-col a:hover { color: var(--accent); }
+.social-row a { background: #fff; color: var(--muted); border: 1px solid var(--border); }
+.social-row a:hover { background: var(--accent); color: #fff; }
+
+.skip-link { background: var(--accent); }
+
+@media (max-width: 900px) {
+  .nav-links.open { background: #fff; border-bottom: 1px solid var(--border); }
+  .nav-links.open .dd-menu { border-left-color: var(--border); }
+  .nav-links.open .nav-more, .nav-links.open .nav-more:hover, .nav-links.open .nav-more.active { color: var(--muted); box-shadow: none; }
+  .nav-links.open .dd-menu a { color: #3A424C; }
+  .nav-links > li > a.active, .nav-links > li > a:hover { box-shadow: none; }
+}
