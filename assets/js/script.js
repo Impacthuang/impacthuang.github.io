@@ -205,3 +205,34 @@ document.addEventListener('DOMContentLoaded', function () {
     if (a.hasAttribute('data-mail-text')) a.textContent = addr;
   });
 });
+
+/* ── Show the latest few entries, with a button for the rest ──
+   A list marked data-show="N" keeps its first N items (matched by data-item)
+   and hides everything after the Nth, year dividers included. Without
+   scripts the full list stays visible. A link to an entry further down
+   opens the list first so the anchor still lands. */
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('[data-show]').forEach(function (list) {
+    var n = parseInt(list.getAttribute('data-show'), 10);
+    var items = list.querySelectorAll(':scope > ' + list.getAttribute('data-item'));
+    if (items.length <= n) return;
+    var hidden = [];
+    var el = items[n - 1].nextElementSibling;
+    while (el) { hidden.push(el); el = el.nextElementSibling; }
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'btn btn-outline show-more';
+    btn.textContent = 'Show all ' + items.length + ' ↓';
+    function open() {
+      hidden.forEach(function (h) { h.hidden = false; });
+      btn.remove();
+    }
+    hidden.forEach(function (h) { h.hidden = true; });
+    btn.addEventListener('click', open);
+    list.after(btn);
+    var target = location.hash && document.getElementById(location.hash.slice(1));
+    if (target && hidden.some(function (h) { return h === target || h.contains(target); })) {
+      open(); target.scrollIntoView();
+    }
+  });
+});

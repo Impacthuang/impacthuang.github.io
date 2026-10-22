@@ -1248,3 +1248,7 @@ h1, h2, h3,
   .nav-links.open .dd-menu a { color: #3A424C; }
   .nav-links > li > a.active, .nav-links > li > a:hover { box-shadow: none; }
 }
+
+/* "Show all" button under a shortened list */
+.show-more { margin-top: 24px; }
+[hidden] { display: none !important; }
