@@ -1,144 +1,147 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="1200" height="640" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" font-family="'Times New Roman', 'Liberation Serif', 'STIX Two Text', Times, serif" role="img" aria-labelledby="t d">
   <title id="t">Anatomy of a numerical simulation</title>
-  <desc id="d">A numerical simulation rests on three coupled parts: geometric representation, the constitutive equation of the metal, and physical principles. Inside the constitutive equation, a yield check routes to elastic behaviour (Hooke's law) or plastic behaviour; plastic behaviour combines a characterized flow stress equation, highlighted, with a plasticity model (von Mises criterion and flow rule) to determine the yield surface.</desc>
+  <desc id="d">A numerical simulation combines (a) a discretized geometry: 1D bars, 2D triangles and quadrilaterals, 3D hexahedra, or meshless SPH particles; (b) the constitutive equation of the metal: elastic response by Hooke's law up to yield, then plastic flow governed by a flow stress equation that depends on plastic strain, strain rate and temperature, which sets the size of the von Mises yield surface, while the flow rule gives the direction of plastic flow; and (c) balance laws for mass, momentum and energy, into which the constitutive equation supplies the stress.</desc>
   <defs>
-    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#4A5B72"/>
-    </marker>
-    <marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0,0 L10,5 L0,10 z" fill="#C8430F"/>
-    </marker>
-    <filter id="sh" x="-10%" y="-10%" width="120%" height="140%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0B1C34" flood-opacity="0.12"/>
-    </filter>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#222"/></marker>
+    <marker id="aA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#B23A12"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#888"/></marker>
   </defs>
-
   <style>
-    .lbl  { font-size: 14px; fill: #1A2333; }
-    .sm   { font-size: 12.5px; fill: #5E6E82; }
-    .hd   { font-size: 15px; font-weight: 700; fill: #FFFFFF; }
-    .sub  { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; fill: #5E6E82; }
-    .box  { fill: #FFFFFF; stroke: #CBD3DE; stroke-width: 1.2; }
-    .ln   { fill: none; stroke: #4A5B72; stroke-width: 1.6; }
-    .lnA  { fill: none; stroke: #C8430F; stroke-width: 1.8; }
-    .yn   { font-size: 12.5px; font-weight: 700; fill: #4A5B72; }
+    .hd  { font-size: 18px; fill: #111; }
+    .lb  { font-size: 14px; fill: #333; }
+    .cap { font-size: 13.5px; fill: #555; font-style: italic; }
+    .m   { font-style: italic; }
+    .ink { fill: none; stroke: #222; stroke-width: 1.2; }
+    .thin{ fill: none; stroke: #555; stroke-width: .8; }
+    .gr  { fill: none; stroke: #9a9a9a; stroke-width: 1; }
+    .acc { fill: none; stroke: #B23A12; stroke-width: 2; }
+    .A   { fill: #B23A12; }
   </style>
 
-  <rect width="1200" height="640" fill="#FFFFFF"/>
+  <rect width="1200" height="600" fill="#FFFFFF"/>
 
-  <!-- ── Root ── -->
-  <rect x="470" y="18" width="260" height="46" rx="23" fill="#0B1C34" filter="url(#sh)"/>
-  <text x="600" y="47" text-anchor="middle" class="hd" font-size="16">Numerical simulation</text>
+  <!-- panel rules -->
+  <path d="M345,30 V500 M872,30 V500" stroke="#d6d2ca" stroke-width="1"/>
 
-  <!-- bus -->
-  <path class="ln" d="M600,64 V88 M175,88 H1025 M175,88 V108 M1025,88 V108 M600,88 V108" />
-  <path class="ln" marker-end="url(#ah)" d="M175,100 V110"/>
-  <path class="ln" marker-end="url(#ah)" d="M600,100 V110"/>
-  <path class="ln" marker-end="url(#ah)" d="M1025,100 V110"/>
+  <!-- ═════ (a) Geometric representation ═════ -->
+  <text x="30" y="46" class="hd"><tspan font-weight="700">(a)</tspan> Geometric representation</text>
 
-  <!-- ── Branch headers ── -->
-  <rect x="45"  y="112" width="260" height="40" rx="8" fill="#2C5282"/>
-  <text x="175" y="137" text-anchor="middle" class="hd">Geometric representation</text>
-  <rect x="455" y="112" width="290" height="40" rx="8" fill="#C8430F"/>
-  <text x="600" y="137" text-anchor="middle" class="hd">Constitutive equation (metals)</text>
-  <rect x="895" y="112" width="260" height="40" rx="8" fill="#2C5282"/>
-  <text x="1025" y="137" text-anchor="middle" class="hd">Physical principles</text>
+  <text x="30" y="88" class="lb">1D · bar</text>
+  <path class="ink" d="M110,84 H310"/>
+  <g fill="#222"><circle cx="110" cy="84" r="3"/><circle cx="160" cy="84" r="3"/><circle cx="210" cy="84" r="3"/><circle cx="260" cy="84" r="3"/><circle cx="310" cy="84" r="3"/></g>
 
-  <path class="ln" marker-end="url(#ah)" d="M175,152 V172"/>
-  <path class="lnA" marker-end="url(#ahA)" d="M600,152 V172"/>
-  <path class="ln" marker-end="url(#ah)" d="M1025,152 V172"/>
+  <text x="30" y="128" class="lb">2D · quadrilateral | triangle</text>
+  <g class="thin">
+    <rect x="40" y="142" width="270" height="96" fill="#faf8f4" stroke="#222" stroke-width="1.2"/>
+    <path d="M67,142 V238 M94,142 V238 M121,142 V238 M148,142 V238 M175,142 V238 M202,142 V238 M229,142 V238 M256,142 V238 M283,142 V238"/>
+    <path d="M40,166 H310 M40,190 H310 M40,214 H310"/>
+    <path d="M175,166 L202,142 M175,190 L229,142 M175,214 L256,142 M175,238 L283,142 M202,238 L310,142 M229,238 L310,166 M256,238 L310,190 M283,238 L310,214"/>
+  </g>
 
-  <!-- ── Panels ── -->
-  <rect x="20"  y="175" width="310" height="445" rx="14" fill="#F4F6F9" stroke="#D5DCE6"/>
-  <rect x="365" y="175" width="470" height="445" rx="14" fill="#FDF6F1" stroke="#E7B79C" stroke-dasharray="6 4"/>
-  <rect x="870" y="175" width="310" height="445" rx="14" fill="#F4F6F9" stroke="#D5DCE6"/>
+  <text x="30" y="284" class="lb">3D · hexahedron</text>
+  <g class="ink" stroke-linejoin="round">
+    <path d="M60,330 L120,330 L120,390 L60,390 Z"/>
+    <path d="M60,330 L88,306 L148,306 L120,330 M148,306 L148,366 L120,390"/>
+    <path d="M60,390 L88,366 L148,366 M88,366 L88,306" stroke-dasharray="3 3" stroke="#888"/>
+  </g>
+  <g fill="#222"><circle cx="60" cy="330" r="2.6"/><circle cx="120" cy="330" r="2.6"/><circle cx="120" cy="390" r="2.6"/><circle cx="60" cy="390" r="2.6"/><circle cx="88" cy="306" r="2.6"/><circle cx="148" cy="306" r="2.6"/><circle cx="148" cy="366" r="2.6"/><circle cx="88" cy="366" r="2.6" fill="#888"/></g>
 
-  <!-- coupling arrows between panels -->
-  <path class="ln" marker-start="url(#ah)" marker-end="url(#ah)" d="M334,398 H361"/>
-  <path class="ln" marker-start="url(#ah)" marker-end="url(#ah)" d="M839,398 H866"/>
+  <text x="190" y="284" class="lb">meshless · SPH</text>
+  <g fill="#fff" stroke="#222" stroke-width="1">
+    <circle cx="200" cy="312" r="5"/><circle cx="214" cy="312" r="5"/><circle cx="228" cy="312" r="5"/><circle cx="242" cy="312" r="5"/><circle cx="256" cy="312" r="5"/><circle cx="270" cy="312" r="5"/><circle cx="284" cy="312" r="5"/><circle cx="298" cy="312" r="5"/>
+    <circle cx="207" cy="324" r="5"/><circle cx="221" cy="324" r="5"/><circle cx="235" cy="324" r="5"/><circle cx="249" cy="324" r="5"/><circle cx="263" cy="324" r="5"/><circle cx="277" cy="324" r="5"/><circle cx="291" cy="324" r="5"/><circle cx="305" cy="324" r="5"/>
+    <circle cx="200" cy="336" r="5"/><circle cx="214" cy="336" r="5"/><circle cx="228" cy="336" r="5"/><circle cx="242" cy="336" r="5"/><circle cx="256" cy="336" r="5"/><circle cx="270" cy="336" r="5"/><circle cx="284" cy="336" r="5"/><circle cx="298" cy="336" r="5"/>
+    <circle cx="207" cy="348" r="5"/><circle cx="221" cy="348" r="5"/><circle cx="235" cy="348" r="5"/><circle cx="249" cy="348" r="5"/><circle cx="263" cy="348" r="5"/><circle cx="277" cy="348" r="5"/><circle cx="291" cy="348" r="5"/><circle cx="305" cy="348" r="5"/>
+    <circle cx="200" cy="360" r="5"/><circle cx="214" cy="360" r="5"/><circle cx="228" cy="360" r="5"/><circle cx="242" cy="360" r="5"/><circle cx="256" cy="360" r="5"/><circle cx="270" cy="360" r="5"/><circle cx="284" cy="360" r="5"/><circle cx="298" cy="360" r="5"/>
+    <circle cx="207" cy="372" r="5"/><circle cx="221" cy="372" r="5"/><circle cx="235" cy="372" r="5"/><circle cx="249" cy="372" r="5"/><circle cx="263" cy="372" r="5"/><circle cx="277" cy="372" r="5"/><circle cx="291" cy="372" r="5"/><circle cx="305" cy="372" r="5"/>
+  </g>
+  <circle cx="249" cy="348" r="5" fill="#222"/>
+  <circle cx="249" cy="348" r="31" fill="none" stroke="#222" stroke-width="1" stroke-dasharray="3 3"/>
+  <path class="thin" d="M249,348 L271,326"/>
+  <rect x="270" y="309" width="11" height="15" fill="#fff"/><text x="271" y="321" class="lb m" font-size="14">h</text>
 
-  <!-- ── Left panel: geometry ── -->
-  <text x="40" y="205" class="sub">FINITE ELEMENTS</text>
-  <text x="40" y="226" class="sm">Element shape functions</text>
-  <path class="ln" d="M52,236 V364"/>
-  <path class="ln" marker-end="url(#ah)" d="M52,262 H76"/>
-  <path class="ln" marker-end="url(#ah)" d="M52,313 H76"/>
-  <path class="ln" marker-end="url(#ah)" d="M52,364 H76"/>
-  <rect class="box" x="78" y="243" width="232" height="38" rx="7"/>
-  <text x="94" y="267" class="lbl"><tspan font-weight="700">1D</tspan>  e.g. bar</text>
-  <rect class="box" x="78" y="294" width="232" height="38" rx="7"/>
-  <text x="94" y="318" class="lbl"><tspan font-weight="700">2D</tspan>  e.g. triangle, quadrilateral</text>
-  <rect class="box" x="78" y="345" width="232" height="38" rx="7"/>
-  <text x="94" y="369" class="lbl"><tspan font-weight="700">3D</tspan>  e.g. hexahedron</text>
+  <text x="30" y="440" class="cap">The domain is discretized; the balance laws</text>
+  <text x="30" y="458" class="cap">in (c) are solved on these elements or particles.</text>
 
-  <text x="40" y="430" class="sub">MESHLESS METHODS</text>
-  <path class="ln" d="M52,440 V466"/>
-  <path class="ln" marker-end="url(#ah)" d="M52,466 H76"/>
-  <rect class="box" x="78" y="447" width="232" height="38" rx="7"/>
-  <text x="94" y="471" class="lbl">e.g. SPH</text>
+  <!-- ═════ (b) Constitutive equation ═════ -->
+  <text x="365" y="46" class="hd"><tspan font-weight="700">(b)</tspan> Constitutive equation <tspan fill="#666">(metals)</tspan></text>
 
-  <!-- ── Centre panel: constitutive equation ── -->
-  <!-- yield check -->
-  <polygon points="600,186 664,214 600,242 536,214" fill="#FFFFFF" stroke="#4A5B72" stroke-width="1.6"/>
-  <text x="600" y="219" text-anchor="middle" class="lbl" font-weight="700">Yield?</text>
+  <path class="ink" marker-end="url(#a)" d="M395,380 V112"/>
+  <path class="ink" marker-end="url(#a)" d="M395,380 H612"/>
+  <text x="380" y="118" class="lb m" font-size="16">σ</text>
+  <text x="604" y="400" class="lb m" font-size="16">ε</text>
 
-  <!-- No → elastic -->
-  <path class="ln" marker-end="url(#ah)" d="M536,214 H440 V300"/>
-  <text x="488" y="206" text-anchor="middle" class="yn">No</text>
-  <rect class="box" x="382" y="302" width="116" height="62" rx="8"/>
-  <text x="440" y="328" text-anchor="middle" class="lbl" font-weight="700">Elastic</text>
-  <text x="440" y="348" text-anchor="middle" class="sm">Hooke's law</text>
+  <path class="ink" stroke-width="1.6" d="M395,380 L428,200"/>
+  <path class="thin" d="M409,318 L432,318"/><text x="436" y="322" class="lb" font-size="13">elastic · <tspan class="m">σ = Eε</tspan></text>
 
-  <!-- Yes → plastic -->
-  <path class="ln" marker-end="url(#ah)" d="M664,214 H675 V258"/>
-  <text x="690" y="240" class="yn">Yes</text>
-  <rect class="box" x="555" y="260" width="240" height="36" rx="8"/>
-  <text x="675" y="283" text-anchor="middle" class="lbl" font-weight="700">Plastic behaviour</text>
+  <path class="gr" stroke-width="1.4" d="M418.8,250 C450,232 520,222 595,216"/>
+  <path class="gr" stroke-width="1.4" d="M423.4,225 C455,206 520,196 595,190"/>
+  <path class="acc" d="M428,200 C460,180 520,170 595,163"/>
+  <g fill="#222"><circle cx="418.8" cy="250" r="2.8"/><circle cx="423.4" cy="225" r="2.8"/></g>
+  <circle cx="428" cy="200" r="3.2" class="A"/>
+  <path d="M432,214 L446,232" class="thin"/>
+  <text x="448" y="246" class="lb" font-size="13">yield</text>
+  <path stroke="#888" stroke-width="1" fill="none" marker-end="url(#aG)" d="M565,232 L565,158"/>
+  <g font-size="13" fill="#666"><text x="572" y="248" font-style="italic">ε</text><circle cx="576.5" cy="238" r="1.1"/><text x="582" y="248">↑ ,</text><text x="600" y="248" font-style="italic">T</text><text x="609" y="248">↓</text></g>
 
-  <!-- plastic sub-group -->
-  <rect x="520" y="314" width="300" height="292" rx="10" fill="none" stroke="#D9A88C" stroke-dasharray="4 4"/>
-  <path class="ln" d="M675,296 V318 M603,318 H747"/>
-  <path class="ln" marker-end="url(#ah)" d="M603,318 V332"/>
-  <path class="ln" marker-end="url(#ah)" d="M747,318 V332"/>
+  <text x="402" y="424" class="lb" fill="#B23A12" font-weight="700">Flow stress equation</text>
+  <g fill="#B23A12" font-size="15" font-style="italic">
+    <text x="402" y="446">σ</text><text x="411" y="450" font-size="11">y</text>
+    <text x="421" y="446" font-style="normal">=</text><text x="434" y="446">f</text><text x="442" y="446" font-style="normal">(</text>
+    <text x="448" y="446">ε</text><text x="455" y="450" font-size="11">p</text><text x="461" y="446" font-style="normal">,</text>
+    <text x="469" y="446">ε</text><circle cx="474" cy="434.5" r="1.2"/><text x="476" y="450" font-size="11">p</text><text x="482" y="446" font-style="normal">,</text>
+    <text x="490" y="446">T</text><text x="499" y="446" font-style="normal">)</text>
+  </g>
+  <text x="402" y="468" class="cap">sets the size of the yield surface</text>
 
-  <rect class="box" x="533" y="334" width="140" height="52" rx="8"/>
-  <text x="603" y="356" text-anchor="middle" class="lbl">Mechanical</text>
-  <text x="603" y="375" text-anchor="middle" class="lbl">characterization</text>
+  <g class="gr" stroke-width=".9">
+    <path d="M760,268 V170"/>
+    <path d="M760,268 L675,317"/>
+    <path d="M760,268 L845,317"/>
+  </g>
+  <text x="752" y="162" class="lb m" font-size="13" fill="#777">σ′<tspan font-size="10" dy="3">1</tspan></text>
+  <text x="652" y="330" class="lb m" font-size="13" fill="#777">σ′<tspan font-size="10" dy="3">2</tspan></text>
+  <text x="848" y="330" class="lb m" font-size="13" fill="#777">σ′<tspan font-size="10" dy="3">3</tspan></text>
+  <circle cx="760" cy="268" r="64" class="ink" stroke-width="1.6"/>
+  <circle cx="760" cy="268" r="82" fill="none" stroke="#B23A12" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <path class="acc" stroke-width="1.4" marker-end="url(#aA)" d="M704.6,236 L690,227.6"/>
+  <text x="626" y="214" class="lb" font-size="12.5" fill="#B23A12">hardening</text>
+  <circle cx="815.4" cy="236" r="3" fill="#222"/>
+  <path class="ink" stroke-width="1.4" marker-end="url(#a)" d="M815.4,236 L851,215.5"/>
+  <text x="826" y="204" class="lb m" font-size="14">dε<tspan font-size="10" dy="-6">p</tspan></text>
 
-  <rect class="box" x="677" y="334" width="140" height="52" rx="8"/>
-  <text x="747" y="356" text-anchor="middle" class="lbl">Mathematical</text>
-  <text x="747" y="375" text-anchor="middle" class="lbl">model</text>
+  <text x="672" y="372" class="lb" font-weight="700">Plasticity model</text>
+  <text x="672" y="394" class="lb" font-size="13.5">von Mises criterion · <tspan fill="#666">shape</tspan></text>
+  <text x="672" y="414" class="lb" font-size="13.5">flow rule · <tspan fill="#666">direction of plastic flow</tspan></text>
+  <text x="672" y="446" class="cap">π-plane: current (solid) and</text>
+  <text x="672" y="464" class="cap">hardened (dashed) yield surface</text>
 
-  <path class="lnA" marker-end="url(#ahA)" d="M603,386 V408"/>
-  <path class="ln" marker-end="url(#ah)" d="M747,386 V408"/>
+  <!-- ═════ (c) Physical principles ═════ -->
+  <text x="892" y="46" class="hd"><tspan font-weight="700">(c)</tspan> Physical principles</text>
 
-  <!-- highlighted: flow stress equation -->
-  <rect x="533" y="410" width="140" height="92" rx="8" fill="#C8430F" filter="url(#sh)"/>
-  <text x="603" y="436" text-anchor="middle" class="hd" font-size="14.5">Flow stress</text>
-  <text x="603" y="455" text-anchor="middle" class="hd" font-size="14.5">equation</text>
-  <text x="603" y="480" text-anchor="middle" font-size="13" fill="#FFE9DE" font-style="italic">σ<tspan font-size="10" dy="3">y</tspan><tspan dy="-3"> = f(ε</tspan><tspan font-size="10" dy="3">p</tspan><tspan dy="-3">, ε̇</tspan><tspan font-size="10" dy="3">p</tspan><tspan dy="-3">, T)</tspan></text>
+  <path d="M960,110 C990,82 1080,84 1110,104 C1140,124 1132,176 1102,190 C1068,206 990,204 962,186 C936,168 934,130 960,110 Z" fill="#faf8f4" stroke="#222" stroke-width="1.2"/>
+  <text x="1028" y="152" class="lb m" font-size="17">Ω</text>
+  <text x="1114" y="98" class="lb m" font-size="14">∂Ω</text>
+  <path class="ink" marker-end="url(#a)" d="M1106,186 L1128,206"/>
+  <text x="1132" y="220" class="lb m" font-size="14">n</text>
+  <path class="thin" marker-end="url(#aG)" d="M914,146 L950,146"/>
+  <path class="thin" marker-end="url(#aG)" d="M1124,150 L1160,150"/>
+  <text x="900" y="136" class="lb" font-size="12" fill="#777">flux in</text>
+  <text x="1130" y="172" class="lb" font-size="12" fill="#777">flux out</text>
 
-  <rect class="box" x="677" y="410" width="140" height="92" rx="8"/>
-  <text x="747" y="436" text-anchor="middle" class="lbl" font-weight="700">Plasticity model</text>
-  <text x="747" y="458" text-anchor="middle" class="sm">von Mises criterion</text>
-  <text x="747" y="477" text-anchor="middle" class="sm">flow rule</text>
+  <text x="892" y="256" class="lb" font-size="12.5" fill="#777">mass</text>
+  <text x="975" y="256" class="lb m" font-size="16">∂ρ/∂t + ∇·(ρv) = 0</text>
+  <text x="892" y="294" class="lb" font-size="12.5" fill="#777">momentum</text>
+  <text x="975" y="294" class="lb m" font-size="16">ρ Dv/Dt = ∇·<tspan fill="#B23A12" font-weight="700">σ</tspan> + ρ b</text>
+  <text x="892" y="332" class="lb" font-size="12.5" fill="#777">energy</text>
+  <text x="975" y="332" class="lb m" font-size="16">ρ De/Dt = <tspan fill="#B23A12" font-weight="700">σ</tspan> : D − ∇·q</text>
+  <text x="892" y="372" class="lb" font-size="13" fill="#666">+ boundary and initial conditions,</text>
+  <text x="892" y="390" class="lb" font-size="13" fill="#666">  closures such as an equation of state</text>
 
-  <path class="lnA" marker-end="url(#ahA)" d="M603,502 V538"/>
-  <path class="ln" marker-end="url(#ah)" d="M747,502 V538"/>
-  <rect x="545" y="540" width="260" height="44" rx="8" fill="#0B1C34"/>
-  <text x="675" y="567" text-anchor="middle" class="hd" font-size="14.5">Yield surface determined</text>
+  <text x="892" y="440" class="cap">The stress σ in the balance laws</text>
+  <text x="892" y="458" class="cap">is supplied by the constitutive equation (b).</text>
 
-  <!-- ── Right panel: physical principles ── -->
-  <text x="890" y="205" class="sub">GOVERNING LAWS</text>
-  <rect class="box" x="890" y="222" width="270" height="70" rx="8"/>
-  <text x="1025" y="250" text-anchor="middle" class="lbl" font-weight="700">Conservation laws</text>
-  <text x="1025" y="272" text-anchor="middle" class="sm">mass · momentum · energy</text>
-  <rect class="box" x="890" y="310" width="270" height="52" rx="8"/>
-  <text x="1025" y="341" text-anchor="middle" class="lbl">Other</text>
 
-  <!-- legend -->
-  <rect x="899" y="574" width="14" height="14" rx="3" fill="#C8430F"/>
-  <text x="930" y="586" class="sm">Focus of this research</text>
-  <path class="ln" marker-start="url(#ah)" marker-end="url(#ah)" d="M890,559 H922"/>
-  <text x="930" y="563" class="sm">Coupled parts</text>
+  <path d="M30,516 H1170" stroke="#d6d2ca" stroke-width="1"/>
+  <text x="600" y="556" text-anchor="middle" font-size="17" fill="#222">Numerical simulation  =  discretized geometry <tspan font-weight="700">(a)</tspan>  +  <tspan fill="#B23A12">constitutive equation</tspan> <tspan font-weight="700" fill="#B23A12">(b)</tspan>  +  balance laws <tspan font-weight="700">(c)</tspan></text>
 </svg>
