@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <nav class="navbar">
   <div class="inner">
@@ -64,7 +65,7 @@
   </div>
 </nav>
 
-<div class="page-header">
+<div class="page-header" id="main">
   <div class="container">
     <div class="bc"><a href="index.html">Home</a><span>/</span>Notes</div>
     <h1>Technical Notes &amp; Glossary</h1>
@@ -217,7 +218,7 @@
         <p class="gl-body">Determining it is difficult because the three variables cannot be controlled independently in a single experiment: a high strain rate test heats the specimen through plastic work, so strain rate and temperature effects arrive coupled and have to be separated afterwards.</p>
         <div class="gl-src">
           <span class="gl-src-lbl">From our papers</span>
-          <div class="gl-src-item">Huang &amp; Li, the four-paper series in <em>International Journal of Impact Engineering</em>: <a href="publications.html#pub-6">173 (2023) 104453</a>, <a href="publications.html#pub-11">206 (2025) 105403, Part 1</a>, <a href="publications.html#pub-10">206 (2025) 105432, Part 2</a>, and <a href="publications.html#pub-17">219 (2027) 105863</a>.</div>
+          <div class="gl-src-item">Huang &amp; Li, the four-paper series in <em>International Journal of Impact Engineering</em>: <a href="publications.html#pub-6">173 (2023) 104453</a>, <a href="publications.html#pub-11">206 (2025) 105403, Part 1</a>, <a href="publications.html#pub-10">206 (2025) 105432, Part 2</a>, and <a href="publications.html#pub-17">219 (2026) 105863</a>.</div>
         </div>
         <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
       </div>
@@ -240,7 +241,7 @@
         <p class="gl-body">A cylindrical specimen is fired against a Hopkinson bar acting as the anvil, so that the deformed final shape of the specimen and the force history recorded by the bar are both available from the same experiment. It reaches strain rates above what a conventional SHPB can reach, but the deformation field is strongly non-uniform, so the flow stress is recovered by inverse identification: a finite element model of the test is run repeatedly until its predictions match the measurements.</p>
         <div class="gl-src">
           <span class="gl-src-lbl">From our papers</span>
-          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-17"><em>Int. J. Impact Eng.</em> 219 (2027) 105863</a>, where Taylor-Hopkinson tests supply the very-high-rate measurements used to validate the extrapolation.</div>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-17"><em>Int. J. Impact Eng.</em> 219 (2026) 105863</a>, where Taylor-Hopkinson tests supply the very-high-rate measurements used to validate the extrapolation.</div>
         </div>
         <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
@@ -252,7 +253,7 @@
         <p class="gl-body">Metals typically show a marked upturn in strength somewhere above about 10<sup>3</sup> s<sup>-1</sup>. Because no single technique spans the full spectrum, the behaviour in the very-high-rate band has to be extrapolated from lower-rate data, and doing that extrapolation defensibly is a central problem of the constitutive modeling stream.</p>
         <div class="gl-src">
           <span class="gl-src-lbl">From our papers</span>
-          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-11"><em>Int. J. Impact Eng.</em> 206 (2025) 105403, Part 1</a> for the rate dependence itself, and <a href="publications.html#pub-17">219 (2027) 105863</a> for the extrapolation beyond the tested band.</div>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-11"><em>Int. J. Impact Eng.</em> 206 (2025) 105403, Part 1</a> for the rate dependence itself, and <a href="publications.html#pub-17">219 (2026) 105863</a> for the extrapolation beyond the tested band.</div>
         </div>
         <div class="gl-where">Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a> &nbsp;·&nbsp; <a href="research.html">Research</a></div>
       </div>
@@ -282,7 +283,7 @@
         <p class="gl-body">The framework developed in the constitutive modeling stream. Discrete experimental flow stress data over strain, strain rate, and temperature is arranged as an order-3 tensor and decomposed into non-negative one-dimensional latent modes, so that the strain rate dependence is carried by its own mode rather than being assumed to take a prescribed algebraic form. Those modes are then extrapolated beyond the calibrated domain under consistency constraints, and the extrapolated model is identified inversely against Taylor-Hopkinson impact experiments.</p>
         <div class="gl-src">
           <span class="gl-src-lbl">From our papers</span>
-          <div class="gl-src-item">Introduced in Huang &amp; Li, <a href="publications.html#pub-17"><em>Int. J. Impact Eng.</em> 219 (2027) 105863</a>, Paper 4 of the series.</div>
+          <div class="gl-src-item">Introduced in Huang &amp; Li, <a href="publications.html#pub-17"><em>Int. J. Impact Eng.</em> 219 (2026) 105863</a>, Paper 4 of the series.</div>
         </div>
         <div class="gl-where">Used on: <a href="research-constitutive-modeling.html#tedi-fs">Constitutive Modeling</a></div>
       </div>
@@ -306,7 +307,7 @@
         <p class="gl-body">Unlike matrix decompositions, CP decomposition is essentially unique under mild conditions without needing an artificial constraint such as orthogonality, which is what makes its components candidates for physical interpretation rather than mere basis functions.</p>
         <div class="gl-src">
           <span class="gl-src-lbl">From our papers</span>
-          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-10"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a>, where flow stress over strain, strain rate and temperature is treated as an order-3 tensor, and <a href="publications.html#pub-17">219 (2027) 105863</a>.</div>
+          <div class="gl-src-item">Huang &amp; Li, <a href="publications.html#pub-10"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a>, where flow stress over strain, strain rate and temperature is treated as an order-3 tensor, and <a href="publications.html#pub-17">219 (2026) 105863</a>.</div>
         </div>
         <div class="gl-where">Full notes: <a href="note_cp.html">CP Decomposition (CP-ALS)</a> &nbsp;·&nbsp; <a href="note_nncp.html">Non-negative CP</a> &nbsp;·&nbsp; Used on: <a href="research-constitutive-modeling.html">Constitutive Modeling</a></div>
       </div>
@@ -318,7 +319,7 @@
         <p class="gl-body">It is the tensor-decomposition step underneath the <a href="#tedi-fs" class="term">TEDI-FS</a> framework.</p>
         <div class="gl-src">
           <span class="gl-src-lbl">From our papers</span>
-          <div class="gl-src-item">The decomposition step in Huang &amp; Li, <a href="publications.html#pub-10"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a> and <a href="publications.html#pub-17">219 (2027) 105863</a>.</div>
+          <div class="gl-src-item">The decomposition step in Huang &amp; Li, <a href="publications.html#pub-10"><em>Int. J. Impact Eng.</em> 206 (2025) 105432, Part 2</a> and <a href="publications.html#pub-17">219 (2026) 105863</a>.</div>
         </div>
         <div class="gl-where">Full note: <a href="note_nncp.html">Non-negative CP Decomposition, with derivations and worked examples</a></div>
       </div>

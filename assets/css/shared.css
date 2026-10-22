@@ -1151,3 +1151,7 @@ img.zoom-in { cursor: zoom-in; }
   .hero-content h1 { font-size: 32px; }
   .pub-stats      { gap: 20px; }
 }
+
+/* Skip-to-content link: visible only on keyboard focus */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:10000;padding:.6rem 1rem;background:#0B1C34;color:#fff}
+.skip-link:focus{left:0}
