@@ -27,6 +27,9 @@
   <meta name="twitter:description" content="Why the Johnson-Cook-type factorised form was never actually verified, and how a rank-1 low-rank approximation turns that assumption into a testable number.">
   <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <meta name="description" content="A reading guide to Paper 1 (IJIE 2023): why the legitimacy of decoupled (Johnson-Cook-type) flow stress equations was never rigorously tested, and how SVD/CP low-rank approximation turns that assumption into a measurable rank-1 criterion, with the paper's own four-dataset evidence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap">
   <link rel="stylesheet" href="assets/css/shared.css">
   <script>
     window.MathJax = {
@@ -155,7 +158,7 @@
           where each rank-1 term \(\sigma_k\,\mathbf{u}_k\otimes\mathbf{v}_k\) is exactly the decoupled form of Eq. (1), and the singular values \(\sigma_k\) are ranked so the first term carries the most weight. For three variables, the analogous tool is <a href="note_cp.html" class="term">CANDECOMP/PARAFAC (CP) decomposition</a>, which extends the same idea, a sum of rank-1 three-way terms, to a 3D array. Fig. 2 shows the procedure for the 2D case: the full matrix \(N\) is decomposed into weighted outer products, and the flow stress can equivalently be written as a sum of \(r\) factorised sub-functions.
         </p>
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper1/fig2-svd-decomposition.webp" alt="Low-rank approximation procedure for a 2D flow stress data matrix, showing decomposition into weighted rank-1 outer products and the equivalent factorised function form" loading="lazy" decoding="async">
+          <img width="693" height="676" src="assets/img/notes/paper1/fig2-svd-decomposition.webp" alt="Low-rank approximation procedure for a 2D flow stress data matrix, showing decomposition into weighted rank-1 outer products and the equivalent factorised function form" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 2 (Paper 1).</strong> Low-rank approximation procedure for a 2D matrix. The measured flow stress array \(N\) is decomposed into a weighted sum of rank-1 outer products \(u_r\otimes v_r\), which is exactly a decoupled (factorised) representation \(f_1(\varepsilon)f_2(\dot\varepsilon)\) once the leading terms are kept.</figcaption>
         </figure>
         <p>
@@ -177,7 +180,7 @@
           <li><strong>Data-4</strong> (Al-0.8Mg-0.76Si, 3D): Rank-1 MAPE \(\varepsilon_1=10.17\%\), far above the same threshold; the criterion is only satisfied at Rank-3 (\(\varepsilon_3=0.93\%\)). Thermal softening, strain-rate strengthening and strain hardening all interact here, especially the temperature effect, which stops varying monotonically once strain-rate and strain change, exactly the kind of behaviour a single multiplicative temperature term cannot capture.</li>
         </ul>
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper1/fig12-mape-vs-rank.webp" alt="MAPE versus decomposition rank for Data-3 and Data-4, showing Data-3 reaching 1.17% error at Rank-1 while Data-4 requires Rank-3 to reach 0.93% error" loading="lazy" decoding="async">
+          <img width="1600" height="1224" src="assets/img/notes/paper1/fig12-mape-vs-rank.webp" alt="MAPE versus decomposition rank for Data-3 and Data-4, showing Data-3 reaching 1.17% error at Rank-1 while Data-4 requires Rank-3 to reach 0.93% error" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 12 (Paper 1).</strong> MAPE for different Rank-r decomposition schemes. Data-3 (titanium) already satisfies a 1.5% error threshold at Rank-1 (1.17%): its decoupled J-C-type equation is legitimate. Data-4 (Al-0.8Mg-0.76Si) needs Rank-3 (0.93%) to reach the same threshold, its Rank-1 error is 10.17%: a decoupled equation is not a legitimate description of this material.</figcaption>
         </figure>
         <p>

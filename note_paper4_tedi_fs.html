@@ -27,6 +27,9 @@
   <meta name="twitter:description" content="The TEDI-FS framework, its rank-2 non-negative CP decomposition, and how a Taylor-Hopkinson impact test identifies and verifies a flow stress model far beyond its SHPB calibration range.">
   <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <meta name="description" content="A reading guide to Paper 4 (IJIE 2026): the TEDI-FS framework, a rank-2 non-negative CP decomposition of strain, strain-rate and temperature that is consistency-constrained-extrapolated beyond SHPB range and inversely identified from Taylor-Hopkinson impact tests up to strain-rates of about 10^5 s^-1.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap">
   <link rel="stylesheet" href="assets/css/shared.css">
   <script>
     window.MathJax = {
@@ -196,7 +199,7 @@
           At 53.03 and 62.23 m/s, both below the 72.33 m/s calibration velocity, the model reproduces the experimental force-time histories with good agreement across the whole impact event (Fig. 18). At 102.37 and 114.33 m/s, both well above it, the paper reports the numerical predictions are in &ldquo;very good agreement&rdquo; with experiment, including the oscillatory trends, which it summarises as demonstrating &ldquo;strong extrapolation performance&rdquo; (Fig. 19):
         </p>
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper4/fig19b-extrapolation-114ms.webp" alt="Comparison of experimental and numerical force-time histories at an impact velocity of 114.33 m/s, well above the 72.33 m/s calibration velocity, showing close agreement between the TEDI-FS rank-2 prediction and the experimental measurement" loading="lazy" decoding="async">
+          <img width="1000" height="581" src="assets/img/notes/paper4/fig19b-extrapolation-114ms.webp" alt="Comparison of experimental and numerical force-time histories at an impact velocity of 114.33 m/s, well above the 72.33 m/s calibration velocity, showing close agreement between the TEDI-FS rank-2 prediction and the experimental measurement" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 19(b) (Paper 4).</strong> Model extrapolation performance at an impact velocity of 114.33 m/s, roughly 1.6&times; the 72.33 m/s calibration velocity: experimental (Exp) versus TEDI-FS rank-2 (Num) force-time histories.</figcaption>
         </figure>
         <p>
@@ -206,7 +209,7 @@
           The sharper test is a head-to-head comparison against two conventional strategies built from the same underlying data: the classical Johnson-Cook (J-C) model, and the analytical CP rank-1 model derived directly from Paper 2/3-style rank-1 decomposition (the paper notes, citing its own earlier work, that J-C can be regarded as a special case of the rank-1 model). Both are single-regime formulations extrapolated beyond their own calibration domain the conventional way, directly. At low velocities they perform reasonably, but as impact velocity increases both show &ldquo;pronounced discrepancies relative to experimental observations, including inaccurate peak force prediction and incorrect loading duration,&rdquo; attributed to &ldquo;the limited flexibility of single-regime constitutive formulations when extrapolated beyond their calibration domain.&rdquo; At the most extreme velocity tested, the gap is unmistakable:
         </p>
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper4/fig21d-vs-jc-rank1-114ms.webp" alt="Four-way comparison at 114.33 m/s of experimental force-time history against the J-C model, the analytical CP rank-1 model, and the proposed TEDI-FS model, with a highlighted region showing large deviations of the J-C and rank-1 predictions from the experimental late-stage decay while TEDI-FS tracks it closely" loading="lazy" decoding="async">
+          <img width="1000" height="581" src="assets/img/notes/paper4/fig21d-vs-jc-rank1-114ms.webp" alt="Four-way comparison at 114.33 m/s of experimental force-time history against the J-C model, the analytical CP rank-1 model, and the proposed TEDI-FS model, with a highlighted region showing large deviations of the J-C and rank-1 predictions from the experimental late-stage decay while TEDI-FS tracks it closely" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 21(d) (Paper 4).</strong> Force-time histories at 114.33 m/s: experiment (Exp) versus the J&ndash;C model, the analytical CP rank-1 model, and the proposed TEDI-FS framework. The highlighted region marks the &ldquo;significant deviations&rdquo; the paper attributes to &ldquo;the limitations of a rank-1 representation under extreme loading conditions.&rdquo;</figcaption>
         </figure>
         <p>

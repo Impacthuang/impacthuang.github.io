@@ -27,6 +27,9 @@
   <meta name="twitter:title" content="Dynamic Constitutive Modeling">
   <meta name="twitter:description" content="Data-driven determination and extrapolation of dynamic flow stress, combining tensor decomposition with neural networks, from SHPB data to very-high strain-rate impact.">
   <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap">
   <link rel="stylesheet" href="assets/css/shared.css">
 </head>
 <body>
@@ -70,14 +73,14 @@
       </p>
       <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:20px;">
         <figure style="margin:0;">
-          <img src="assets/img/scicomm/fem-crash-simulation.webp" alt="Finite element simulation of a three-car collision" style="width:100%; height:240px; object-fit:cover; border-radius:8px; border:1px solid var(--border);" loading="lazy" decoding="async">
+          <img width="789" height="709" src="assets/img/scicomm/fem-crash-simulation.webp" alt="Finite element simulation of a three-car collision" style="width:100%; height:240px; object-fit:cover; border-radius:8px; border:1px solid var(--border);" loading="lazy" decoding="async">
           <figcaption style="font-size:12.5px; color:var(--muted); line-height:1.55; margin-top:8px;">
             A finite element model of a three-car collision. During the simulation, every element queries the material's flow stress model at every time step.
             Image: Matt Howard, Argonne National Laboratory, via <a href="https://commons.wikimedia.org/wiki/File:Crash-test_simulation_(3467719123).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener">CC BY-SA 2.0</a>.
           </figcaption>
         </figure>
         <figure style="margin:0;">
-          <img src="assets/img/scicomm/hopkinson-bar-lab.webp" alt="Split-Hopkinson pressure bar apparatus in a testing laboratory" style="width:100%; height:240px; object-fit:cover; object-position:center 65%; border-radius:8px; border:1px solid var(--border);" loading="lazy" decoding="async">
+          <img width="1200" height="1800" src="assets/img/scicomm/hopkinson-bar-lab.webp" alt="Split-Hopkinson pressure bar apparatus in a testing laboratory" style="width:100%; height:240px; object-fit:cover; object-position:center 65%; border-radius:8px; border:1px solid var(--border);" loading="lazy" decoding="async">
           <figcaption style="font-size:12.5px; color:var(--muted); line-height:1.55; margin-top:8px;">
             A Hopkinson pressure bar system, the standard apparatus for measuring how strong metals are at high strain rates. Data from such tests calibrate the flow stress models used in simulation.
             Image: MET-4719, via <a href="https://commons.wikimedia.org/wiki/File:Barres_d%27Hopkinson.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.
@@ -117,7 +120,7 @@
           <p style="margin-top:18px;"><a href="note_paper1_svd_legitimacy.html" class="btn btn-outline"><i class="fas fa-book-open"></i> Reading Guide: When Is It Legitimate to Decouple a Flow Stress Equation?</a></p>
         </div>
         <div class="pb-figure">
-          <img src="assets/img/research/jc-legitimacy.webp" alt="Decomposition of a flow stress data array into rank-1 terms" loading="lazy" decoding="async">
+          <img width="1800" height="1679" src="assets/img/research/jc-legitimacy.webp" alt="Decomposition of a flow stress data array into rank-1 terms" loading="lazy" decoding="async">
           <div class="fig-cap">A flow stress data array written as a sum of rank-1 terms. This is the precise mathematical statement of what a decoupled equation assumes, and it turns the assumption into something a dataset can be tested against.</div>
         </div>
       </div>
@@ -160,7 +163,7 @@
           </p>
         </div>
         <div class="pb-figure">
-          <img src="assets/img/research/shpb-varied-strain-rate.webp" alt="Varied strain-rate SHPB methodology" loading="lazy" decoding="async">
+          <img width="1800" height="1481" src="assets/img/research/shpb-varied-strain-rate.webp" alt="Varied strain-rate SHPB methodology" loading="lazy" decoding="async">
           <div class="fig-cap">Framework for extracting dynamic flow stress from varied strain-rate SHPB test data using ANN + SVD decomposition.</div>
         </div>
       </div>
@@ -203,7 +206,7 @@
           </p>
         </div>
         <div class="pb-figure">
-          <img src="assets/img/research/cp-decomposition.webp" alt="Reconstructed flow stress surfaces compared with experimental data at four temperatures" loading="lazy" decoding="async">
+          <img width="1800" height="1632" src="assets/img/research/cp-decomposition.webp" alt="Reconstructed flow stress surfaces compared with experimental data at four temperatures" loading="lazy" decoding="async">
           <div class="fig-cap">Reconstructed flow stress surfaces compared with the qualified experimental data at 293 K, 373 K, 523 K and 673 K. The reconstruction reproduces the measured points and extends continuously into the strain and strain-rate ranges the tests do not cover.</div>
         </div>
       </div>
@@ -244,7 +247,7 @@
           <p style="margin-top:18px;"><a href="note_paper4_tedi_fs.html" class="btn btn-outline"><i class="fas fa-book-open"></i> Reading Guide: How Do You Extrapolate a Flow Stress Model Beyond Where It Was Calibrated?</a></p>
         </div>
         <div class="pb-figure">
-          <img src="assets/img/research/tedi-fs-framework.webp" alt="TEDI-FS framework flowchart" loading="lazy" decoding="async">
+          <img width="1141" height="1097" src="assets/img/research/tedi-fs-framework.webp" alt="TEDI-FS framework flowchart" loading="lazy" decoding="async">
           <div class="fig-cap">The TEDI-FS framework: from SHPB-calibrated latent modes, through consistency-constrained extrapolation, to inverse identification against Taylor-Hopkinson impact tests.</div>
         </div>
       </div>
