@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 548" width="1200" height="548" font-family="'Times New Roman', 'Liberation Serif', 'STIX Two Text', Times, serif" role="img" aria-labelledby="t d">
+  <title id="t">Three routes from material data to a flow stress equation</title>
+  <desc id="d">From characterized material data, (a) the conventional method fits the constants of a physically based or empirical equation chosen in advance, such as Johnson-Cook; (b) the machine-learning method trains a neural network on the data, accurate inside the tested range but uncertain outside it; (c) this work screens the data, passes non-ideal data through an artificial neural network, and uses SVD or CP tensor decomposition to identify the flow stress equation from the low-rank structure of the data, in discrete or analytic form.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#222"/></marker>
+    <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 z" fill="#1F4E8C"/></marker>
+  </defs>
+  <style>
+    .hd  { font-size: 18px; fill: #111; }
+    .lb  { font-size: 14px; fill: #333; }
+    .sm  { font-size: 12.5px; fill: #777; }
+    .cap { font-size: 13.5px; fill: #555; font-style: italic; }
+    .m   { font-style: italic; }
+    .ink { fill: none; stroke: #222; stroke-width: 1.2; }
+    .thin{ fill: none; stroke: #777; stroke-width: .8; }
+    .gr  { fill: none; stroke: #9a9a9a; stroke-width: 1.1; }
+    .bl  { fill: none; stroke: #1F4E8C; stroke-width: 1.8; }
+  </style>
+  <rect width="1200" height="548" fill="#FFFFFF"/>
+
+<text x="600" y="34" text-anchor="middle" class="hd">Characterized material data</text>
+<path class="ink" marker-end="url(#a)" d="M548,128 V48"/><path class="ink" marker-end="url(#a)" d="M548,128 H660"/>
+<text x="536" y="56" class="lb m" font-size="13">σ</text><text x="662" y="126" class="lb m" font-size="13">ε</text>
+<circle cx="560.0" cy="116.1" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="572.9" cy="110.6" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="585.7" cy="103.3" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="598.6" cy="101.7" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="611.4" cy="101.1" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="624.3" cy="97.1" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="637.1" cy="97.7" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="650.0" cy="98.4" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/>
+<circle cx="564.0" cy="112.8" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="576.3" cy="101.4" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="588.6" cy="93.3" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="600.9" cy="91.7" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="613.1" cy="87.5" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="625.4" cy="84.2" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="637.7" cy="85.7" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="650.0" cy="83.5" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/>
+<circle cx="568.0" cy="108.1" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="579.7" cy="92.1" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="591.4" cy="84.6" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="603.1" cy="80.4" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="614.9" cy="73.8" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="626.6" cy="72.7" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="638.3" cy="72.5" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/><circle cx="650.0" cy="68.7" r="2.3" fill="#fff" stroke="#222" stroke-width=".9"/>
+<text x="672" y="72" class="sm">discrete tests at several</text><text x="672" y="88" class="sm" data-dots="">strain rates and temperatures</text>
+<path class="ink" d="M600,136 V152 M205,152 H995"/>
+<path class="ink" marker-end="url(#a)" d="M205,152 V170"/>
+<path class="ink" marker-end="url(#a)" d="M600,152 V170"/>
+<path class="ink" marker-end="url(#a)" d="M995,152 V170"/>
+<path d="M402,180 V500 M798,180 V500" stroke="#C8C8C8" stroke-width="1"/>
+<text x="30" y="196" class="hd"><tspan font-weight="700">(a)</tspan> Conventional method</text>
+<text x="30" y="224" class="sm">form chosen before the data are examined</text>
+<text x="30" y="250" class="lb">physical-based  |  empirical-based, e.g. Johnson–Cook</text>
+<text id="jc" x="42" y="280" class="lb m" font-size="16">σ = (A + Bε<tspan font-size="11" dy="-6">n</tspan><tspan dy="6">) (1 + C ln ε*) (1 − T*</tspan><tspan font-size="11" dy="-6">m</tspan><tspan dy="6">)</tspan></text><circle cx="181.5" cy="272.5" r="0.82" fill="rgb(51, 51, 51)"/>
+<path class="ink" marker-end="url(#a)" d="M60,440 V300"/><path class="ink" marker-end="url(#a)" d="M60,440 H370"/>
+<text x="46" y="308" class="lb m" font-size="13">σ</text><text x="362" y="458" class="lb m" font-size="13">ε</text>
+<circle cx="72.0" cy="421.8" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="102.9" cy="409.1" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="133.8" cy="411.0" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="164.7" cy="403.4" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="195.6" cy="395.9" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="226.4" cy="401.5" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="257.3" cy="396.4" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="288.2" cy="391.0" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="319.1" cy="397.9" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="350.0" cy="393.7" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/>
+<path class="ink" d="M72.0,433.0 L79.0,430.3 L85.9,427.8 L92.8,425.5 L99.8,423.4 L106.8,421.5 L113.7,419.7 L120.7,418.0 L127.6,416.5 L134.6,415.0 L141.5,413.7 L148.4,412.5 L155.4,411.4 L162.4,410.4 L169.3,409.4 L176.2,408.5 L183.2,407.7 L190.1,407.0 L197.1,406.3 L204.0,405.7 L211.0,405.1 L218.0,404.5 L224.9,404.0 L231.8,403.6 L238.8,403.1 L245.8,402.7 L252.7,402.4 L259.6,402.0 L266.6,401.7 L273.5,401.4 L280.5,401.2 L287.5,400.9 L294.4,400.7 L301.4,400.5 L308.3,400.3 L315.2,400.1 L322.2,400.0 L329.2,399.8 L336.1,399.7 L343.1,399.5 L350.0,399.4"/>
+<circle cx="72.0" cy="408.6" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="102.9" cy="397.4" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="133.8" cy="391.9" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="164.7" cy="375.7" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="195.6" cy="373.7" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="226.4" cy="374.8" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="257.3" cy="363.3" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="288.2" cy="364.9" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="319.1" cy="368.4" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="350.0" cy="358.6" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/>
+<path class="ink" d="M72.0,431.0 L79.0,426.0 L85.9,421.4 L92.8,417.1 L99.8,413.2 L106.8,409.6 L113.7,406.2 L120.7,403.1 L127.6,400.3 L134.6,397.6 L141.5,395.2 L148.4,393.0 L155.4,390.9 L162.4,389.0 L169.3,387.2 L176.2,385.6 L183.2,384.1 L190.1,382.7 L197.1,381.4 L204.0,380.2 L211.0,379.1 L218.0,378.1 L224.9,377.2 L231.8,376.3 L238.8,375.5 L245.8,374.8 L252.7,374.1 L259.6,373.5 L266.6,372.9 L273.5,372.4 L280.5,371.9 L287.5,371.4 L294.4,371.0 L301.4,370.6 L308.3,370.3 L315.2,370.0 L322.2,369.6 L329.2,369.4 L336.1,369.1 L343.1,368.9 L350.0,368.6"/>
+<circle cx="72.0" cy="398.3" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="102.9" cy="386.1" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="133.8" cy="367.0" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="164.7" cy="349.9" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="195.6" cy="351.3" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="226.4" cy="341.8" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="257.3" cy="331.8" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="288.2" cy="338.3" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="319.1" cy="332.2" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="350.0" cy="325.1" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/>
+<path class="ink" d="M72.0,429.0 L79.0,421.5 L85.9,414.7 L92.8,408.3 L99.8,402.4 L106.8,397.0 L113.7,392.0 L120.7,387.4 L127.6,383.1 L134.6,379.2 L141.5,375.6 L148.4,372.2 L155.4,369.1 L162.4,366.3 L169.3,363.6 L176.2,361.2 L183.2,359.0 L190.1,356.9 L197.1,355.0 L204.0,353.2 L211.0,351.6 L218.0,350.1 L224.9,348.7 L231.8,347.4 L238.8,346.2 L245.8,345.1 L252.7,344.1 L259.6,343.2 L266.6,342.3 L273.5,341.5 L280.5,340.8 L287.5,340.1 L294.4,339.5 L301.4,338.9 L308.3,338.4 L315.2,337.9 L322.2,337.4 L329.2,337.0 L336.1,336.6 L343.1,336.3 L350.0,336.0"/>
+<text x="200" y="312" class="sm">fitted constants A, B, C, n, m</text>
+<text x="30" y="482" class="lb" font-weight="700">Flow stress equation</text>
+<text x="30" y="504" class="cap">fast and accepted by every solver, but whatever</text>
+<text x="30" y="522" class="cap">the chosen form cannot express is lost</text>
+<text x="420" y="196" class="hd"><tspan font-weight="700">(b)</tspan> Machine-learning method</text>
+<text x="420" y="224" class="sm">no prescribed form; the map is learned</text>
+<path class="thin" stroke="#b5b5b5" d="M470,248 L555,236"/>
+<path class="thin" stroke="#b5b5b5" d="M470,248 L555,260"/>
+<path class="thin" stroke="#b5b5b5" d="M470,248 L555,284"/>
+<path class="thin" stroke="#b5b5b5" d="M470,248 L555,308"/>
+<path class="thin" stroke="#b5b5b5" d="M470,272 L555,236"/>
+<path class="thin" stroke="#b5b5b5" d="M470,272 L555,260"/>
+<path class="thin" stroke="#b5b5b5" d="M470,272 L555,284"/>
+<path class="thin" stroke="#b5b5b5" d="M470,272 L555,308"/>
+<path class="thin" stroke="#b5b5b5" d="M470,296 L555,236"/>
+<path class="thin" stroke="#b5b5b5" d="M470,296 L555,260"/>
+<path class="thin" stroke="#b5b5b5" d="M470,296 L555,284"/>
+<path class="thin" stroke="#b5b5b5" d="M470,296 L555,308"/>
+<path class="thin" stroke="#b5b5b5" d="M555,236 L635,236"/>
+<path class="thin" stroke="#b5b5b5" d="M555,236 L635,260"/>
+<path class="thin" stroke="#b5b5b5" d="M555,236 L635,284"/>
+<path class="thin" stroke="#b5b5b5" d="M555,236 L635,308"/>
+<path class="thin" stroke="#b5b5b5" d="M555,260 L635,236"/>
+<path class="thin" stroke="#b5b5b5" d="M555,260 L635,260"/>
+<path class="thin" stroke="#b5b5b5" d="M555,260 L635,284"/>
+<path class="thin" stroke="#b5b5b5" d="M555,260 L635,308"/>
+<path class="thin" stroke="#b5b5b5" d="M555,284 L635,236"/>
+<path class="thin" stroke="#b5b5b5" d="M555,284 L635,260"/>
+<path class="thin" stroke="#b5b5b5" d="M555,284 L635,284"/>
+<path class="thin" stroke="#b5b5b5" d="M555,284 L635,308"/>
+<path class="thin" stroke="#b5b5b5" d="M555,308 L635,236"/>
+<path class="thin" stroke="#b5b5b5" d="M555,308 L635,260"/>
+<path class="thin" stroke="#b5b5b5" d="M555,308 L635,284"/>
+<path class="thin" stroke="#b5b5b5" d="M555,308 L635,308"/>
+<path class="thin" stroke="#b5b5b5" d="M635,236 L715,272"/>
+<path class="thin" stroke="#b5b5b5" d="M635,260 L715,272"/>
+<path class="thin" stroke="#b5b5b5" d="M635,284 L715,272"/>
+<path class="thin" stroke="#b5b5b5" d="M635,308 L715,272"/>
+<circle cx="470" cy="248" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="470" cy="272" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="470" cy="296" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="555" cy="236" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="555" cy="260" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="555" cy="284" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="555" cy="308" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="635" cy="236" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="635" cy="260" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="635" cy="284" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="635" cy="308" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<circle cx="715" cy="272" r="7" fill="#fff" stroke="#222" stroke-width="1.1"/>
+<text x="456" y="252" text-anchor="end" class="lb m" font-size="14">ε</text>
+<text x="456" y="276" text-anchor="end" class="lb m" font-size="14">ε</text><circle cx="454.1" cy="268.5" r="0.82" fill="rgb(51, 51, 51)"/>
+<text x="456" y="300" text-anchor="end" class="lb m" font-size="14">T</text>
+<text x="730" y="277" class="lb m" font-size="14">σ</text>
+<path class="ink" marker-end="url(#a)" d="M450,450 V335"/><path class="ink" marker-end="url(#a)" d="M450,450 H780"/>
+<text x="436" y="344" class="lb m" font-size="13">σ</text><text x="772" y="468" class="lb m" font-size="13">ε</text>
+<rect x="462" y="338" width="180" height="111" fill="#F2F2F2"/>
+<text x="470" y="354" class="sm">tested range</text>
+<circle cx="468.0" cy="434.4" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="489.0" cy="421.5" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="510.0" cy="411.3" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="531.0" cy="413.7" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="552.0" cy="407.1" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="573.0" cy="401.4" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="594.0" cy="406.9" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="615.0" cy="402.3" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/><circle cx="636.0" cy="398.2" r="2.4" fill="#fff" stroke="#666" stroke-width=".9"/>
+<path class="ink" d="M466.0,442.0 L470.4,438.5 L474.7,435.2 L479.1,432.2 L483.4,429.4 L487.8,426.8 L492.1,424.5 L496.4,422.3 L500.8,420.3 L505.1,418.4 L509.5,416.7 L513.9,415.1 L518.2,413.6 L522.5,412.3 L526.9,411.0 L531.2,409.9 L535.6,408.8 L540.0,407.8 L544.3,406.9 L548.6,406.1 L553.0,405.3 L557.4,404.6 L561.7,403.9 L566.0,403.3 L570.4,402.7 L574.8,402.2 L579.1,401.7 L583.5,401.3 L587.8,400.9 L592.1,400.5 L596.5,400.2 L600.9,399.9 L605.2,399.6 L609.5,399.3 L613.9,399.0 L618.2,398.8 L622.6,398.6 L627.0,398.4 L631.3,398.2 L635.6,398.0 L640.0,397.9"/>
+<path d="M640,396.5 C680,392 720,386 770,378 L770,346 C720,366 680,380 640,396.5 Z" fill="#E4E4E4"/>
+<path d="M640,396.5 C680,402 720,410 770,418 L770,378 C720,386 680,392 640,396.5 Z" fill="#E4E4E4"/>
+<path class="ink" stroke-dasharray="4 3" d="M640,396.5 C680,392 720,386 770,378"/>
+<text x="676" y="440" class="sm">extrapolation ?</text>
+<text x="420" y="482" class="lb" font-weight="700">Flow stress neural network (trained)</text>
+<text x="420" y="504" class="cap">accurate inside the tested range, little</text>
+<text x="420" y="522" class="cap">confidence outside it, where impact problems live</text>
+<text x="816" y="196" class="hd" fill="#1F4E8C"><tspan font-weight="700">(c)</tspan> This work</text>
+<text x="816" y="224" class="sm">form identified from the structure of the data</text>
+<text x="995" y="252" text-anchor="middle" class="lb" font-weight="700" fill="#1F4E8C">data screening</text>
+<path class="bl" d="M995,258 V268 M900,268 H1090"/><path class="bl" marker-end="url(#aB)" d="M900,268 V282"/><path class="bl" marker-end="url(#aB)" d="M1090,268 V282"/>
+<text x="900" y="298" text-anchor="middle" class="lb">ideal data</text>
+<text x="1090" y="298" text-anchor="middle" class="lb">non-ideal data</text>
+<text x="1090" y="314" text-anchor="middle" class="sm">rate not constant</text>
+<path class="bl" marker-end="url(#aB)" d="M1090,320 V328"/>
+<path class="thin" stroke="#9db2cf" d="M1070,338 L1090,332"/>
+<path class="thin" stroke="#9db2cf" d="M1070,338 L1090,346"/>
+<path class="thin" stroke="#9db2cf" d="M1070,338 L1090,360"/>
+<path class="thin" stroke="#9db2cf" d="M1070,354 L1090,332"/>
+<path class="thin" stroke="#9db2cf" d="M1070,354 L1090,346"/>
+<path class="thin" stroke="#9db2cf" d="M1070,354 L1090,360"/>
+<path class="thin" stroke="#9db2cf" d="M1090,332 L1110,346"/>
+<path class="thin" stroke="#9db2cf" d="M1090,346 L1110,346"/>
+<path class="thin" stroke="#9db2cf" d="M1090,360 L1110,346"/>
+<circle cx="1070" cy="338" r="4" fill="#fff" stroke="#1F4E8C" stroke-width="1"/>
+<circle cx="1070" cy="354" r="4" fill="#fff" stroke="#1F4E8C" stroke-width="1"/>
+<circle cx="1090" cy="332" r="4" fill="#fff" stroke="#1F4E8C" stroke-width="1"/>
+<circle cx="1090" cy="346" r="4" fill="#fff" stroke="#1F4E8C" stroke-width="1"/>
+<circle cx="1090" cy="360" r="4" fill="#fff" stroke="#1F4E8C" stroke-width="1"/>
+<circle cx="1110" cy="346" r="4" fill="#fff" stroke="#1F4E8C" stroke-width="1"/>
+<text x="1122" y="350" class="sm">ANN</text>
+<path class="bl" d="M1090,364 V368 H900"/>
+<path class="bl" d="M900,304 V368"/><path class="bl" marker-end="url(#aB)" d="M960,368 V378"/>
+<g stroke="#222" stroke-width="1.1" fill="#F2F2F2" stroke-linejoin="round"><path d="M832,394 h40 v40 h-40 z"/><path d="M832,394 l12,-12 h40 l-12,12 z" fill="#E6E6E6"/><path d="M872,394 l12,-12 v40 l-12,12 z" fill="#DADADA"/></g>
+<text x="858" y="456" text-anchor="middle" class="sm m">σ(ε, ε, T)</text><circle cx="860.9" cy="449.2" r="0.77" fill="rgb(119, 119, 119)"/>
+<text x="895" y="420" class="lb" font-size="18">≈</text>
+<rect x="918" y="392" width="7" height="40" fill="#1F4E8C"/><rect x="928" y="392" width="36" height="7" fill="#1F4E8C" opacity=".6"/><polygon points="918,392 930,381 937,381 925,392" fill="#1F4E8C" opacity=".35"/>
+<text x="976" y="420" class="lb" font-size="18">+</text>
+<rect x="994" y="392" width="7" height="40" fill="#1F4E8C"/><rect x="1004" y="392" width="36" height="7" fill="#1F4E8C" opacity=".6"/><polygon points="994,392 1006,381 1013,381 1001,392" fill="#1F4E8C" opacity=".35"/>
+<text x="1052" y="420" class="lb" font-size="18">+ ⋯</text>
+<text x="1090" y="402" class="lb" font-weight="700" fill="#1F4E8C">SVD / CP</text>
+<text x="1090" y="420" class="sm">rank-one terms</text>
+<text x="816" y="482" class="lb" font-weight="700" fill="#1F4E8C">Flow stress equation (discrete / analytic)</text>
+<text x="816" y="504" class="cap">the data decide the form; noise separates</text>
+<text x="816" y="522" class="cap">from structure; extrapolation becomes testable</text>
+</svg>
