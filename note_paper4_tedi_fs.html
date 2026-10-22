@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +28,6 @@
   <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <meta name="description" content="A reading guide to Paper 4 (IJIE 2026): the TEDI-FS framework, a rank-2 non-negative CP decomposition of strain, strain-rate and temperature that is consistency-constrained-extrapolated beyond SHPB range and inversely identified from Taylor-Hopkinson impact tests up to strain-rates of about 10^5 s^-1.">
   <link rel="stylesheet" href="assets/css/shared.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script>
     window.MathJax = {
       tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
@@ -34,43 +35,57 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How Do You Extrapolate a Flow Stress Model Beyond Where It Was Calibrated?",
+  "description": "A reading guide to Paper 4 (IJIE 2026): the TEDI-FS framework, a rank-2 non-negative CP decomposition of strain, strain-rate and temperature that is consistency-constrained-extrapolated beyond SHPB range and inversely identified from Taylor-Hopkinson impact tests up to strain-rates of about 10^5 s^-1.",
+  "url": "https://impacthuang.github.io/note_paper4_tedi_fs.html",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "@id": "https://impacthuang.github.io/#person",
+    "name": "Xianglin Huang"
+  },
+  "about": {
+    "@type": "ScholarlyArticle",
+    "name": "Tensor-decomposition-based inverse characterization of flow stress for very-high strain-rate impact",
+    "sameAs": "https://doi.org/10.1016/j.ijimpeng.2026.105863",
+    "identifier": {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1016/j.ijimpeng.2026.105863"
+    },
+    "datePublished": "2026",
+    "isPartOf": {
+      "@type": "PublicationVolume",
+      "volumeNumber": "219",
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "International Journal of Impact Engineering",
+        "issn": "0734-743X"
+      }
+    },
+    "pagination": "105863",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Xianglin Huang"
+      },
+      {
+        "@type": "Person",
+        "name": "Q.M. Li"
+      }
+    ]
+  }
+}
+  </script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="navbar">
-  <div class="inner">
-    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
-    <button class="nav-toggle" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li>
-        <a href="research.html">Research</a>
-        <ul class="dd-menu">
-          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
-          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
-          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
-        </ul>
-      </li>
-      <li><a href="publications.html">Publications</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li>
-        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
-        <ul class="dd-menu dd-right">
-          <li><a href="news.html">News</a></li>
-          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
-          <li><a href="members.html">Members</a></li>
-          <li><a href="conferences.html">Conferences</a></li>
-          <li><a href="activities.html">Activities</a></li>
-          <li><a href="downloads.html">Downloads</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+{% include nav.html %}
 
 <div class="page-header" id="main">
   <div class="container">
@@ -181,7 +196,7 @@
           At 53.03 and 62.23 m/s, both below the 72.33 m/s calibration velocity, the model reproduces the experimental force-time histories with good agreement across the whole impact event (Fig. 18). At 102.37 and 114.33 m/s, both well above it, the paper reports the numerical predictions are in &ldquo;very good agreement&rdquo; with experiment, including the oscillatory trends, which it summarises as demonstrating &ldquo;strong extrapolation performance&rdquo; (Fig. 19):
         </p>
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper4/fig19b-extrapolation-114ms.png" alt="Comparison of experimental and numerical force-time histories at an impact velocity of 114.33 m/s, well above the 72.33 m/s calibration velocity, showing close agreement between the TEDI-FS rank-2 prediction and the experimental measurement" loading="lazy" decoding="async">
+          <img src="assets/img/notes/paper4/fig19b-extrapolation-114ms.webp" alt="Comparison of experimental and numerical force-time histories at an impact velocity of 114.33 m/s, well above the 72.33 m/s calibration velocity, showing close agreement between the TEDI-FS rank-2 prediction and the experimental measurement" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 19(b) (Paper 4).</strong> Model extrapolation performance at an impact velocity of 114.33 m/s, roughly 1.6&times; the 72.33 m/s calibration velocity: experimental (Exp) versus TEDI-FS rank-2 (Num) force-time histories.</figcaption>
         </figure>
         <p>
@@ -191,7 +206,7 @@
           The sharper test is a head-to-head comparison against two conventional strategies built from the same underlying data: the classical Johnson-Cook (J-C) model, and the analytical CP rank-1 model derived directly from Paper 2/3-style rank-1 decomposition (the paper notes, citing its own earlier work, that J-C can be regarded as a special case of the rank-1 model). Both are single-regime formulations extrapolated beyond their own calibration domain the conventional way, directly. At low velocities they perform reasonably, but as impact velocity increases both show &ldquo;pronounced discrepancies relative to experimental observations, including inaccurate peak force prediction and incorrect loading duration,&rdquo; attributed to &ldquo;the limited flexibility of single-regime constitutive formulations when extrapolated beyond their calibration domain.&rdquo; At the most extreme velocity tested, the gap is unmistakable:
         </p>
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper4/fig21d-vs-jc-rank1-114ms.png" alt="Four-way comparison at 114.33 m/s of experimental force-time history against the J-C model, the analytical CP rank-1 model, and the proposed TEDI-FS model, with a highlighted region showing large deviations of the J-C and rank-1 predictions from the experimental late-stage decay while TEDI-FS tracks it closely" loading="lazy" decoding="async">
+          <img src="assets/img/notes/paper4/fig21d-vs-jc-rank1-114ms.webp" alt="Four-way comparison at 114.33 m/s of experimental force-time history against the J-C model, the analytical CP rank-1 model, and the proposed TEDI-FS model, with a highlighted region showing large deviations of the J-C and rank-1 predictions from the experimental late-stage decay while TEDI-FS tracks it closely" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 21(d) (Paper 4).</strong> Force-time histories at 114.33 m/s: experiment (Exp) versus the J&ndash;C model, the analytical CP rank-1 model, and the proposed TEDI-FS framework. The highlighted region marks the &ldquo;significant deviations&rdquo; the paper attributes to &ldquo;the limitations of a rank-1 representation under extreme loading conditions.&rdquo;</figcaption>
         </figure>
         <p>
@@ -225,46 +240,7 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
-        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
-        <div class="social-row">
-          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
-          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
-          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="research.html">Research</a></li>
-          <li><a href="publications.html">Publications</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="notes.html">Technical Notes</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
-          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
-          <li class="fc-txt">Dongguk University&ndash;Seoul, Korea</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
-      <span>KAIST &middot; Dongguk University</span>
-    </div>
-  </div>
-</footer>
+{% include footer.html %}
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/glossary.js"></script>

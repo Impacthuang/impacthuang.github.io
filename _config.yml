@@ -1,0 +1,6 @@
+title: ImpactHuang
+url: https://impacthuang.github.io
+exclude:
+  - .claude
+  - .gitignore
+  - README.md

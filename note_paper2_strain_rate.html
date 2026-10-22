@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +28,6 @@
   <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <meta name="description" content="A reading guide to Paper 2 (IJIE 2025, Part 1): why stress equilibrium and a constant strain-rate are independent conditions in an SHPB test, with the Lagrangian-coordinate argument and the paper's own experimental evidence.">
   <link rel="stylesheet" href="assets/css/shared.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script>
     window.MathJax = {
       tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
@@ -34,43 +35,57 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Does a Test Need a Constant Strain-Rate to Be Valid?",
+  "description": "A reading guide to Paper 2 (IJIE 2025, Part 1): why stress equilibrium and a constant strain-rate are independent conditions in an SHPB test, with the Lagrangian-coordinate argument and the paper's own experimental evidence.",
+  "url": "https://impacthuang.github.io/note_paper2_strain_rate.html",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "@id": "https://impacthuang.github.io/#person",
+    "name": "Xianglin Huang"
+  },
+  "about": {
+    "@type": "ScholarlyArticle",
+    "name": "Determination of dynamic flow stress equation based on discrete experimental data: Part 1 Methodology and the dependence of dynamic flow stress on strain-rate",
+    "sameAs": "https://doi.org/10.1016/j.ijimpeng.2025.105403",
+    "identifier": {
+      "@type": "PropertyValue",
+      "propertyID": "DOI",
+      "value": "10.1016/j.ijimpeng.2025.105403"
+    },
+    "datePublished": "2025",
+    "isPartOf": {
+      "@type": "PublicationVolume",
+      "volumeNumber": "206",
+      "isPartOf": {
+        "@type": "Periodical",
+        "name": "International Journal of Impact Engineering",
+        "issn": "0734-743X"
+      }
+    },
+    "pagination": "105403",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Xianglin Huang"
+      },
+      {
+        "@type": "Person",
+        "name": "Q.M. Li"
+      }
+    ]
+  }
+}
+  </script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="navbar">
-  <div class="inner">
-    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
-    <button class="nav-toggle" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li>
-        <a href="research.html">Research</a>
-        <ul class="dd-menu">
-          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
-          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
-          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
-        </ul>
-      </li>
-      <li><a href="publications.html">Publications</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li>
-        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
-        <ul class="dd-menu dd-right">
-          <li><a href="news.html">News</a></li>
-          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
-          <li><a href="members.html">Members</a></li>
-          <li><a href="conferences.html">Conferences</a></li>
-          <li><a href="activities.html">Activities</a></li>
-          <li><a href="downloads.html">Downloads</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+{% include nav.html %}
 
 <div class="page-header" id="main">
   <div class="container">
@@ -199,12 +214,12 @@
         </ul>
 
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper2/fig14-equilibrium-varying-rate.jpg" alt="Stress wave equilibrium analysis for SHPB tests without a shaper, with a copper alloy shaper, and with a nylon shaper, showing the equilibrium error alongside the strain histories" loading="lazy" decoding="async">
+          <img src="assets/img/notes/paper2/fig14-equilibrium-varying-rate.webp" alt="Stress wave equilibrium analysis for SHPB tests without a shaper, with a copper alloy shaper, and with a nylon shaper, showing the equilibrium error alongside the strain histories" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 14 (Paper 2).</strong> Front/back strain histories and the equilibrium error \(e_\mathrm{wave}\) for three SHPB configurations. Inside the green-shaded windows the equilibrium criterion is met (\(e_\mathrm{wave}<0.05\)) even though the incident, reflected and transmitted strains, and hence the instantaneous strain-rate, are still visibly evolving.</figcaption>
         </figure>
 
         <figure class="fp-fig" style="margin:26px 0;">
-          <img src="assets/img/notes/paper2/fig18c-constant-rate-nonequilibrium.png" alt="Flow stress and strain-rate history for a shaped SHPB test, Exp-23, showing a plateau region of near-constant strain-rate where the equilibrium criterion still fails" loading="lazy" decoding="async">
+          <img src="assets/img/notes/paper2/fig18c-constant-rate-nonequilibrium.webp" alt="Flow stress and strain-rate history for a shaped SHPB test, Exp-23, showing a plateau region of near-constant strain-rate where the equilibrium criterion still fails" loading="lazy" decoding="async">
           <figcaption><strong>Fig. 18(c) (Paper 2).</strong> Full data from a shaped test (Exp-23). Between roughly 0.1&ndash;0.2 plastic strain the strain-rate (green) plateaus to a near-constant value, yet the front and rear stress traces (black/blue) still diverge there, i.e. the equilibrium criterion fails precisely where the rate is flattest.</figcaption>
         </figure>
 
@@ -242,46 +257,7 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
-        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
-        <div class="social-row">
-          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
-          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
-          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="research.html">Research</a></li>
-          <li><a href="publications.html">Publications</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="notes.html">Technical Notes</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
-          <li class="fc-txt">InnoCORE PRISM-AI Center, KAIST</li>
-          <li class="fc-txt">Dongguk University&ndash;Seoul, Korea</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
-      <span>KAIST &middot; Dongguk University</span>
-    </div>
-  </div>
-</footer>
+{% include footer.html %}
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/glossary.js"></script>

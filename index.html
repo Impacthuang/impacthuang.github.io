@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+---
+---
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -26,7 +28,6 @@
   <meta name="twitter:description" content="Dr. Xianglin Huang — Visiting Research Professor at Dongguk University and Postdoctoral Researcher at KAIST. Data-driven dynamic constitutive modeling and lithium-ion battery impact safety.">
   <meta name="twitter:image" content="https://impacthuang.github.io/assets/img/og-cover.jpg">
   <link rel="stylesheet" href="assets/css/shared.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -99,39 +100,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ═══ NAVBAR ═══ -->
-<nav class="navbar">
-  <div class="inner">
-    <a href="index.html" class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</a>
-    <button class="nav-toggle" aria-label="Toggle navigation">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li>
-        <a href="research.html">Research</a>
-        <ul class="dd-menu">
-          <li><a href="research-constitutive-modeling.html">Constitutive Modeling</a></li>
-          <li><a href="research-battery-phm.html">Battery Impact &amp; PHM</a></li>
-          <li><a href="research-impact-dynamics.html">Impact Mechanics</a></li>
-        </ul>
-      </li>
-      <li><a href="publications.html">Publications</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li>
-        <button type="button" class="nav-more" aria-haspopup="true" aria-expanded="false">More <i class="fas fa-chevron-down"></i></button>
-        <ul class="dd-menu dd-right">
-          <li><a href="news.html">News</a></li>
-          <li><a href="notes.html">Technical Notes &amp; Glossary</a></li>
-          <li><a href="members.html">Members</a></li>
-          <li><a href="conferences.html">Conferences</a></li>
-          <li><a href="activities.html">Activities</a></li>
-          <li><a href="downloads.html">Downloads</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+{% include nav.html %}
 
 <!-- ═══ HERO ═══ -->
 <section class="hero" id="main">
@@ -154,7 +123,7 @@
       </div>
     </div>
     <div class="hero-photo">
-      <img src="assets/img/profile/dr-huang.jpg" alt="Dr. Xianglin Huang" fetchpriority="high" decoding="async">
+      <img src="assets/img/profile/dr-huang.webp" alt="Dr. Xianglin Huang" fetchpriority="high" decoding="async">
     </div>
   </div>
 </section>
@@ -169,7 +138,7 @@
     <div class="res-grid">
 
       <div class="res-card">
-        <div class="rc-img"><img src="assets/img/research/constitutive-modelling.jpg" alt="Constitutive Modeling" loading="lazy" decoding="async"></div>
+        <div class="rc-img"><img src="assets/img/research/constitutive-modelling.webp" alt="Constitutive Modeling" loading="lazy" decoding="async"></div>
         <div class="rc-body">
           <div class="rc-tag"><span class="tag tag-accent">Core Research</span></div>
           <div class="rc-title">Data-Driven Constitutive Modeling</div>
@@ -180,7 +149,7 @@
       </div>
 
       <div class="res-card">
-        <div class="rc-img"><img src="assets/img/research/battery-phm-dl.jpg" alt="Battery PHM" loading="lazy" decoding="async"></div>
+        <div class="rc-img"><img src="assets/img/research/battery-phm-dl.webp" alt="Battery PHM" loading="lazy" decoding="async"></div>
         <div class="rc-body">
           <div class="rc-tag"><span class="tag tag-blue">Current Focus</span></div>
           <div class="rc-title">Battery Impact Safety &amp; Health Management</div>
@@ -191,7 +160,7 @@
       </div>
 
       <div class="res-card">
-        <div class="rc-img"><img src="assets/img/research/impact-resistance.jpg" alt="Impact Mechanics" loading="lazy" decoding="async"></div>
+        <div class="rc-img"><img src="assets/img/research/impact-resistance.webp" alt="Impact Mechanics" loading="lazy" decoding="async"></div>
         <div class="rc-body">
           <div class="rc-tag"><span class="tag tag-navy">Foundation &amp; Emerging Directions</span></div>
           <div class="rc-title">Impact Mechanics &amp; Structural Response</div>
@@ -210,7 +179,7 @@
         <a href="research-constitutive-modeling.html" style="font-weight:600;">Learn more →</a>
       </div>
       <figure style="margin:0; flex:0 1 220px;">
-        <img src="assets/img/scicomm/fem-crash-simulation.jpg" alt="Finite element simulation of a three-car collision" style="width:100%; border-radius:8px; border:1px solid var(--border);" loading="lazy" decoding="async">
+        <img src="assets/img/scicomm/fem-crash-simulation.webp" alt="Finite element simulation of a three-car collision" style="width:100%; border-radius:8px; border:1px solid var(--border);" loading="lazy" decoding="async">
         <figcaption style="font-size:11.5px; color:var(--muted); line-height:1.5; margin-top:6px;">
           FE model of a three-car collision. Image: Matt Howard, Argonne National Laboratory, via <a href="https://commons.wikimedia.org/wiki/File:Crash-test_simulation_(3467719123).jpg" target="_blank" rel="noopener">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener">CC BY-SA 2.0</a>.
         </figcaption>
@@ -322,7 +291,7 @@
         </div>
       </div>
       <div>
-        <img src="assets/img/profile/dr-huang.jpg" alt="Dr. Xianglin Huang" class="prof-photo-sm" loading="lazy" decoding="async">
+        <img src="assets/img/profile/dr-huang.webp" alt="Dr. Xianglin Huang" class="prof-photo-sm" loading="lazy" decoding="async">
       </div>
     </div>
   </div>
@@ -390,47 +359,7 @@
 </section>
 
 <!-- ═══ FOOTER ═══ -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo"><img class="nav-mark" src="assets/img/brand/logo.svg" alt="" width="30" height="30"><span>Impact</span>Huang</div>
-        <p>Research at the intersection of impact dynamics, data-driven constitutive modeling, and lithium-ion battery safety.</p>
-        <div class="social-row">
-          <a href="mailto:xianglin.huang@kaist.ac.kr" title="Email"><i class="fas fa-envelope"></i></a>
-          <a href="https://scholar.google.com/citations?hl=en&amp;user=zzJ9v3gAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-          <a href="https://www.researchgate.net/profile/Xianglin-Huang-2" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
-          <a href="https://orcid.org/0000-0003-3101-0386" title="ORCID"><i class="fab fa-orcid"></i></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Navigation</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="research.html">Research</a></li>
-          <li><a href="publications.html">Publications</a></li>
-          <li><a href="news.html">News</a></li>
-          <li><a href="notes.html">Technical Notes</a></li>
-          <li><a href="members.html">Members</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="mailto:xianglin.huang@kaist.ac.kr">xianglin.huang@kaist.ac.kr</a></li>
-          <li class="fc-txt">InnoCORE PRISM-AI Center<br>KAIST, Daejeon, South Korea</li>
-          <li class="fc-txt" style="margin-top:8px;">Dept. Mechanical, Robotics &amp; Energy Engineering<br>Dongguk University–Seoul, Korea</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 ImpactHuang &middot; Dr. Xianglin Huang</span>
-      <span>KAIST &middot; Dongguk University</span>
-    </div>
-  </div>
-</footer>
+{% include footer.html %}
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/glossary.js"></script>
