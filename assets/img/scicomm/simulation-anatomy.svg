@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" width="1200" height="640" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Anatomy of a numerical simulation</title>
+  <desc id="d">A numerical simulation rests on three coupled parts: geometric representation, the constitutive equation of the metal, and physical principles. Inside the constitutive equation, a yield check routes to elastic behaviour (Hooke's law) or plastic behaviour; plastic behaviour combines a characterized flow stress equation, highlighted, with a plasticity model (von Mises criterion and flow rule) to determine the yield surface.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4A5B72"/>
+    </marker>
+    <marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#C8430F"/>
+    </marker>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.5" flood-color="#0B1C34" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <style>
+    .lbl  { font-size: 14px; fill: #1A2333; }
+    .sm   { font-size: 12.5px; fill: #5E6E82; }
+    .hd   { font-size: 15px; font-weight: 700; fill: #FFFFFF; }
+    .sub  { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; fill: #5E6E82; }
+    .box  { fill: #FFFFFF; stroke: #CBD3DE; stroke-width: 1.2; }
+    .ln   { fill: none; stroke: #4A5B72; stroke-width: 1.6; }
+    .lnA  { fill: none; stroke: #C8430F; stroke-width: 1.8; }
+    .yn   { font-size: 12.5px; font-weight: 700; fill: #4A5B72; }
+  </style>
+
+  <rect width="1200" height="640" fill="#FFFFFF"/>
+
+  <!-- ── Root ── -->
+  <rect x="470" y="18" width="260" height="46" rx="23" fill="#0B1C34" filter="url(#sh)"/>
+  <text x="600" y="47" text-anchor="middle" class="hd" font-size="16">Numerical simulation</text>
+
+  <!-- bus -->
+  <path class="ln" d="M600,64 V88 M175,88 H1025 M175,88 V108 M1025,88 V108 M600,88 V108" />
+  <path class="ln" marker-end="url(#ah)" d="M175,100 V110"/>
+  <path class="ln" marker-end="url(#ah)" d="M600,100 V110"/>
+  <path class="ln" marker-end="url(#ah)" d="M1025,100 V110"/>
+
+  <!-- ── Branch headers ── -->
+  <rect x="45"  y="112" width="260" height="40" rx="8" fill="#2C5282"/>
+  <text x="175" y="137" text-anchor="middle" class="hd">Geometric representation</text>
+  <rect x="455" y="112" width="290" height="40" rx="8" fill="#C8430F"/>
+  <text x="600" y="137" text-anchor="middle" class="hd">Constitutive equation (metals)</text>
+  <rect x="895" y="112" width="260" height="40" rx="8" fill="#2C5282"/>
+  <text x="1025" y="137" text-anchor="middle" class="hd">Physical principles</text>
+
+  <path class="ln" marker-end="url(#ah)" d="M175,152 V172"/>
+  <path class="lnA" marker-end="url(#ahA)" d="M600,152 V172"/>
+  <path class="ln" marker-end="url(#ah)" d="M1025,152 V172"/>
+
+  <!-- ── Panels ── -->
+  <rect x="20"  y="175" width="310" height="445" rx="14" fill="#F4F6F9" stroke="#D5DCE6"/>
+  <rect x="365" y="175" width="470" height="445" rx="14" fill="#FDF6F1" stroke="#E7B79C" stroke-dasharray="6 4"/>
+  <rect x="870" y="175" width="310" height="445" rx="14" fill="#F4F6F9" stroke="#D5DCE6"/>
+
+  <!-- coupling arrows between panels -->
+  <path class="ln" marker-start="url(#ah)" marker-end="url(#ah)" d="M334,398 H361"/>
+  <path class="ln" marker-start="url(#ah)" marker-end="url(#ah)" d="M839,398 H866"/>
+
+  <!-- ── Left panel: geometry ── -->
+  <text x="40" y="205" class="sub">FINITE ELEMENTS</text>
+  <text x="40" y="226" class="sm">Element shape functions</text>
+  <path class="ln" d="M52,236 V364"/>
+  <path class="ln" marker-end="url(#ah)" d="M52,262 H76"/>
+  <path class="ln" marker-end="url(#ah)" d="M52,313 H76"/>
+  <path class="ln" marker-end="url(#ah)" d="M52,364 H76"/>
+  <rect class="box" x="78" y="243" width="232" height="38" rx="7"/>
+  <text x="94" y="267" class="lbl"><tspan font-weight="700">1D</tspan>  e.g. bar</text>
+  <rect class="box" x="78" y="294" width="232" height="38" rx="7"/>
+  <text x="94" y="318" class="lbl"><tspan font-weight="700">2D</tspan>  e.g. triangle, quadrilateral</text>
+  <rect class="box" x="78" y="345" width="232" height="38" rx="7"/>
+  <text x="94" y="369" class="lbl"><tspan font-weight="700">3D</tspan>  e.g. hexahedron</text>
+
+  <text x="40" y="430" class="sub">MESHLESS METHODS</text>
+  <path class="ln" d="M52,440 V466"/>
+  <path class="ln" marker-end="url(#ah)" d="M52,466 H76"/>
+  <rect class="box" x="78" y="447" width="232" height="38" rx="7"/>
+  <text x="94" y="471" class="lbl">e.g. SPH</text>
+
+  <!-- ── Centre panel: constitutive equation ── -->
+  <!-- yield check -->
+  <polygon points="600,186 664,214 600,242 536,214" fill="#FFFFFF" stroke="#4A5B72" stroke-width="1.6"/>
+  <text x="600" y="219" text-anchor="middle" class="lbl" font-weight="700">Yield?</text>
+
+  <!-- No → elastic -->
+  <path class="ln" marker-end="url(#ah)" d="M536,214 H440 V300"/>
+  <text x="488" y="206" text-anchor="middle" class="yn">No</text>
+  <rect class="box" x="382" y="302" width="116" height="62" rx="8"/>
+  <text x="440" y="328" text-anchor="middle" class="lbl" font-weight="700">Elastic</text>
+  <text x="440" y="348" text-anchor="middle" class="sm">Hooke's law</text>
+
+  <!-- Yes → plastic -->
+  <path class="ln" marker-end="url(#ah)" d="M664,214 H675 V258"/>
+  <text x="690" y="240" class="yn">Yes</text>
+  <rect class="box" x="555" y="260" width="240" height="36" rx="8"/>
+  <text x="675" y="283" text-anchor="middle" class="lbl" font-weight="700">Plastic behaviour</text>
+
+  <!-- plastic sub-group -->
+  <rect x="520" y="314" width="300" height="292" rx="10" fill="none" stroke="#D9A88C" stroke-dasharray="4 4"/>
+  <path class="ln" d="M675,296 V318 M603,318 H747"/>
+  <path class="ln" marker-end="url(#ah)" d="M603,318 V332"/>
+  <path class="ln" marker-end="url(#ah)" d="M747,318 V332"/>
+
+  <rect class="box" x="533" y="334" width="140" height="52" rx="8"/>
+  <text x="603" y="356" text-anchor="middle" class="lbl">Mechanical</text>
+  <text x="603" y="375" text-anchor="middle" class="lbl">characterization</text>
+
+  <rect class="box" x="677" y="334" width="140" height="52" rx="8"/>
+  <text x="747" y="356" text-anchor="middle" class="lbl">Mathematical</text>
+  <text x="747" y="375" text-anchor="middle" class="lbl">model</text>
+
+  <path class="lnA" marker-end="url(#ahA)" d="M603,386 V408"/>
+  <path class="ln" marker-end="url(#ah)" d="M747,386 V408"/>
+
+  <!-- highlighted: flow stress equation -->
+  <rect x="533" y="410" width="140" height="92" rx="8" fill="#C8430F" filter="url(#sh)"/>
+  <text x="603" y="436" text-anchor="middle" class="hd" font-size="14.5">Flow stress</text>
+  <text x="603" y="455" text-anchor="middle" class="hd" font-size="14.5">equation</text>
+  <text x="603" y="480" text-anchor="middle" font-size="13" fill="#FFE9DE" font-style="italic">σ<tspan font-size="10" dy="3">y</tspan><tspan dy="-3"> = f(ε</tspan><tspan font-size="10" dy="3">p</tspan><tspan dy="-3">, ε̇</tspan><tspan font-size="10" dy="3">p</tspan><tspan dy="-3">, T)</tspan></text>
+
+  <rect class="box" x="677" y="410" width="140" height="92" rx="8"/>
+  <text x="747" y="436" text-anchor="middle" class="lbl" font-weight="700">Plasticity model</text>
+  <text x="747" y="458" text-anchor="middle" class="sm">von Mises criterion</text>
+  <text x="747" y="477" text-anchor="middle" class="sm">flow rule</text>
+
+  <path class="lnA" marker-end="url(#ahA)" d="M603,502 V538"/>
+  <path class="ln" marker-end="url(#ah)" d="M747,502 V538"/>
+  <rect x="545" y="540" width="260" height="44" rx="8" fill="#0B1C34"/>
+  <text x="675" y="567" text-anchor="middle" class="hd" font-size="14.5">Yield surface determined</text>
+
+  <!-- ── Right panel: physical principles ── -->
+  <text x="890" y="205" class="sub">GOVERNING LAWS</text>
+  <rect class="box" x="890" y="222" width="270" height="70" rx="8"/>
+  <text x="1025" y="250" text-anchor="middle" class="lbl" font-weight="700">Conservation laws</text>
+  <text x="1025" y="272" text-anchor="middle" class="sm">mass · momentum · energy</text>
+  <rect class="box" x="890" y="310" width="270" height="52" rx="8"/>
+  <text x="1025" y="341" text-anchor="middle" class="lbl">Other</text>
+
+  <!-- legend -->
+  <rect x="899" y="574" width="14" height="14" rx="3" fill="#C8430F"/>
+  <text x="930" y="586" class="sm">Focus of this research</text>
+  <path class="ln" marker-start="url(#ah)" marker-end="url(#ah)" d="M890,559 H922"/>
+  <text x="930" y="563" class="sm">Coupled parts</text>
+</svg>
